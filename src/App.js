@@ -1,9 +1,9 @@
 import React from 'react'
-// import Maps from './M'
+import Maps from './components/Maps'
 import './App.css'
-import Icon from './Icon';
-import Top  from './Top'
-import Middle from './Middle';
+// import Icon from './Icon';
+// import Top from './Top'
+// import Middle from './Middle';
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -19,7 +19,7 @@ class App extends React.Component {
 
         return (
             <React.Fragment>
-                <div>
+                {/* <div>
                     <header>
                     <Icon></Icon>
                     <Top></Top>
@@ -27,7 +27,12 @@ class App extends React.Component {
                  <body>
                      <Middle></Middle>
                  </body>
-                </div>
+                </div> */}
+
+                {/* maps */}
+
+                <Maps
+                />
             </React.Fragment>
         )
     }
