@@ -15,8 +15,8 @@ class App extends React.Component {
 
     }
 
-    to(){
-        this.setState({a:0})
+    to() {
+        this.setState({ a: 0 })
     }
     componentDidMount() {
 
@@ -37,7 +37,7 @@ class App extends React.Component {
                         : <p id="off">off</p>
                     }
 
-<button onClick={this.to}>0ff</button>
+                    <button onClick={this.to}>0ff</button>
                     <button onClick={this.toState}>on</button>
                     <input placeholder=""></input>
                     <br></br>
@@ -55,21 +55,21 @@ class App extends React.Component {
                     {/* <input type="checkbox" name="check" value="1" >หนึ่ง</input>
                     <input type="checkbox" name="check" value="1" >สอง</input> */}
                 </div>
-                
+
                 <Maps
-        id="myMap"
-        options={{
-          center: { lat: 41.0082, lng: 28.9784 },
-          zoom: 8
-        }}
-        onMapLoad={map => {
-          var marker = new window.google.maps.Marker({
-            position: { lat: 41.0082, lng: 28.9784 },
-            map: map,
-            title: 'Hello Istanbul!'
-          });
-        }}
-      />
+                    id="myMap"
+                    options={{
+                        center: { lat: 41.0082, lng: 28.9784 },
+                        zoom: 8
+                    }}
+                    onMapLoad={map => {
+                        var marker = new window.google.maps.Marker({
+                            position: { lat: 41.0082, lng: 28.9784 },
+                            map: map,
+                            title: 'Hello Istanbul!'
+                        });
+                    }}
+                />
             </React.Fragment>
         )
     }
