@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/error-404-team/share-to-go-ui#readme",
   "dependencies": {
+    "firebase": "^5.10.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-google-map-apis": "^0.1.2"
