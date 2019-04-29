@@ -1,9 +1,16 @@
 import React from 'react'
 // import Maps from './M'
 import './App.css'
-import Icon from './Icon';
-import Top  from './Top'
-import Middle from './Middle';
+import TapBar from './components/items/LoginForm/TapBar';
+// import Top from './components/items/Top'
+// import Icon from './components/items/Icon';
+// import Top  from './components/items/Top'
+// import Middle from './components/items/Middle';
+import {withStyles} from '@material-ui/core/styles'
+const stylesI = theme => ({ 
+    BGcolor:{
+    backgroundColor: '#6999E2',}
+  });
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -20,17 +27,14 @@ class App extends React.Component {
         return (
             <React.Fragment>
                 <div>
-                    <header>
-                    <Icon></Icon>
-                    <Top></Top>
-                 </header>
-                 <body>
-                     <Middle></Middle>
-                 </body>
+                    {/* <header><Top></Top></header> */}
+                    <TapBar></TapBar>
+
+
                 </div>
             </React.Fragment>
         )
     }
 }
 
-export default App
+export default withStyles(stylesI) (App)

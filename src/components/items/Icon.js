@@ -1,5 +1,5 @@
 import React from 'react'
-import './Icon'
+import '../../App.css'
 class Icon extends React.Component {
     constructor(props) {
         super(props)
