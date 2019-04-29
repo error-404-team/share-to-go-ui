@@ -1,10 +1,8 @@
 import React from 'react'
 // import Maps from './components/Maps'
 import './App.css'
-import TapBar from './components/items/LoginForm/TapBar';
-// import Top from './components/items/Top'
-// import Icon from './components/items/Icon';
-// import Top  from './components/items/Top'
+// import TapBar from './components/items/LoginForm/TapBar';
+import FaceI  from './components/items/FaceI'
 // import Middle from './components/items/Middle';
 import { withStyles } from '@material-ui/core/styles'
 
