@@ -18,12 +18,8 @@
   },
   "homepage": "https://github.com/error-404-team/share-to-go-ui#readme",
   "dependencies": {
-<<<<<<< HEAD
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
-=======
-    "firebase": "^5.10.0",
->>>>>>> 6fde28da8a051cb295da5a00b17fb5f8249e81d2
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-google-map-apis": "^0.1.2",
