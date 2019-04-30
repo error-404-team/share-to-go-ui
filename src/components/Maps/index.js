@@ -17,9 +17,9 @@ export class Maps extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <div className={this.props.classes.root}>
               <SearchInput />
-      </React.Fragment>
+      </div>
     )
   }
 }

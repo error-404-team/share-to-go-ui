@@ -1,47 +1,20 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import BG from './LoginForm/BG'
+import CheckNum from './LoginForm/CheckNum'
+import InputTime from './LoginForm/InputTime'
+import InputSeardMap from './LoginForm/InputSeardMap';
+import HeadTop from './LoginForm/HeadTop'
+import CheckFrom from './LoginForm/CheckFrom'
+import ShareBTN from './LoginForm/ShareBTN'
 // import color from '@material-ui/core/colors/deepOrange';
 
 const bts = theme => ({
-    borderS: {
-        border: '1px solid white',
-        borderRadius: '10px',
-        height:'18px'
-    },
-    borderSI: {
-        border: '1px solid white',
-        borderRadius: '5px',
-        height: '26px',
-        margin:'auto',
-        width: '60px',
-        position: 'fixed',
-        right:'40%'
-
-    },
-    ButtonCR: {
-     
-        border: '1px solid white',
-        borderRadius: '5px',
-        width: '100%',
-        height: '50px',
-        color: 'white',
-        position: 'absolute',
-        bottom: '0%',
-        backgroundColor: '#20C53C',
-      
-    },
-    // PositionI:{
-    //     position: 'absolute',
-    //     right:'10',
-    // },
-    centerr: {
-        margin: 'auto',
-        width: '50%',
-    },
     centerrII: {
         margin: 'auto',
         width: '60%',
         color: 'white',
+        
     },
     centerrI: {
         margin: 'auto',
@@ -50,16 +23,16 @@ const bts = theme => ({
         color: 'white',
         backgroundColor: 'white'
     },
-    BGcolor: {
-        backgroundColor: '#4A83D9',
+    marginI: { marginBottom: '100%' },
+    floatI: {
+        float: 'left',
+        marginRight: '50%',
+        marginTop: '%'
     },
-    // PadingI:{
-    //     position: 'fixed',
-    //     right:'60%',
+    PositionII: {
+        marginRight: '50'
 
-    // }
-    // floatI: { float: 'left' },
-    // floatII:{float:'right'}
+    },
 })
 
 class FaceI extends React.Component {
@@ -76,26 +49,27 @@ class FaceI extends React.Component {
         return (
             <React.Fragment>
 
-                <div className={this.props.classes.BGcolor}>
-                    <header className={this.props.classes.centerr} >
-                        <br></br>
-                        <input className={this.props.classes.borderS} placeholder="ค้นหา"></input>
-                        <br></br>
-                        <br></br>
-                        <input className={this.props.classes.borderS} placeholder="เป้าหมาย" ></input>
-                    </header>
-                    <br></br>
+                <BG>
+
+                    <HeadTop>
+                        <InputSeardMap placeholder="ค้นหา"></InputSeardMap>
+                        <InputSeardMap placeholder="ปลายทาง"></InputSeardMap>
+                    </HeadTop>                    <br></br>
                     <hr className={this.props.classes.centerrI}></hr>
                     <br></br>
-                    <br></br>
                     <h3 className={this.props.classes.centerrII}>เวลาที่คาดว่าจะเดินทาง</h3>
-                    <p >เริ่มต้น</p>
-                    <input className={this.props.classes.borderSI} placeholder="15.00 น"></input>
-                    <p >สิ้นสุด</p>
-                    <input className={this.props.classes.borderSI} placeholder="17.00 น"></input>
                     <br></br>
-                    <button className={this.props.classes.ButtonCR} >ร่วมแชร์</button>
-                </div>
+                    <InputTime type="number" placeholder="15.00 น" text="เริ่มต้น"></InputTime>
+                    <InputTime type="number" placeholder="17.00 น" text="สิ้นสุด"></InputTime>
+                   
+                    {/* <button  ></button> */}
+                    <CheckFrom>
+                        <CheckNum type="radio" name="sex" value="1" text="คน" textII="ต้องการเพื่อนร่วมแชร์อีก" />
+                        <CheckNum type="radio" name="sex" value="2" text="คน" />
+
+                    </CheckFrom>
+                                <ShareBTN text="ร่วมแชร์"></ShareBTN>
+                                    </BG>
 
 
             </React.Fragment>
