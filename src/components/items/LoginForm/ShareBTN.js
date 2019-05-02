@@ -6,12 +6,12 @@ const styles = theme => ({
         border: '1px solid #20C53C',
         borderRadius: '5px',
         width: '100%',
-        height: '50px',
+        height: '53px',
         color: 'white',
         position: 'absolute',
-        bottom: '7%',
+        bottom: '9%',
         backgroundColor: '#20C53C',
-        width: ' 70%',
+        width:' 70%',
         marginLeft: '15%'
     },
 

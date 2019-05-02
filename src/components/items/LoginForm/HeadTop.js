@@ -6,6 +6,7 @@ const bts = theme => ({
     centerr: {
         margin: 'auto',
         width: '50%',
+        marginTop:'-6%'
     },
 })
 

@@ -7,22 +7,12 @@ import InputSeardMap from './LoginForm/InputSeardMap';
 import HeadTop from './LoginForm/HeadTop'
 import CheckFrom from './LoginForm/CheckFrom'
 import ShareBTN from './LoginForm/ShareBTN'
+import HeadText from './LoginForm/HeadText';
+import IconBack from './LoginForm/IconBack';
 // import color from '@material-ui/core/colors/deepOrange';
 
 const bts = theme => ({
-    centerrII: {
-        margin: 'auto',
-        width: '60%',
-        color: 'white',
-        
-    },
-    centerrI: {
-        margin: 'auto',
-        width: '95%',
-        height: '1px',
-        color: 'white',
-        backgroundColor: 'white'
-    },
+
     marginI: { marginBottom: '100%' },
     floatI: {
         float: 'left',
@@ -50,26 +40,25 @@ class FaceI extends React.Component {
             <React.Fragment>
 
                 <BG>
-
+                    <IconBack></IconBack>
                     <HeadTop>
                         <InputSeardMap placeholder="ค้นหา"></InputSeardMap>
                         <InputSeardMap placeholder="ปลายทาง"></InputSeardMap>
-                    </HeadTop>                    <br></br>
-                    <hr className={this.props.classes.centerrI}></hr>
-                    <br></br>
-                    <h3 className={this.props.classes.centerrII}>เวลาที่คาดว่าจะเดินทาง</h3>
-                    <br></br>
+                    </HeadTop>
+                    <HeadText text="เวลาที่คาดว่าจะเดินทาง"></HeadText>
                     <InputTime type="number" placeholder="15.00 น" text="เริ่มต้น"></InputTime>
+                    {/* <br></br>
+                    <br></br>
+                    <br></br> */}
                     <InputTime type="number" placeholder="17.00 น" text="สิ้นสุด"></InputTime>
-                   
                     {/* <button  ></button> */}
                     <CheckFrom>
                         <CheckNum type="radio" name="sex" value="1" text="คน" textII="ต้องการเพื่อนร่วมแชร์อีก" />
                         <CheckNum type="radio" name="sex" value="2" text="คน" />
 
                     </CheckFrom>
-                                <ShareBTN text="ร่วมแชร์"></ShareBTN>
-                                    </BG>
+                    <ShareBTN text="ร่วมแชร์"></ShareBTN>
+                </BG>
 
 
             </React.Fragment>

@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 const bts = theme => ({
     BGcolor: {
         backgroundColor: '#4A83D9',
-        overflowX: "hidden",
-        overflowY: "hidden",
+        overflowX: "auto",
+        overflowY: "auto",
         height: " -webkit-fill-available",
     },
 })

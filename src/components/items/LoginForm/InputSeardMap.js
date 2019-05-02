@@ -4,9 +4,13 @@ import { withStyles } from '@material-ui/core/styles'
 const bts = theme => ({
     borderS: {
         border: '1px solid white',
-        borderRadius: '10px',
-        height: '18px',
-        margin: "10px"
+        borderRadius: '14px',
+        height: '23px',
+        marginTop: '10%',
+        marginLeft:'-20%',
+        width: '140%'
+
+
     },
 })
 

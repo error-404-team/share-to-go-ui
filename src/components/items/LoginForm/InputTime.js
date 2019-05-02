@@ -1,22 +1,24 @@
 
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+// import color from '@material-ui/core/colors/green';
 
 const bts = theme => ({
     fontCenten: {
-        display: "flex",
+        // display: "flex",
         marginLeft: "27%",
-        marginTop: "7px",
-        marginBottom: "7px"
+        // marginTop: "7px",
+        marginBottom: "10%",
+        color:"white",
     },
     borderSI: {
         border: '1px solid white',
         borderRadius: '5px',
-        height: '26px',
+        height: '35px',
         margin: 'auto',
-        width: '60px',
+        width: '90px',
         position: 'absolute',
-        right: '40%',
+        right: '30%',
 
     },
 })
