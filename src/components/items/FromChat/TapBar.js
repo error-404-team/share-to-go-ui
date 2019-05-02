@@ -13,6 +13,8 @@ import InputSeardMap from '../LoginForm/InputSeardMap';
 import IconBack from '../LoginForm/IconBack'
 // import color from '@material-ui/core/colors/red';
 import FromChatAll from './FromChatAll';
+// import Font from '../Font'
+import HeadText from '../LoginForm/HeadText'
 function TabContainer(props) {
   const { children, dir } = props;
 
@@ -46,18 +48,18 @@ const styles = theme => ({
   //   margin: 'auto',
   //   width: '90%',
   // }
-// ,
-  marginSize:{
+  // ,
+  marginSize: {
     marginTop: '5%',
-    color:'rgba(255, 255, 255, 0.87)'
+    color: 'rgba(255, 255, 255, 0.87)'
   }
 
 });
 
 const theme2 = createMuiTheme({
   palette: {
-    primary: { main: '#ffffff'},  
-    },
+    primary: { main: '#ffffff' },
+  },
 });
 
 
@@ -83,6 +85,7 @@ class TapBar extends React.Component {
     };
     return (
       <Bg>
+
         <div className={classes.root}>
           <IconBack></IconBack>
           <HeadTop>
@@ -90,30 +93,36 @@ class TapBar extends React.Component {
             <InputSeardMap placeholder="ปลายทาง"></InputSeardMap>
           </HeadTop>
           <AppBar position="static" className={this.props.classes.marginSize} >
-          <MuiThemeProvider theme={theme2} >
+            <MuiThemeProvider theme={theme2} >
               <Tabs
                 value={this.state.value}
                 onChange={this.handleChange}
                 indicatorColor="primary"
                 textColor="primary"
                 variant="fullWidth">
-                <Tab label="หาเพื่อนร่วมทาง"/>
+                <Tab label="หาเพื่อนร่วมทาง" />
                 <Tab label="เรียกรถ" />
               </Tabs>
-                </MuiThemeProvider>
+            </MuiThemeProvider>
 
           </AppBar>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
             onChangeIndex={this.handleChangeIndex}>
-            <TabContainer dir={theme.direction}><FromChatAll></FromChatAll><div className={this.props.classes.PosiTionII}>
-              <br></br>
-            </div>
+            <TabContainer dir={theme.direction}><FromChatAll></FromChatAll>
+              <div className={this.props.classes.PosiTionII}>
+                <br></br>
+              </div>
             </TabContainer>
-            <TabContainer dir={theme.direction}>ฟหกดเ้่่</TabContainer>
+            <TabContainer dir={theme.direction}>
+            <HeadText text="เรียก Grab Taxi"></HeadText>
+            <HeadText text="เรียก Texi"></HeadText>
+            <HeadText></HeadText>
+            </TabContainer>
           </SwipeableViews>
         </div>
+
       </Bg>
     );
   }

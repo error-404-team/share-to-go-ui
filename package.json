@@ -24,7 +24,8 @@
     "react-chat-widget": "^2.1.4-1",
     "react-dom": "^16.8.6",
     "react-google-map-apis": "^0.1.2",
-    "react-swipeable-views": "^0.13.1"
+    "react-swipeable-views": "^0.13.1",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "react-scripts": "^2.1.8"
