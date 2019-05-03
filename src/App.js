@@ -21,7 +21,7 @@ class App extends React.Component {
         signInOptions: [
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            // firebase.auth.EmailAuthProvider.PROVIDER_ID,
             firebase.auth.PhoneAuthProvider.PROVIDER_ID
         ],
         callbacks: {
@@ -39,7 +39,9 @@ class App extends React.Component {
     componentDidMount() {
 
         firebaseApp.auth().onAuthStateChanged((user) => {
-            this.setState({ isSignedIn: !!user });
+            this.setState({ isSignedIn: user });
+            console.log(user);
+
         });
     }
 
@@ -53,25 +55,27 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                {this.state.isSignedIn !== undefined && !this.state.isSignedIn &&
-                    <div>
-                        <BackgrourdFromSingInAndUp >
-                            
-                        </BackgrourdFromSingInAndUp>
-                        <AppBarBottom>
-                            <FirebaseAuth uiConfig={this.uiConfig}
-                                firebaseAuth={firebaseApp.auth()} />
+                {this.state.isSignedIn ? (
+                    <React.Fragment>
+                        {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
+                        <button onClick={() => firebaseApp.auth().signOut()}>Sign-out</button>
+                    </React.Fragment>
+                )
+                    : (
+                        <React.Fragment>
+                            <BackgrourdFromSingInAndUp >
 
-                            {/* <Facebook /> */}
-                        </AppBarBottom>
-                    </div>
+                            </BackgrourdFromSingInAndUp>
+                            <AppBarBottom>
+                                <FirebaseAuth uiConfig={this.uiConfig}
+                                    firebaseAuth={firebaseApp.auth()} />
+
+                                {/* <Facebook /> */}
+                            </AppBarBottom>
+                        </React.Fragment>
+                    )
                 }
-                {this.state.isSignedIn &&
-                    <div >
-                        Hello {firebaseApp.auth().currentUser.displayName}. You are now signed In!
-            <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
-                    </div>
-                }
+
                 {/* <RoutePages /> */}
             </Router>
         )
