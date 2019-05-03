@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { BrowserRouter as Router } from "react-router-dom";
 // Firebase.
-// import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
 // firebase ui
 import FirebaseAuth from './components/SignInAndUp/FirebaseAuth'
