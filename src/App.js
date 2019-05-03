@@ -1,10 +1,4 @@
 import React from 'react'
-import './App.css'
-import FromChat from './components/FromChat'
-// import FaceI from './components/items/FaceI'
-import { withStyles } from '@material-ui/core/styles'
-// import AppI from './components/items/FromChat/AppI'
-
 import { BrowserRouter as Router } from "react-router-dom";
 // Firebase.
 import * as firebase from 'firebase';
@@ -12,37 +6,32 @@ import * as firebase from 'firebase';
 // firebase ui
 import FirebaseAuth from './components/SignInAndUp/FirebaseAuth'
 import AppBarBottom from './components/SignInAndUp/AppBarBottom'
-import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSingInAndUp'
 
 // firebase app connect
 import firebaseApp from './Firbase/firebaseApp'
 
-const stylesI = theme => ({
-    BGcolor: {
-        backgroundColor: '#6999E2',
-    }
-});
+import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSingInAndUp'
+
+
+
 class App extends React.Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            isSignedIn: undefined,
-        }
+    uiConfig = {
+        signInFlow: 'popup',
+        signInOptions: [
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        ],
+        callbacks: {
+            signInSuccessWithAuthResult: () => false,
+        },
+    };
 
-        this.uiConfig = {
-            signInFlow: 'popup',
-            signInOptions: [
-                firebaseApp.auth.FacebookAuthProvider.PROVIDER_ID,
-                firebaseApp.auth.GoogleAuthProvider.PROVIDER_ID,
-                firebaseApp.auth.EmailAuthProvider.PROVIDER_ID,
-                firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID
-            ],
-            callbacks: {
-                signInSuccessWithAuthResult: () => false,
-            },
-        };
-    }
+    state = {
+        isSignedIn: undefined,
+    };
 
     /**
      * @inheritDoc
@@ -50,7 +39,7 @@ class App extends React.Component {
     componentDidMount() {
 
         firebaseApp.auth().onAuthStateChanged((user) => {
-            this.setState({ isSignedIn: user });
+            this.setState({ isSignedIn: !!user });
         });
     }
 
@@ -61,19 +50,13 @@ class App extends React.Component {
         this.unregisterAuthObserver();
     }
 
-    componentDidMount() {
-
-    }
     render() {
-
-
         return (
-
             <Router>
                 {this.state.isSignedIn !== undefined && !this.state.isSignedIn &&
                     <div>
                         <BackgrourdFromSingInAndUp >
-
+                            
                         </BackgrourdFromSingInAndUp>
                         <AppBarBottom>
                             <FirebaseAuth uiConfig={this.uiConfig}
@@ -85,20 +68,14 @@ class App extends React.Component {
                 }
                 {this.state.isSignedIn &&
                     <div >
-                        {/* <AppI></AppI> */}
-                        {/* <FaceI/>   */}
-                        <FromChat/>
-
                         Hello {firebaseApp.auth().currentUser.displayName}. You are now signed In!
-        <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
-                        {/* <RoutePages /> */}
+            <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
                     </div>
                 }
-
+                {/* <RoutePages /> */}
             </Router>
-
         )
     }
 }
 
-export default withStyles(stylesI)(App)
+export default App;
