@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import InputChat from './InputChat'
 import ListChat from './ListChat'
-import firebase from 'firebase'
-import { Config } from './Config'
-firebase.initializeApp(Config)
+import firebaseApp from '../../Firbase/firebaseApp'
+
 
 class ChatFrom extends Component {
   
@@ -12,7 +11,7 @@ class ChatFrom extends Component {
   constructor(props) {
     super(props)
     var that  = this;
-    firebase.database().ref('message/').on('value', function(snapshot) {
+    firebaseApp.database().ref('message/').on('value', function(snapshot) {
       if(snapshot.val() != null) { 
          that.setState({
           listMsg:snapshot.val()
@@ -26,7 +25,7 @@ class ChatFrom extends Component {
       key: Math.random().toString().replace('.',''),
       message: msg
      })
-    firebase.database().ref('message/').set(listMsgData);
+    firebaseApp.database().ref('message/').set(listMsgData);
   }
 
   render() {

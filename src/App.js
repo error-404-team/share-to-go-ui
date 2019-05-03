@@ -1,13 +1,13 @@
 import React from 'react'
 import './App.css'
-import TapBar from './components/items/FromChat/TapBar'
+import FromChat from './components/FromChat'
 // import FaceI from './components/items/FaceI'
 import { withStyles } from '@material-ui/core/styles'
 // import AppI from './components/items/FromChat/AppI'
 
 import { BrowserRouter as Router } from "react-router-dom";
 // Firebase.
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
 // firebase ui
 import FirebaseAuth from './components/SignInAndUp/FirebaseAuth'
@@ -33,20 +33,16 @@ class App extends React.Component {
         this.uiConfig = {
             signInFlow: 'popup',
             signInOptions: [
-                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                firebase.auth.PhoneAuthProvider.PROVIDER_ID
+                firebaseApp.auth.FacebookAuthProvider.PROVIDER_ID,
+                firebaseApp.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebaseApp.auth.EmailAuthProvider.PROVIDER_ID,
+                firebaseApp.auth.PhoneAuthProvider.PROVIDER_ID
             ],
             callbacks: {
                 signInSuccessWithAuthResult: () => false,
             },
         };
     }
-
-
-
-
 
     /**
      * @inheritDoc
@@ -61,9 +57,9 @@ class App extends React.Component {
     /**
      * @inheritDoc
      */
-    // componentWillUnmount() {
-    //     this.unregisterAuthObserver();
-    // }
+    componentWillUnmount() {
+        this.unregisterAuthObserver();
+    }
 
     componentDidMount() {
 
@@ -91,7 +87,7 @@ class App extends React.Component {
                     <div >
                         {/* <AppI></AppI> */}
                         {/* <FaceI/>   */}
-                        <TapBar></TapBar>
+                        <FromChat/>
 
                         Hello {firebaseApp.auth().currentUser.displayName}. You are now signed In!
         <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>

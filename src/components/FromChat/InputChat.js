@@ -1,5 +1,5 @@
 import React from 'react'
-class Chatinput extends React.Component {
+class InputChat extends React.Component {
 
     state = {
         msg: ""
@@ -30,4 +30,4 @@ class Chatinput extends React.Component {
     }
 }
 
-export default Chatinput
+export default InputChat
