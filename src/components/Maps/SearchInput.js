@@ -26,7 +26,7 @@ const styles = {
 
     },
     input: {
-        marginLeft: 12,
+        marginLeft: 0,
         flex: 1,
     },
     iconButton: {
@@ -104,7 +104,10 @@ export class CustomizedInputBase extends React.Component {
                     <AppBar elevation={0} position="static" color="primary">
                         <Toolbar>
                             <MuiThemeProvider theme={searchTheme}>
-                                <Paper className={classes.inputRoot} elevation={1} style={{ borderRadius: 30 }}>
+                                <Paper className={classes.inputRoot} elevation={1} style={{ borderRadius: 30 ,height: "40px"}}>
+                                    <IconButton className={classes.iconButton} aria-label="Menu">
+                                        <MenuIcon />
+                                    </IconButton>
                                     <InputBase className={classes.input} placeholder="Search Google Maps" />
                                     <IconButton className={classes.iconButton} aria-label="Search">
                                         <SearchIcon />

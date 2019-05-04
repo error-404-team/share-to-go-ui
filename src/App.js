@@ -12,6 +12,7 @@ import firebaseApp from './Firbase/firebaseApp'
 
 import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSingInAndUp'
 
+import Maps from './components/Maps'
 
 
 
@@ -64,8 +65,9 @@ class App extends React.Component {
             <React.Fragment>
                 {this.state.isSignedIn ? (
                     <Router>
+                        <Maps/>
                         {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
-                        <button onClick={() => firebaseApp.auth().signOut()}>Sign-out</button>
+                        {/* <button onClick={() => firebaseApp.auth().signOut()}>Sign-out</button> */}
                         {/* <RoutePages /> */}
                     </Router>
                 )
