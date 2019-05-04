@@ -1,5 +1,9 @@
 import React from 'react';
 
+// Get Apis Google Maps
+{/* <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+type="text/javascript"></script> */}
+
 function loadScript(url) {
     var index = window.document.getElementsByTagName("script")[0]
     var script = window.document.createElement("script")
