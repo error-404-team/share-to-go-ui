@@ -14,10 +14,11 @@ import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSi
 
 
 
+
 class App extends React.Component {
 
     uiConfig = {
-        signInFlow: 'popup',
+        // signInFlow: 'popup',
         signInOptions: [
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -31,6 +32,8 @@ class App extends React.Component {
 
     state = {
         isSignedIn: undefined,
+        dataSignIn: null,
+        loading: true
     };
 
     /**
@@ -39,8 +42,12 @@ class App extends React.Component {
     componentDidMount() {
 
         firebaseApp.auth().onAuthStateChanged((user) => {
-            this.setState({ isSignedIn: user });
-            console.log(user);
+            this.setState({
+                isSignedIn: !!user,
+                dataSignIn: user,
+                loading: false
+            });
+            // console.log(user);
 
         });
     }
@@ -54,30 +61,33 @@ class App extends React.Component {
 
     render() {
         return (
-            <Router>
+            <React.Fragment>
                 {this.state.isSignedIn ? (
-                    <React.Fragment>
+                    <Router>
                         {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
                         <button onClick={() => firebaseApp.auth().signOut()}>Sign-out</button>
-                    </React.Fragment>
+                        {/* <RoutePages /> */}
+                    </Router>
                 )
                     : (
-                        <React.Fragment>
-                            <BackgrourdFromSingInAndUp >
+                        this.state.loading
+                            ? (<h1>loading</h1>)
+                            : (<React.Fragment>
+                                <BackgrourdFromSingInAndUp >
 
-                            </BackgrourdFromSingInAndUp>
-                            <AppBarBottom>
-                                <FirebaseAuth uiConfig={this.uiConfig}
-                                    firebaseAuth={firebaseApp.auth()} />
+                                </BackgrourdFromSingInAndUp>
+                                <AppBarBottom>
+                                    <FirebaseAuth uiConfig={this.uiConfig}
+                                        firebaseAuth={firebaseApp.auth()} />
 
-                                {/* <Facebook /> */}
-                            </AppBarBottom>
-                        </React.Fragment>
+                                    {/* <Facebook /> */}
+                                </AppBarBottom>
+                            </React.Fragment>)
                     )
                 }
 
-                {/* <RoutePages /> */}
-            </Router>
+
+            </React.Fragment>
         )
     }
 }
