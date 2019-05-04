@@ -13,3 +13,10 @@ function connectMapApi(YOUR_API_KEY, initMap) {
 
 
 module.exports = connectMapApi;
+
+
+// วิธีใช้ 
+// improt connectMapApi from 'connectMapApi'
+// var YOUR_API_KEY = 'dfg-fg-dfgl-dkl'
+// function initMap () {....}
+// connectMapApi(YOUR_API_KEY, initMap)

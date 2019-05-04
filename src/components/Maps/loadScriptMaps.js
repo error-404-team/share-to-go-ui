@@ -14,3 +14,8 @@ function loadScript(url) {
 }
 
 module.exports = loadScript;
+
+
+// วิธีใช้ 
+// import loadScript from 'loadScript'
+// loadScript('https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap')
