@@ -30,7 +30,7 @@ state = {
         center: {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        }
+        },
       })
     })
   }
@@ -46,13 +46,13 @@ state = {
 
 
   initMap = () => {
-
     // Create A Map
     var map = new window.google.maps.Map(document.getElementById('map'), {
       center: this.state.center,
       zoom: 8,
       disableDefaultUI: true
     })
+
 
   }
 
