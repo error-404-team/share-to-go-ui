@@ -13,7 +13,7 @@ function loadScript(url) {
     index.parentNode.insertBefore(script, index)
 }
 
-module.exports = loadScript;
+export default loadScript;
 
 
 // วิธีใช้ 

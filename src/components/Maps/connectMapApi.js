@@ -12,7 +12,7 @@ function connectMapApi(YOUR_API_KEY, initMap) {
 }
 
 
-module.exports = connectMapApi;
+export default connectMapApi;
 
 
 // วิธีใช้ 
