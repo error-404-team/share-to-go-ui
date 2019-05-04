@@ -3,6 +3,7 @@ import SearchInput from './SearchInput'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import connectMapApi from './connectMapApi'
+import CenterMapBtn from './CenterMapBtn'
 
 
 const styles = {
@@ -13,20 +14,46 @@ const styles = {
 
 export class Maps extends React.Component {
 
+state = {
+  center: {
+    lat: null,
+    lng: null
+  },
+}
+
   componentDidMount() {
     const YOUR_API_KEY = "AIzaSyC0sxMyj3-daWXmS8fwrAJrNpUuq9L19fI"
     connectMapApi(YOUR_API_KEY, this.initMap)
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      })
+    })
   }
+
+
+  centerMap = () => {
+    var map = new window.google.maps.Map(document.getElementById('map'), {
+      center: this.state.center,
+      zoom: 12,
+      disableDefaultUI: true
+    }).setCenter(this.state.center);
+  };
 
 
   initMap = () => {
 
     // Create A Map
     var map = new window.google.maps.Map(document.getElementById('map'), {
-      center: { lat: -34.397, lng: 150.644 },
+      center: this.state.center,
       zoom: 8,
       disableDefaultUI: true
     })
+
   }
 
   render() {
@@ -39,6 +66,7 @@ export class Maps extends React.Component {
       <div className={this.props.classes.root}>
         <div style={{ width: fullWidth, height:fullHeight, position:"absolute" }} id="map" />
         <SearchInput />
+        <CenterMapBtn onClick={this.centerMap} />
       </div>
     )
   }
