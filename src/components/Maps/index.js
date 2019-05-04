@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchInput from './SearchInput'
+import InputSearch from './SearchMaps/InputSearch'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import connectMapApi from './connectMapApi'
@@ -15,7 +15,7 @@ const styles = {
 export class Maps extends React.Component {
 
 state = {
-  center: {
+  position: {
     lat: null,
     lng: null
   },
@@ -27,7 +27,7 @@ state = {
 
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
-        center: {
+        position: {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         },
@@ -36,19 +36,19 @@ state = {
   }
 
 
-  centerMap = () => {
+  centerControl = () => {
     var map = new window.google.maps.Map(document.getElementById('map'), {
-      center: this.state.center,
+      center: this.state.position,
       zoom: 12,
       disableDefaultUI: true
-    }).setCenter(this.state.center);
+    }).setCenter(this.state.position);
   };
 
 
   initMap = () => {
     // Create A Map
     var map = new window.google.maps.Map(document.getElementById('map'), {
-      center: this.state.center,
+      center: this.state.position,
       zoom: 8,
       disableDefaultUI: true
     })
@@ -65,8 +65,8 @@ state = {
     return (
       <div className={this.props.classes.root}>
         <div style={{ width: fullWidth, height:fullHeight, position:"absolute" }} id="map" />
-        <SearchInput />
-        <CenterMapBtn onClick={this.centerMap} />
+        <InputSearch mapCenter={this.state.position} />
+        <CenterMapBtn onClick={this.centerControl} />
       </div>
     )
   }

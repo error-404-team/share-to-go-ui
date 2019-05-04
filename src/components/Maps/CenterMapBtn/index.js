@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
-import getElementType from '../../lib/getElementType'
-import getUnhandledProps from '../../lib/getUnhandledProps'
-import Ref, { useKeyOnly } from '../../lib/Ref'
+import getElementType from './lib/getElementType'
+import getUnhandledProps from './lib/getUnhandledProps'
+import Ref, { useKeyOnly } from './lib/Ref'
 
 const styles = theme => ({
   fab: {
