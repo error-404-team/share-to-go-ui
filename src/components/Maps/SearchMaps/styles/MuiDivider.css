@@ -1,0 +1,27 @@
+.MuiDivider-root-109 {
+    height: 65%;
+    margin: 0;
+    border: none;
+    flex-shrink: 0;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.MuiDivider-absolute-110 {
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+}
+
+.MuiDivider-inset-111 {
+    margin-left: 72px;
+}
+
+.MuiDivider-light-112 {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.MuiDivider-middle-113 {
+    margin-left: 16px;
+    margin-right: 16px;
+}

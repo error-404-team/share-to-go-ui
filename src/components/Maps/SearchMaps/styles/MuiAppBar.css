@@ -1,0 +1,52 @@
+.MuiAppBar-root-7 {
+    width: 100%;
+    display: flex;
+    z-index: 1100;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    flex-direction: column;
+}
+
+.MuiAppBar-positionFixed-8 {
+    top: 0;
+    left: auto;
+    right: 0;
+    position: fixed;
+}
+
+.MuiAppBar-positionAbsolute-9 {
+    top: 0;
+    left: auto;
+    right: 0;
+    position: absolute;
+}
+
+.MuiAppBar-positionSticky-10 {
+    top: 0;
+    left: auto;
+    right: 0;
+    position: sticky;
+}
+
+.MuiAppBar-positionStatic-11 {
+    position: static;
+}
+
+.MuiAppBar-positionRelative-12 {
+    position: relative;
+}
+
+.MuiAppBar-colorDefault-13 {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #f5f5f5;
+}
+
+.MuiAppBar-colorPrimary-14 {
+    color: #fff;
+    background-color: rgb(0, 0, 0, 0);
+}
+
+.MuiAppBar-colorSecondary-15 {
+    color: #ffcc00;
+    background-color: #0044ff;
+}
