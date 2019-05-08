@@ -1,4 +1,5 @@
 import React from 'react'
+import {openNav} from '../../SidenavPushMenu'
 import './styles/InputSearch.css'
 import './styles/MuiToolbar.css'
 import './styles/MuiPaper.css'
@@ -91,6 +92,7 @@ function searchMap(el, map, position) {
     //set style
     this.button.style.borderRadius = '30px';
     this.button.style.height = '40px';
+    this.button.style.marginLeft = "7px";
 
     // all tag div
     this.div_II.appendChild(this.button)
@@ -108,6 +110,10 @@ function searchMap(el, map, position) {
 
     // all tag i
     this.button.appendChild(this.i)
+
+    this.button.addEventListener('click', function() {
+      openNav()
+    })
 
     //  --------------------------------
 
@@ -152,6 +158,7 @@ function searchMap(el, map, position) {
 
     // all tag div
     this.div_III.appendChild(this.input)
+
 
     // --------------------------------
 
@@ -198,7 +205,7 @@ function searchMap(el, map, position) {
         if (place.geometry.viewport) {
           map.fitBounds(place.geometry.viewport);
         } else {
-          map.setCenter(place.geometry.location);
+          // map.setCenter(place.geometry.location);
           map.setZoom(17);  // Why 17? Because it looks good.
         }
         marker.setPosition(place.geometry.location);
@@ -265,6 +272,9 @@ function searchMap(el, map, position) {
     this.buttonAriaLabel_II = document.createAttribute('aria-label')
     this.buttonAriaLabel_II.value = 'Directions'
     this.button_II.setAttributeNode(this.buttonAriaLabel_II)
+
+    // set style
+    this.button_II.style.marginRight = '7px';
 
     var directionsService = new window.google.maps.DirectionsService;
     var directionsDisplay = new window.google.maps.DirectionsRenderer;

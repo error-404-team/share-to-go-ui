@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import connectMapApiInitMap from './lib/connectMapApiInitMap'
 import connectMapApiInitAutocomplete from './lib/connectMapApiInitAutocomplete'
+import loadScriptMaps from './lib/loadScriptMaps'
 import mapCenterBtn from './CenterMapBtn'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
+
+import SidenavPushMenu from '../SidenavPushMenu'
 
 
 const styles = {
@@ -23,8 +26,8 @@ export class Maps extends React.Component {
     this.state = {
       ...props,
       position: {
-        lat: null,
-        lng: null
+        lat: 14.0314178,
+        lng: 100.7357461
       },
     }
 
@@ -37,8 +40,6 @@ export class Maps extends React.Component {
     // add key
     const YOUR_API_KEY = "AIzaSyC0sxMyj3-daWXmS8fwrAJrNpUuq9L19fI"
     connectMapApiInitMap(YOUR_API_KEY, this.initMap)
-    // connectMapApiInitAutocomplete(YOUR_API_KEY, this.initAutocomplete)
-
     // push locatin to state
     this._gapi = window.google;
     navigator.geolocation.getCurrentPosition((position) => {
@@ -54,6 +55,7 @@ export class Maps extends React.Component {
 
   // initMap
   initMap = () => {
+
     // Create A Map
     this.map = new window.google.maps.Map(document.getElementById('map'), {
       center: this.state.position,
@@ -87,7 +89,7 @@ export class Maps extends React.Component {
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(this.searchMapsDiv);
-   
+
 
     // -----------------------------------------------------
 
@@ -137,10 +139,12 @@ export class Maps extends React.Component {
     return (
       <div className={this.props.classes.root}>
         <Map id="map" google={this.state.google}>
-          <div id="content"></div>
+          {/* <div id="content"></div> */}
         </Map>
         {/* <InputSearch /> */}
-
+        <SidenavPushMenu store={this.props.store}>
+          {this.props.children}
+        </SidenavPushMenu>
       </div>
     )
   }

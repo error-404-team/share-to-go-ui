@@ -6,11 +6,13 @@ import loadScriptMaps from './loadScriptMaps'
 // and create maps by initMap
 
 function connectMapApiInitMap(YOUR_API_KEY, initMap) {
+    
     // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&callback=initMap`)
     loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=places&callback=initMap`)
-    // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=geometry`)
-    // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=drawing`)
-    // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=initPano`)
+        // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=places`)
+    // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=geometry&callback=initMap`)
+    // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=drawing&callback=initMap`)
+    // loadScriptMaps(`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=initPano&callback=initMap`)
 
     window.initMap = initMap;
 }
