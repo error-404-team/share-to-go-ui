@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,8 +21,23 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "clsx": "^1.0.4",
+    "downshift": "^3.2.10",
+    "firebase": "^5.11.1",
+    "firebaseui": "^3.6.0",
+    "lodash": "^4.17.11",
     "react": "^16.8.6",
+<<<<<<< HEAD
     "react-swipeable-views": "^0.13.1"
+=======
+    "react-chat-widget": "^2.1.4-1",
+    "react-dom": "^16.8.6",
+    "react-google-map-apis": "^0.1.2",
+    "react-router-dom": "^5.0.0",
+    "react-swipeable-views": "^0.13.1",
+    "warning": "^4.0.3",
+    "webfontloader": "^1.6.28"
+>>>>>>> a8717e877e1fe3445ba33edad64d104874a25ef6
   },
   "devDependencies": {
     "react-scripts": "^2.1.8"

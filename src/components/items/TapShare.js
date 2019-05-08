@@ -37,8 +37,8 @@ class TapShare extends React.Component {
                         <EditTextSearh placeholder="ปลายทาง"></EditTextSearh>
                     </TapSearch>
                     <HeadText text="เวลาที่คาดว่าจะเดินทาง"></HeadText>
-                    <InputTime type="time" placeholder="15.00 น" text="เริ่มต้น"></InputTime>
-                    <InputTime type="time" placeholder="17.00 น" text="สิ้นสุด"></InputTime>
+                    <InputTime type="time " placeholder="15.00 น" text="เริ่มต้น"></InputTime>
+                    <InputTime type="time " placeholder="17.00 น" text="สิ้นสุด"></InputTime>
                     <SelectCheck>
                         <CheckNum type="radio" name="sex" value="1" text="คน" textII="ต้องการเพื่อนร่วมแชร์อีก" />
                         <CheckNum type="radio" name="sex" value="2" text="คน" />

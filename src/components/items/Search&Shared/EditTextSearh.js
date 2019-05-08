@@ -1,8 +1,8 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
-const bts = theme => ({
-    borderS: {
+const styletwo = theme => ({
+    search: {
         border: '1px solid white',
         borderRadius: '14px',
         height: '23px',
@@ -18,8 +18,8 @@ class EditTextSearh extends React.Component {
 
     render() {
         return (
-            <input className={this.props.classes.borderS} placeholder={this.props.placeholder}></input>
+            <input className={this.props.classes.search} placeholder={this.props.placeholder}></input>
         )
     }
 }
-export default withStyles(bts)(EditTextSearh)
+export default withStyles(styletwo)(EditTextSearh)

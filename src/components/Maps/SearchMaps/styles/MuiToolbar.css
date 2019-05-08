@@ -1,0 +1,32 @@
+
+.MuiToolbar-root-43 {
+    /* display: flex; */
+    position: relative;
+    align-items: center;
+  }
+  .MuiToolbar-gutters-44 {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  @media (min-width:600px) {
+    .MuiToolbar-gutters-44 {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+  .MuiToolbar-regular-45 {
+    min-height: 56px;
+  }
+  @media (min-width:0px) and (orientation: landscape) {
+    .MuiToolbar-regular-45 {
+      min-height: 48px;
+    }
+  }
+  @media (min-width:600px) {
+    .MuiToolbar-regular-45 {
+      min-height: 64px;
+    }
+  }
+  .MuiToolbar-dense-46 {
+    min-height: 48px;
+  }

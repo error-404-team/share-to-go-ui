@@ -29,17 +29,13 @@ const bts = theme => ({
     positiontwo:{marginLeft:'44%',
                 marginTop:'2%',
                 color: 'rgb(146, 146, 146)',
-
-
     },
 }
 )
-
 class RequestCar extends React.Component {
 
     render() {
         return (
-            
                 <React.Fragment>
             <div className={this.props.classes.divposition}>
                     <h3 className={this.props.classes.positionsize}>{this.props.text}</h3>

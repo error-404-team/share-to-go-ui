@@ -1,0 +1,127 @@
+.MuiInputBase-root-92 {
+    color: rgba(0, 0, 0, 0.87);
+    cursor: text;
+    display: inline-flex;
+    font-size: 1.5rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    line-height: 1.1875em;
+    align-items: center;
+    margin-left: 3px;
+}
+
+.MuiInputBase-root-92.MuiInputBase-disabled-95 {
+    color: rgba(0, 0, 0, 0.38);
+    cursor: default;
+}
+
+.MuiInputBase-multiline-100 {
+    padding: 6px 0 7px;
+}
+
+.MuiInputBase-fullWidth-101 {
+    width: 100%;
+}
+
+.MuiInputBase-input-102 {
+    font: inherit;
+    color: gray;
+    width: 100%;
+    border: 0;
+    margin: 0;
+    padding: 3px 0 3px;
+    display: block;
+    min-width: 0;
+    box-sizing: content-box;
+    background: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.MuiInputBase-input-102::-webkit-input-placeholder {
+    color: currentColor;
+    opacity: 0.42;
+    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.MuiInputBase-input-102::-moz-placeholder {
+    color: currentColor;
+    opacity: 0.42;
+    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.MuiInputBase-input-102:-ms-input-placeholder {
+    color: currentColor;
+    opacity: 0.42;
+    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.MuiInputBase-input-102::-ms-input-placeholder {
+    color: currentColor;
+    opacity: 0.42;
+    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.MuiInputBase-input-102:focus {
+    outline: 0;
+}
+
+.MuiInputBase-input-102:invalid {
+    box-shadow: none;
+}
+
+.MuiInputBase-input-102::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+.MuiInputBase-input-102.MuiInputBase-disabled-95 {
+    opacity: 1;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102::-webkit-input-placeholder {
+    opacity: 0;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102::-moz-placeholder {
+    opacity: 0;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102:-ms-input-placeholder {
+    opacity: 0;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102::-ms-input-placeholder {
+    opacity: 0;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102:focus::-webkit-input-placeholder {
+    opacity: 0.42;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102:focus::-moz-placeholder {
+    opacity: 0.42;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102:focus:-ms-input-placeholder {
+    opacity: 0.42;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl-93 .MuiInputBase-input-102:focus::-ms-input-placeholder {
+    opacity: 0.42;
+}
+
+.MuiInputBase-inputMarginDense-103 {
+    padding-top: 3px;
+}
+
+.MuiInputBase-inputMultiline-104 {
+    resize: none;
+    padding: 0;
+}
+
+.MuiInputBase-inputType-105 {
+    height: 1.1875em;
+}
+
+.MuiInputBase-inputTypeSearch-106 {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
-const bts = theme => ({
+const stlyeone = theme => ({
 })
 
 class CheckNum extends React.Component {
@@ -18,4 +18,4 @@ class CheckNum extends React.Component {
         )
     }
 }
-export default withStyles(bts)(CheckNum)
+export default withStyles(stlyeone)(CheckNum)
