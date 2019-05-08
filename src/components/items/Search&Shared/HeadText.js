@@ -1,6 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-// import color from '@material-ui/core/colors/blueGrey';
 
 const bts = theme => ({
     centerrI: {
@@ -20,7 +19,7 @@ const bts = theme => ({
     }
 )
 
-class CheckNum extends React.Component {
+class HeadText extends React.Component {
 
     render() {
         return (
@@ -33,4 +32,4 @@ class CheckNum extends React.Component {
         )
     }
 }
-export default withStyles(bts)(CheckNum)
+export default withStyles(bts)(HeadText)

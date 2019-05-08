@@ -1,17 +1,13 @@
 
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-// import color from '@material-ui/core/colors/green';
-
-const bts = theme => ({
-    fontCenten: {
-        // display: "flex",
+const SryleButy = theme => ({
+    fontposition: {
         marginLeft: "27%",
-        // marginTop: "7px",
         marginBottom: "10%",
         color:"white",
     },
-    borderSI: {
+    inputsearch: {
         border: '1px solid white',
         borderRadius: '5px',
         height: '35px',
@@ -19,7 +15,7 @@ const bts = theme => ({
         width: '90px',
         position: 'absolute',
         right: '30%',
-
+        textAlign:'-webkit-center'
     },
 })
 
@@ -28,10 +24,10 @@ class InputTime extends React.Component {
     render() {
         return (
             <span style={{ display: "flex" }}>
-                <p className={this.props.classes.fontCenten}>{this.props.text}</p>
-                <input className={this.props.classes.borderSI} type={this.props.type} placeholder={this.props.placeholder}></input>
+                <p className={this.props.classes.fontposition}>{this.props.text}</p>
+                <input className={this.props.classes.inputsearch} type={this.props.type} placeholder={this.props.placeholder}></input>
             </span>
         )
     }
 }
-export default withStyles(bts)(InputTime)
+export default withStyles(SryleButy)(InputTime)

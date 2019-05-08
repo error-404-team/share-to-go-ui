@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Bg from '../LoginForm/BG';
-import HeadTop from '../LoginForm/HeadTop';
-import InputSeardMap from '../LoginForm/InputSeardMap';
-import IconBack from '../LoginForm/IconBack'
-// import color from '@material-ui/core/colors/red';
-import FromChatAll from './FromChatAll';
-// import Font from '../Font'
-import HeadText from '../LoginForm/HeadText'
+import BgTop from './Chat&Search/BgTop';
+import TapSearch from './Search&Shared/TapSearch';
+import EditTextSearh from '../items/Search&Shared/EditTextSearh'
+import IconBack from '../items/Search&Shared/IconBack'
+import TotalChat from './Chat&Search/TotalChat';
+import RequestCar from './Chat&Search/RequestCar';
+import BgBody from './Chat&Search/BgBody';
+import BgWhite from './Chat&Search/BgWhite';
+import LogoGrab from './Chat&Search/LogoGrab'
+import LogoTaxi from './Chat&Search/LogoTaxi'
 function TabContainer(props) {
   const { children, dir } = props;
-
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
       {children}
@@ -35,48 +35,30 @@ const styles = theme => ({
     margin: 'auto',
     width: '50%',
   },
-  PosiTionII: {
-    marginBottom: '100%'
-  },
-  // chatII:{
-  //   MaginI:{
-  //     marginBottom:'2%'
-
-  // }
-  // }
-  // centerI: {
-  //   margin: 'auto',
-  //   width: '90%',
-  // }
-  // ,
   marginSize: {
     marginTop: '5%',
-    color: 'rgba(255, 255, 255, 0.87)'
-  }
-
-});
-
-const theme2 = createMuiTheme({
-  palette: {
-    primary: { main: '#ffffff' },
+    color: 'rgba(255, 255, 255, 0.87)',
+  },
+  RootII: {
+    color: 'inherit',
   },
 });
-
-
-
+const theme2 = createMuiTheme({
+  palette: {
+    primary: { main: '#ffffff', },
+    secondary: { main: '#4A83D9', }
+  },
+});
 class TapBar extends React.Component {
   state = {
     value: 0,
   };
-
   handleChange = (event, value) => {
     this.setState({ value });
   };
-
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
-
   render() {
     const { classes, theme } = this.props;
     const transitionDuration = {
@@ -84,21 +66,20 @@ class TapBar extends React.Component {
       exit: theme.transitions.duration.leavingScreen,
     };
     return (
-      <Bg>
-
-        <div className={classes.root}>
+      <div className={classes.root}>
+        <BgTop>
           <IconBack></IconBack>
-          <HeadTop>
-            <InputSeardMap placeholder="ค้นหา"></InputSeardMap>
-            <InputSeardMap placeholder="ปลายทาง"></InputSeardMap>
-          </HeadTop>
+          <TapSearch>
+            <EditTextSearh placeholder="ค้นหา"></EditTextSearh>
+            <EditTextSearh placeholder="ปลายทาง"></EditTextSearh>
+          </TapSearch>
           <AppBar position="static" className={this.props.classes.marginSize} >
-            <MuiThemeProvider theme={theme2} >
+            <MuiThemeProvider theme={theme2}>
               <Tabs
+                className={this.props.classes.RootII}
                 value={this.state.value}
                 onChange={this.handleChange}
-                indicatorColor="primary"
-                textColor="primary"
+                color="primary"
                 variant="fullWidth">
                 <Tab label="หาเพื่อนร่วมทาง" />
                 <Tab label="เรียกรถ" />
@@ -107,23 +88,33 @@ class TapBar extends React.Component {
 
           </AppBar>
           <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
             onChangeIndex={this.handleChangeIndex}>
-            <TabContainer dir={theme.direction}><FromChatAll></FromChatAll>
-              <div className={this.props.classes.PosiTionII}>
-                <br></br>
-              </div>
-            </TabContainer>
-            <TabContainer dir={theme.direction}>
-            <HeadText text="เรียก Grab Taxi"></HeadText>
-            <HeadText text="เรียก Texi"></HeadText>
-            <HeadText></HeadText>
-            </TabContainer>
-          </SwipeableViews>
-        </div>
+            <BgBody>
+              <TabContainer>
+                <TotalChat />
+              </TabContainer>
+            </BgBody>
+            <BgWhite>
+              <TabContainer>
+                <LogoGrab></LogoGrab>
+                <RequestCar text="เรียก Grab Taxi"
+                  text1="อีก 5 นาที"
+                  text2="150 -170 B ">
+                </RequestCar>
+                <LogoTaxi></LogoTaxi>
+                <RequestCar text="เรียก Taxi"
+                  text1="อีก 3 นาที"
+                  text2="130 -170 B ">
+                </RequestCar>
+              </TabContainer>
+            </BgWhite>
 
-      </Bg>
+          </SwipeableViews>
+        </BgTop>
+      </div>
+
+
     );
   }
 }

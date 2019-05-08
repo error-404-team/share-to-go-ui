@@ -2,12 +2,6 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
 const bts = theme => ({
-    // AlignII:{
-    //     right: '14%',
-    //     bottom: '14%',
-    //     position: 'absolute' 
-    // }
-    
 })
 
 class CheckNum extends React.Component {

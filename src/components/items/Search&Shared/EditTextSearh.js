@@ -14,7 +14,7 @@ const bts = theme => ({
     },
 })
 
-class CheckNum extends React.Component {
+class EditTextSearh extends React.Component {
 
     render() {
         return (
@@ -22,4 +22,4 @@ class CheckNum extends React.Component {
         )
     }
 }
-export default withStyles(bts)(CheckNum)
+export default withStyles(bts)(EditTextSearh)

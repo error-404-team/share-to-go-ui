@@ -4,13 +4,12 @@ import { withStyles } from '@material-ui/core/styles'
 const bts = theme => ({
     BGcolor: {
         backgroundColor: '#4A83D9',
-        overflowX: "auto",
-        overflowY: "auto",
+        overflowX: "hidden",
+        overflowY: "hidden",
         height: " -webkit-fill-available",
     },
 })
-
-class BG extends React.Component {
+class BgConst extends React.Component {
 
     render() {
         return(
@@ -18,4 +17,4 @@ class BG extends React.Component {
         )
     }
 }
-export default withStyles(bts)(BG)
+export default withStyles(bts)(BgConst)

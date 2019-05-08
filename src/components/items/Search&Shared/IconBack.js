@@ -4,9 +4,9 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 const style = theme => ({
-    button: {
+    buttonicon: {
         margin: '1px',
-        fontSize:'30px',
+        fontSize:'20px',
       },
 
 })
@@ -15,7 +15,6 @@ class IconBack extends React.Component {
         return (
             <React.Fragment>
                 <IconButton>
-
                     <KeyboardBackspaceIcon className={this.props.classes.button} aria-label="KeyboardBackspace"></KeyboardBackspaceIcon>
                 </IconButton>
             </React.Fragment>
