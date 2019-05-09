@@ -17,7 +17,7 @@ import Maps from './components/Maps'
 import loadLinks from './lib/loadLinks'
 import loadScripts from './lib/loadScripts'
 
-
+import Loading from './components/Loading'
 
 
 class App extends React.Component {
@@ -105,7 +105,7 @@ class App extends React.Component {
                 )
                     : (
                         this.state.loading
-                            ? (<h1>loading</h1>)
+                            ? (<Loading/>)
                             : (<React.Fragment>
                                 <BackgrourdFromSingInAndUp >
 
