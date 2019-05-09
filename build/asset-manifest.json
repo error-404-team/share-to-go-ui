@@ -1,13 +1,13 @@
 {
-  "main.css": "/error-404-team/share-to-go-ui/static/css/main.c6f58bb6.chunk.css",
-  "main.js": "/error-404-team/share-to-go-ui/static/js/main.d8b16f25.chunk.js",
-  "main.js.map": "/error-404-team/share-to-go-ui/static/js/main.d8b16f25.chunk.js.map",
-  "runtime~main.js": "/error-404-team/share-to-go-ui/static/js/runtime~main.81be644b.js",
-  "runtime~main.js.map": "/error-404-team/share-to-go-ui/static/js/runtime~main.81be644b.js.map",
-  "static/js/2.9349a254.chunk.js": "/error-404-team/share-to-go-ui/static/js/2.9349a254.chunk.js",
-  "static/js/2.9349a254.chunk.js.map": "/error-404-team/share-to-go-ui/static/js/2.9349a254.chunk.js.map",
-  "index.html": "/error-404-team/share-to-go-ui/index.html",
-  "precache-manifest.0765828b4d5445ff9ddc0520ca707259.js": "/error-404-team/share-to-go-ui/precache-manifest.0765828b4d5445ff9ddc0520ca707259.js",
-  "service-worker.js": "/error-404-team/share-to-go-ui/service-worker.js",
-  "static/css/main.c6f58bb6.chunk.css.map": "/error-404-team/share-to-go-ui/static/css/main.c6f58bb6.chunk.css.map"
+  "main.css": "./static/css/main.32500419.chunk.css",
+  "main.js": "./static/js/main.3202a9d0.chunk.js",
+  "main.js.map": "./static/js/main.3202a9d0.chunk.js.map",
+  "runtime~main.js": "./static/js/runtime~main.81be644b.js",
+  "runtime~main.js.map": "./static/js/runtime~main.81be644b.js.map",
+  "static/js/2.c869f10a.chunk.js": "./static/js/2.c869f10a.chunk.js",
+  "static/js/2.c869f10a.chunk.js.map": "./static/js/2.c869f10a.chunk.js.map",
+  "index.html": "./index.html",
+  "precache-manifest.468d69977af3ff327108dbcf70594179.js": "./precache-manifest.468d69977af3ff327108dbcf70594179.js",
+  "service-worker.js": "./service-worker.js",
+  "static/css/main.32500419.chunk.css.map": "./static/css/main.32500419.chunk.css.map"
 }
