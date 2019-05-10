@@ -21,11 +21,14 @@ export function writeUserData(userId, name, email, imageUrl) {
 
 }
 
-export function writeLocationPrivateData(userId, position, location_name) {
+export function writeLocationPrivateData(userId, position, location_name,place_id) {
     firebaseApp.database().ref(`users/${userId}/location`).set({
         position: position,
+        formatted_address:location_name,
+        place_id:place_id
     });
 }
+
 
 export function writeCreateGroupShareData(userId, user, startLocation, endLocation, timeStart, timeEnd, postTime, num) {
     firebaseApp.database().ref(`group_share/hg${userId}`).set({

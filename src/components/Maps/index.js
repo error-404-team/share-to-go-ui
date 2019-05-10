@@ -10,6 +10,7 @@ import Map from './Map'
 import createPopupClass from './createPopupClass'
 import { writeUserData, writeLocationPrivateData } from '../../Firbase/writeData'
 import SidenavPushMenu from '../SidenavPushMenu'
+import { geocodeLatLng } from './ReverseGeocoding'
 
 
 const styles = {
@@ -133,6 +134,8 @@ export class Maps extends React.Component {
 
     // --------------------------------------------------------
 
+    // Reverse Geocoding 
+    geocodeLatLng(this.props.store.uid, this.state.position)
   }
 
 
@@ -144,7 +147,7 @@ export class Maps extends React.Component {
     const { position } = this.state
     // set database
     writeUserData(uid, displayName, email, photoURL)
-    writeLocationPrivateData(uid, position)
+    
 
     return (
       <div className={this.props.classes.root}>

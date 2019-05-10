@@ -156,6 +156,7 @@ function searchMap(el, map, position) {
 
     autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
+
     // all tag div
     this.div_III.appendChild(this.input)
 
@@ -195,9 +196,11 @@ function searchMap(el, map, position) {
         marker.setVisible(false);
         var place = autocomplete.getPlace();
         if (!place.geometry) {
+          
           // User entered the name of a Place that was not suggested and
           // pressed the Enter key, or the Place Details request failed.
           window.alert("No details available for input: '" + place.name + "'");
+          marker.setPosition(this.position);
           return;
         }
 
@@ -288,6 +291,8 @@ function searchMap(el, map, position) {
         }, function (response, status) {
             if (status === 'OK') {
                 directionsDisplay.setDirections(response);
+                // console.log(response);
+                
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
