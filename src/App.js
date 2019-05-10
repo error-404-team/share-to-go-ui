@@ -79,7 +79,6 @@ class App extends React.Component {
         });
         // firebaseui-list-item
 
-
     }
 
     /**
@@ -105,7 +104,7 @@ class App extends React.Component {
                 )
                     : (
                         this.state.loading
-                            ? (<Loading/>)
+                            ? (<Loading />)
                             : (<React.Fragment>
                                 <BackgrourdFromSingInAndUp >
 

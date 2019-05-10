@@ -8,7 +8,7 @@ import loadScriptMaps from './lib/loadScriptMaps'
 import mapCenterBtn from './CenterMapBtn'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
-
+import { writeUserData, writeLocationPrivateData } from '../../Firbase/writeData'
 import SidenavPushMenu from '../SidenavPushMenu'
 
 
@@ -35,6 +35,7 @@ export class Maps extends React.Component {
 
   componentDidMount() {
 
+
     // connect google map apis
 
     // add key
@@ -51,7 +52,11 @@ export class Maps extends React.Component {
         google: this._gapi
       })
     })
+
+
   }
+
+
 
   // initMap
   initMap = () => {
@@ -135,6 +140,11 @@ export class Maps extends React.Component {
   render() {
 
     const { classes } = this.props;
+    const { uid, displayName, email, photoURL } = this.props.store
+    const { position } = this.state
+    // set database
+    writeUserData(uid, displayName, email, photoURL)
+    writeLocationPrivateData(uid, position)
 
     return (
       <div className={this.props.classes.root}>
