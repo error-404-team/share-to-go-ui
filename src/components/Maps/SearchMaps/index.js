@@ -10,6 +10,7 @@ import './styles/MuiDivider.css'
 import './styles/MuiTouchRipple.css'
 import './styles/MuiSvgIcon.css'
 import './styles/MuiButtonBase.css'
+import './styles/infoWindow.css'
 
 function searchMap(el, map, position) {
     this.element = el
@@ -150,6 +151,80 @@ function searchMap(el, map, position) {
     // inputValue.value = null
     // input.setAttributeNode(inputValue)
 
+
+    // -----------------------------------------------
+
+       // create element div
+       const div_IIII = document.createElement('div');
+
+       // add attribute class
+       const div_IIIIID = document.createAttribute('id')
+       div_IIIIID.value = 'infowindow-content'
+       div_IIII.setAttributeNode(div_IIIIID)
+   
+       // all tag div
+       this.element.appendChild(div_IIII)
+   
+       // ----------------------------
+
+         // create element div
+         const img = document.createElement('img');
+
+         // add attribute class
+        const imgID = document.createAttribute('id')
+         imgID.value = 'place-icon'
+         img.setAttributeNode(imgID)
+        const imgSrc = document.createAttribute('src')
+         imgSrc.value = ""
+         img.setAttributeNode(imgSrc)
+         const imgWidth = document.createAttribute('width')
+         imgWidth.value = 16
+         img.setAttributeNode(imgWidth)
+         const imgHeight = document.createAttribute('height')
+         imgHeight.value = 16
+         img.setAttributeNode(imgHeight)
+
+     
+         // all tag div
+         div_IIII.appendChild(img)
+     
+         // ----------------------------
+
+            // create element div
+            const span = document.createElement('span');
+
+            // add attribute class
+            const spanID = document.createAttribute('id')
+            spanID.value = 'place-name'
+            span.setAttributeNode(spanID)
+            const spanClass = document.createAttribute('class')
+            spanClass.value = 'title'
+            span.setAttributeNode(spanClass)
+        
+            // all tag div
+            div_IIII.appendChild(span)
+
+            // --------------------------
+
+            this.br = document.createElement('br');
+            div_IIII.appendChild(this.br)
+        
+            // ----------------------------
+
+                         // create element div
+                         const span_I = document.createElement('span');
+
+                         // add attribute class
+                         const span_IID = document.createAttribute('id')
+                         span_IID.value = 'place-address'
+                         span_I.setAttributeNode(span_IID)
+                     
+                         // all tag div
+                         div_IIII.appendChild(span_I)
+                     
+                         // ----------------------------
+
+
     var autocomplete = new window.google.maps.places.Autocomplete(this.input);
 
     autocomplete.bindTo('bounds', map);
@@ -159,6 +234,50 @@ function searchMap(el, map, position) {
 
     // all tag div
     this.div_III.appendChild(this.input)
+
+    var infowindow = new window.google.maps.InfoWindow();
+
+     
+
+
+        var infowindowContent = div_IIII;
+        infowindow.setContent(infowindowContent);
+
+    autocomplete.addListener('place_changed', function() {
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);  // Why 17? Because it looks good.
+      }
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+
+      imgSrc.value = place.icon;
+      span.textContent = place.name;
+      span_I.textContent = address;
+      infowindow.open(map, marker);
+    });
 
 
     // --------------------------------
@@ -192,7 +311,7 @@ function searchMap(el, map, position) {
     this.div_II.appendChild(this.button_I)
 
     this.button_I.addEventListener('click', function() {
-
+      infowindow.close();
         marker.setVisible(false);
         var place = autocomplete.getPlace();
         if (!place.geometry) {
@@ -222,6 +341,11 @@ function searchMap(el, map, position) {
             (place.address_components[2] && place.address_components[2].short_name || '')
           ].join(' ');
         }
+
+        imgSrc.value = place.icon;
+        span.textContent = place.name;
+        span_I.textContent = address;
+        infowindow.open(map, marker);
 
       });
 

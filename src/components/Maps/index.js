@@ -13,6 +13,7 @@ import SidenavPushMenu from '../SidenavPushMenu'
 import { geocodeLatLng } from './ReverseGeocoding'
 
 
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -36,7 +37,7 @@ export class Maps extends React.Component {
 
   componentDidMount() {
 
-
+   
     // connect google map apis
 
     // add key
@@ -49,19 +50,40 @@ export class Maps extends React.Component {
         position: {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        },
+        }, 
         google: this._gapi
       })
+     
     })
-
+  
 
   }
 
+test = (position,geocoder) => {
+var navigator = []
+ 
+  geocoder.geocode({ 'location': position }, function (results, status) {
+
+      if (status === 'OK') {
+          if (results[0]) {
+              console.log(results[0]);
+              navigator.push({results})
+          } else {
+              window.alert('No results found');
+          }
+      } else {
+          window.alert('Geocoder failed due to: ' + status);
+      }
+  });
+  this.setState({
+    formatted_address: navigator
+  })
+
+}
 
 
   // initMap
   initMap = () => {
-
     // Create A Map
     this.map = new window.google.maps.Map(document.getElementById('map'), {
       center: this.state.position,
@@ -76,6 +98,10 @@ export class Maps extends React.Component {
         stylers: [{ visibility: 'off' }]  // Turn off bus, train stations etc.
       }]
     })
+
+    this.geocoder = new window.google.maps.Geocoder;
+
+    this.test(this.state.position,this.geocoder)
 
     // -----------------------------------------------------
 
@@ -124,7 +150,8 @@ export class Maps extends React.Component {
     this.popup = new this.Popup(
       new window.google.maps.LatLng(this.state.position.lat, this.state.position.lng),
       document.createElement("div"),
-      this.state.store.photoURL
+      this.state.store.photoURL,
+      this.state.navigator
     )
 
     this.popup.setMap(this.map);
@@ -136,6 +163,9 @@ export class Maps extends React.Component {
 
     // Reverse Geocoding 
     geocodeLatLng(this.props.store.uid, this.state.position)
+
+
+   
   }
 
 

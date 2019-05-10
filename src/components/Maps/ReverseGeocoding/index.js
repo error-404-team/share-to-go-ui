@@ -5,7 +5,6 @@ import { writeLocationPrivateData } from '../../../Firbase/writeData'
 
 export function geocodeLatLng(userId, latlng) {
     const geocoder = new window.google.maps.Geocoder;
-    const infowindow = new window.google.maps.InfoWindow;
 
     geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === 'OK') {

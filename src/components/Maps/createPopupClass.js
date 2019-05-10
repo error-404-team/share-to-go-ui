@@ -1,3 +1,6 @@
+import React from 'react'
+// import './'
+
 function createPopupClass() {
     /**
      * A customized popup on the map.
@@ -6,11 +9,11 @@ function createPopupClass() {
      * @constructor
      * @extends {google.maps.OverlayView}
      */
-    function Popup(position, content, url) {
+    function Popup(position, content, url ) {
         this.position = position;
         this.url = url
         this.content = content
-
+        this.navigator = navigator
 
         this.popupImg = document.createElement('img');
 
@@ -18,8 +21,11 @@ function createPopupClass() {
         this.popupImgSrc = document.createAttribute('src')
         this.popupImgSrc.value = this.url
         this.popupImg.setAttributeNode(this.popupImgSrc)
+        this.popupImgClass = document.createAttribute('class')
+        this.popupImgClass.value = "popup"
+        this.popupImg.setAttributeNode(this.popupImgClass)
         this.popupImgAlt = document.createAttribute('alt')
-        this.popupImgAlt.value = "User Name"
+        this.popupImgAlt.value = "displayName"
         this.popupImg.setAttributeNode(this.popupImgAlt)
 
         // set style
@@ -31,8 +37,29 @@ function createPopupClass() {
         this.popupImg.style.margin = '0';
         this.popupImg.style.position = 'absolute';
 
+        
 
         this.content.appendChild(this.popupImg);
+
+        this.popupSpan = document.createElement('span')
+
+        this.popupSpanID = document.createAttribute('id')
+        this.popupSpanID.value = "myPopup"
+        this.popupSpan.setAttributeNode(this.popupSpanID)
+        this.popupSpanClass = document.createAttribute('class')
+        this.popupSpanClass.value = "popuptext"
+        this.popupSpan.setAttributeNode(this.popupSpanClass)
+        this.popupSpan.innerHTML = `test`
+
+
+        this.popupImg.appendChild(this.popupSpan);
+
+
+        this.popupImg.addEventListener('click',function(){
+
+            var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+        })
 
 
         window.google.maps.OverlayView.preventMapHitsAndGesturesFrom(this.popupImg);
