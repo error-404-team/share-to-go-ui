@@ -11,7 +11,7 @@ function mapCenterBtn(el, map, position) {
     let button = document.createElement('button');
 
     // กำหนด style button
-    button.style.margin = '15px'
+    button.style.margin = '10px'
 
     // add  Attribute class button
     let buttonClass = document.createAttribute('class');
