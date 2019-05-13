@@ -11,8 +11,11 @@ import nearbyUsersBtn from './NearbyUsers'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
 import { writeUserData, writeLocationPrivateData } from '../../Firbase/writeData'
-import SidenavPushMenu from '../SidenavPushMenu'
+import SidenavPushMenu from './SidenavPushMenu'
+import SidenavPushNearbyUsers from './SidenavPushNearbyUsers'
 import { geocodeLatLng } from './ReverseGeocoding'
+
+import './hiddenGoogle.css'
 
 
 
@@ -39,7 +42,8 @@ export class Maps extends React.Component {
 
   componentDidMount() {
 
-
+    // var lat = 0.0009043717330001755  //100 meter
+    // var lng = 0.0008983111750069384 //100 meter
 
     var starCountRef = firebase.database().ref(`users/`);
     starCountRef.on('value', function (snapshot) {
@@ -86,217 +90,240 @@ export class Maps extends React.Component {
       center: this.state.position,
       zoom: 13,
       disableDefaultUI: true,
-      // styles: [{
-      //   featureType: 'poi',
-      //   stylers: [{ visibility: 'off' }]  // Turn off POI.
-      // },
-      // {
-      //   featureType: 'transit.station',
-      //   stylers: [{ visibility: 'off' }]  // Turn off bus, train stations etc.
-      // }]
+      styles: [{
+        featureType: 'poi.business',
+        stylers: [{ visibility: 'on' }]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }]
+      }]
     })
+
+    var lat = (14.0314716 - (0.0009043717330001755 * 10)) + (0.0009043717330001755 * 10)
+    var lng = (100.7357462 - (0.0008983111750069384 * 10)) + (0.0008983111750069384 * 10)
+    console.log(`{
+  at: ${lat},
+  lng: ${lng}
+}`);
+
+    var myLatLng = {
+      lat: lat,
+      lng: lng
+    }
+
+    var marker = new window.google.maps.Marker({
+      position: myLatLng,
+      map: this.map,
+      title: 'Hello World!'
+    });
 
     var currentTime = new Date();
     var currentHours = currentTime.getHours();
 
     // console.log(currentHours);
     if ((currentHours >= 5 && currentHours <= 11) || (currentHours >= 16 && currentHours <= 18)) {
-      this.map.setOptions({styles: [{visibility: 'off'}]})
+      this.map.setOptions({ styles: [{ visibility: 'off' }] })
       console.log("ตอนช่าว และ ตอนเย็น");
     } else if (currentHours >= 12 && currentHours <= 15) {
-      this.map.setOptions({styles: [
-        {elementType: 'geometry', stylers: [{color: '#ebe3cd'}]},
-        {elementType: 'labels.text.fill', stylers: [{color: '#523735'}]},
-        {elementType: 'labels.text.stroke', stylers: [{color: '#f5f1e6'}]},
-        {
-          featureType: 'administrative',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#c9b2a6'}]
-        },
-        {
-          featureType: 'administrative.land_parcel',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#dcd2be'}]
-        },
-        {
-          featureType: 'administrative.land_parcel',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#ae9e90'}]
-        },
-        {
-          featureType: 'landscape.natural',
-          elementType: 'geometry',
-          stylers: [{color: '#dfd2ae'}]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'geometry',
-          stylers: [{color: '#dfd2ae'}]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#93817c'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry.fill',
-          stylers: [{color: '#a5b076'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#447530'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{color: '#f5f1e6'}]
-        },
-        {
-          featureType: 'road.arterial',
-          elementType: 'geometry',
-          stylers: [{color: '#fdfcf8'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [{color: '#f8c967'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#e9bc62'}]
-        },
-        {
-          featureType: 'road.highway.controlled_access',
-          elementType: 'geometry',
-          stylers: [{color: '#e98d58'}]
-        },
-        {
-          featureType: 'road.highway.controlled_access',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#db8555'}]
-        },
-        {
-          featureType: 'road.local',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#806b63'}]
-        },
-        {
-          featureType: 'transit.line',
-          elementType: 'geometry',
-          stylers: [{color: '#dfd2ae'}]
-        },
-        {
-          featureType: 'transit.line',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#8f7d77'}]
-        },
-        {
-          featureType: 'transit.line',
-          elementType: 'labels.text.stroke',
-          stylers: [{color: '#ebe3cd'}]
-        },
-        {
-          featureType: 'transit.station',
-          elementType: 'geometry',
-          stylers: [{color: '#dfd2ae'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'geometry.fill',
-          stylers: [{color: '#b9d3c2'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#92998d'}]
-        }
-      ]})
+      this.map.setOptions({
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
+          {
+            featureType: 'administrative',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#c9b2a6' }]
+          },
+          {
+            featureType: 'administrative.land_parcel',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#dcd2be' }]
+          },
+          {
+            featureType: 'administrative.land_parcel',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#ae9e90' }]
+          },
+          {
+            featureType: 'landscape.natural',
+            elementType: 'geometry',
+            stylers: [{ color: '#dfd2ae' }]
+          },
+          {
+            featureType: 'poi',
+            elementType: 'geometry',
+            stylers: [{ color: '#dfd2ae' }]
+          },
+          {
+            featureType: 'poi',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#93817c' }]
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#a5b076' }]
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#447530' }]
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [{ color: '#f5f1e6' }]
+          },
+          {
+            featureType: 'road.arterial',
+            elementType: 'geometry',
+            stylers: [{ color: '#fdfcf8' }]
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry',
+            stylers: [{ color: '#f8c967' }]
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#e9bc62' }]
+          },
+          {
+            featureType: 'road.highway.controlled_access',
+            elementType: 'geometry',
+            stylers: [{ color: '#e98d58' }]
+          },
+          {
+            featureType: 'road.highway.controlled_access',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#db8555' }]
+          },
+          {
+            featureType: 'road.local',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#806b63' }]
+          },
+          {
+            featureType: 'transit.line',
+            elementType: 'geometry',
+            stylers: [{ color: '#dfd2ae' }]
+          },
+          {
+            featureType: 'transit.line',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#8f7d77' }]
+          },
+          {
+            featureType: 'transit.line',
+            elementType: 'labels.text.stroke',
+            stylers: [{ color: '#ebe3cd' }]
+          },
+          {
+            featureType: 'transit.station',
+            elementType: 'geometry',
+            stylers: [{ color: '#dfd2ae' }]
+          },
+          {
+            featureType: 'water',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#b9d3c2' }]
+          },
+          {
+            featureType: 'water',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#92998d' }]
+          }
+        ]
+      })
       console.log("ตอนเที่ยง");
     } else if ((currentHours >= 19 && currentHours <= 24) || (currentHours >= 0 && currentHours <= 4)) {
-      this.map.setOptions({styles: [
-        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-        {
-          featureType: 'administrative.locality',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry',
-          stylers: [{color: '#263c3f'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#6b9a76'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{color: '#38414e'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#212a37'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#9ca5b3'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [{color: '#746855'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#1f2835'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#f3d19c'}]
-        },
-        {
-          featureType: 'transit',
-          elementType: 'geometry',
-          stylers: [{color: '#2f3948'}]
-        },
-        {
-          featureType: 'transit.station',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'geometry',
-          stylers: [{color: '#17263c'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#515c6d'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.stroke',
-          stylers: [{color: '#17263c'}]
-        }
-      ]})
-      console.log(currentTime+" ตอนกลางคืน");
+      this.map.setOptions({
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+          {
+            featureType: 'administrative.locality',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#d59563' }]
+          },
+          {
+            featureType: 'poi',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#d59563' }]
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'geometry',
+            stylers: [{ color: '#263c3f' }]
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#6b9a76' }]
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [{ color: '#38414e' }]
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#212a37' }]
+          },
+          {
+            featureType: 'road',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#9ca5b3' }]
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry',
+            stylers: [{ color: '#746855' }]
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#1f2835' }]
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#f3d19c' }]
+          },
+          {
+            featureType: 'transit',
+            elementType: 'geometry',
+            stylers: [{ color: '#2f3948' }]
+          },
+          {
+            featureType: 'transit.station',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#d59563' }]
+          },
+          {
+            featureType: 'water',
+            elementType: 'geometry',
+            stylers: [{ color: '#17263c' }]
+          },
+          {
+            featureType: 'water',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#515c6d' }]
+          },
+          {
+            featureType: 'water',
+            elementType: 'labels.text.stroke',
+            stylers: [{ color: '#17263c' }]
+          }
+        ]
+      })
+      console.log(currentTime + " ตอนกลางคืน");
     }
 
 
@@ -347,7 +374,6 @@ export class Maps extends React.Component {
     this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
 
 
-
     // -------------------------------------------------------
 
 
@@ -375,7 +401,6 @@ export class Maps extends React.Component {
     geocodeLatLng(this.props.store.uid, this.state.position)
 
 
-
   }
 
 
@@ -398,6 +423,7 @@ export class Maps extends React.Component {
         <SidenavPushMenu store={this.props.store}>
           {this.props.children}
         </SidenavPushMenu>
+        <SidenavPushNearbyUsers  store={this.props.store}/>
       </div>
     )
   }
