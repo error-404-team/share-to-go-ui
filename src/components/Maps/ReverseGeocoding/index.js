@@ -14,6 +14,7 @@ export function geocodeLatLng(userId, latlng) {
                 console.log(results);
 
                 writeLocationPrivateData(userId, latlng, formatted_address, place_id)
+                
             } else {
                 window.alert('No results found');
             }
@@ -21,4 +22,6 @@ export function geocodeLatLng(userId, latlng) {
             window.alert('Geocoder failed due to: ' + status);
         }
     });
+
+    
 }
