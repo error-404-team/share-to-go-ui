@@ -3,9 +3,12 @@ import { writeLocationPrivateData } from '../../../Firbase/writeData'
 
 
 
-export function geocodeLatLng(userId, latlng) {
+export function geocodeLatLng(userId, coords) {
     const geocoder = new window.google.maps.Geocoder;
-
+const latlng = {
+    lat:coords.latitude ,
+    lng:coords.longitude
+}
     geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === 'OK') {
             if (results[0]) {

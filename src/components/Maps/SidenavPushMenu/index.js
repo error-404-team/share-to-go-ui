@@ -12,6 +12,10 @@ export function closeNav() {
 }
 
 class SidenavUI extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {...props}
+    }
 
     render() {
         const fullWidth = window.innerWidth;
@@ -36,8 +40,8 @@ class SidenavUI extends React.Component {
                     className="mm-navbars_top"
                 >
                     <div className="mm-navbar mm-navbar_size-2">
-                        <img src={this.props.store.photoURL} />
-                        <span style={{ display: "list-item", fontSize: "18px" }}>{this.props.store.displayName} </span>
+                        <img src={this.state.dataSignIn.photoURL} />
+                        <span style={{ display: "list-item", fontSize: "18px" }}>{this.state.dataSignIn.displayName} </span>
                     </div>
 
                 </div>
