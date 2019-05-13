@@ -25,6 +25,10 @@ import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSi
 
 import Maps from './components/Maps'
 
+import loadLinks from './lib/loadLinks'
+import loadScripts from './lib/loadScripts'
+
+import Loading from './components/Loading'
 
 
 >>>>>>> a8717e877e1fe3445ba33edad64d104874a25ef6
@@ -54,23 +58,47 @@ class App extends React.Component {
      */
     componentDidMount() {
 
+        // links styles
+        const materialIconsLink = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+        const materialIndigoPinkLink = "https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
+        const fontAwesomeLink = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+
+        // set argument
+        const rel = 'stylesheet'
+        const type = "text/css"
+
+        // connect links
+        loadLinks(materialIconsLink, rel, type)
+        loadLinks(materialIndigoPinkLink, rel, type)
+        loadLinks(fontAwesomeLink, rel, type)
+
+        // links script
+        const mapIconsScript = "http://map-icons.com/dist/js/map-icons.js"
+        const materialScript = "https://code.getmdl.io/1.3.0/material.min.js"
+
+        // load scripts
+        loadScripts(mapIconsScript)
+        loadScripts(materialScript)
+
         firebaseApp.auth().onAuthStateChanged((user) => {
             this.setState({
                 isSignedIn: !!user,
                 dataSignIn: user,
-                loading: false
+                loading: false,
             });
             // console.log(user);
 
         });
+        // firebaseui-list-item
+
     }
 
     /**
      * @inheritDoc
      */
-    componentWillUnmount() {
-        this.unregisterAuthObserver();
-    }
+    // componentWillUnmount() {
+    //     this.unregisterAuthObserver();
+    // }
 
     render() {
         return (
@@ -81,15 +109,18 @@ class App extends React.Component {
 =======
                 {this.state.isSignedIn ? (
                     <Router>
-                        <Maps store={this.state.dataSignIn}/>
-                        {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
-                        {/* <button onClick={() => firebaseApp.auth().signOut()}>Sign-out</button> */}
+                        <Maps store={this.state.dataSignIn} >
+                            {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
+
+                            <a className="mm-listitem__text" onClick={() => firebaseApp.auth().signOut()} >Sign Out</a>
+
+                        </Maps>
                         {/* <RoutePages /> */}
                     </Router>
                 )
                     : (
                         this.state.loading
-                            ? (<h1>loading</h1>)
+                            ? (<Loading />)
                             : (<React.Fragment>
                                 <BackgrourdFromSingInAndUp >
 

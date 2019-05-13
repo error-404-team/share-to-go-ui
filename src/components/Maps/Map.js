@@ -13,7 +13,7 @@ class Map extends React.Component {
 
 
     ConnectAPI = (api) => {
-        console.log(api);
+        // console.log(api);
         // var map = api.maps.Map(this.ref.maps, {
         //     center: this.state.position,
         //     zoom: 8,
@@ -36,8 +36,8 @@ class Map extends React.Component {
     }
     render() {
 
-        const fullWidth = window.innerWidth;
-        const fullHeight = window.innerHeight;
+        var fullWidth = window.innerWidth;
+        var fullHeight = window.innerHeight;
 
         const { google } = this.props
 
