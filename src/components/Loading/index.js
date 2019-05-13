@@ -4,9 +4,9 @@ import './styles/loading.css'
 class Loading extends React.Component {
     render() {
         return (
-            <div class="progress-bar">
-                <span class="bar">
-                    <span class="progress"></span>
+            <div className="progress-bar">
+                <span className="bar">
+                    <span className="progress"></span>
                 </span>
             </div>
         )

@@ -8,8 +8,7 @@ export function writeUserData(userId, name, email, imageUrl) {
         userId: userId,
         username: name,
         email: email,
-        profile_picture: imageUrl,
-        location: {}
+        profile_picture: imageUrl
     }, function (error) {
         if (error) {
             console.log(error);
@@ -21,12 +20,25 @@ export function writeUserData(userId, name, email, imageUrl) {
 
 }
 
-export function writeLocationPrivateData(userId, position, location_name,place_id) {
+export function writeLocationPrivateData(userId, position, location_name, place_id) {
     firebaseApp.database().ref(`users/${userId}/location`).set({
-        position: position,
-        formatted_address:location_name,
-        place_id:place_id
+        position: {
+            lat: position.lat,
+            lng: position.lng
+        },
+        formatted_address: location_name,
+        place_id: place_id
     });
+    console.log(`
+    writeLocationPrivateData() : {
+        position: {
+        lat:${position.lat},
+        lng:${position.lng}
+    },
+    formatted_address:${location_name},
+    place_id:${place_id}
+}`);
+
 }
 
 
