@@ -31,12 +31,11 @@ export class Maps extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ...props,
-      position: {
-        lat: 14.0314178,
-        lng: 102.7357461
-      },
+      coords: props.coords,
+      dataSignIn:props.dataSignIn
     }
+
+    // this.starCountRef = this.starCountRef.bind(this)
 
   }
 
@@ -44,14 +43,20 @@ export class Maps extends React.Component {
 
     // var lat = 0.0009043717330001755  //100 meter
     // var lng = 0.0008983111750069384 //100 meter
+   
+  
+//  firebase.database().ref(`users/${this.state.dataSignIn.uid}`).on('value',  (snapshot) => {
+//       // updateStarCount(postElement, snapshot.val());
+//       var location = snapshot.val().location.postion
 
-    var starCountRef = firebase.database().ref(`users/`);
-    starCountRef.on('value', function (snapshot) {
-      // updateStarCount(postElement, snapshot.val());
-      const arr = [snapshot.val()]
-      console.log(arr.length);
+//       this.setState({location:location})
+//       console.log(snapshot.val().location);
+//       // console.log(Object.keys(snapshot.val()).length);
 
-    });
+//     });
+    
+    
+  
 
 
     // connect google map apis
@@ -61,21 +66,9 @@ export class Maps extends React.Component {
     connectMapApiInitMap(YOUR_API_KEY, this.initMap)
     // push locatin to state
     this._gapi = window.google;
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        position: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        },
-        google: this._gapi
-      })
-      console.log(`navigator: {
-      lat: ${position.coords.latitude},
-      lng: ${position.coords.longitude}
-     }` );
 
-    })
-
+    // check geolocation
+   
 
   }
 
@@ -84,40 +77,44 @@ export class Maps extends React.Component {
   initMap = () => {
     // Create A Map
 
+if(this.state.coords.latitude == undefined && this.state.coords.longitude == undefined) {
+console.log(123);
 
+}else {
+  
+  this.map = new window.google.maps.Map(document.getElementById('map'), {
+    center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+    zoom: 13,
+    disableDefaultUI: true,
+    styles: [{
+      featureType: 'poi.business',
+      stylers: [{ visibility: 'on' }]
+    },
+    {
+      featureType: 'transit',
+      elementType: 'labels.icon',
+      stylers: [{ visibility: 'off' }]
+    }]
+  })
+}
 
-    this.map = new window.google.maps.Map(document.getElementById('map'), {
-      center: this.state.position,
-      zoom: 13,
-      disableDefaultUI: true,
-      styles: [{
-        featureType: 'poi.business',
-        stylers: [{ visibility: 'on' }]
-      },
-      {
-        featureType: 'transit',
-        elementType: 'labels.icon',
-        stylers: [{ visibility: 'off' }]
-      }]
-    })
+    //     var lat = (14.0314716 - (0.0009043717330001755 * 10)) + (0.0009043717330001755 * 10)
+    //     var lng = (100.7357462 - (0.0008983111750069384 * 10)) + (0.0008983111750069384 * 10)
+    //     console.log(`{
+    //   at: ${lat},
+    //   lng: ${lng}
+    // }`);
 
-    var lat = (14.0314716 - (0.0009043717330001755 * 10)) + (0.0009043717330001755 * 10)
-    var lng = (100.7357462 - (0.0008983111750069384 * 10)) + (0.0008983111750069384 * 10)
-    console.log(`{
-  at: ${lat},
-  lng: ${lng}
-}`);
+    // var myLatLng = {
+    //   lat: lat,
+    //   lng: lng
+    // }
 
-    var myLatLng = {
-      lat: lat,
-      lng: lng
-    }
-
-    var marker = new window.google.maps.Marker({
-      position: myLatLng,
-      map: this.map,
-      title: 'Hello World!'
-    });
+    // var marker = new window.google.maps.Marker({
+    //   position: myLatLng,
+    //   map: this.map,
+    //   title: 'Hello World!'
+    // });
 
     var currentTime = new Date();
     var currentHours = currentTime.getHours();
@@ -343,7 +340,7 @@ export class Maps extends React.Component {
     this.searchMapsDiv.style.width = '-webkit-fill-available'
 
     // setting call ui
-    this.centerControl = new searchMaps(this.searchMapsDiv, this.map, this.state.position);
+    this.centerControl = new searchMaps(this.searchMapsDiv, this.map,new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(this.searchMapsDiv);
@@ -363,12 +360,12 @@ export class Maps extends React.Component {
     this.mapCenterBtnDiv.style.marginBottom = '10px'
 
 
-    this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, this.state.position);
+    this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
     // this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
 
     // setting call ui
-    this.centerControl = new mapCenterBtn(this.mapCenterBtnDiv, this.map, this.state.position);
+    this.centerControl = new mapCenterBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
@@ -384,11 +381,14 @@ export class Maps extends React.Component {
 
     this.Popup = createPopupClass();
     this.popup = new this.Popup(
-      new window.google.maps.LatLng(this.state.position.lat, this.state.position.lng),
+     new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      // this.state.position,
       document.createElement("div"),
-      this.state.store.photoURL,
-      this.state.navigator
+      this.state.dataSignIn.photoURL,
+      // this.state.navigator
     )
+console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+
 
     this.popup.setMap(this.map);
 
@@ -397,8 +397,7 @@ export class Maps extends React.Component {
 
     // --------------------------------------------------------
 
-    // Reverse Geocoding 
-    geocodeLatLng(this.props.store.uid, this.state.position)
+    geocodeLatLng(this.state.dataSignIn.uid, this.state.coords)
 
 
   }
@@ -408,9 +407,9 @@ export class Maps extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { uid, displayName, email, photoURL } = this.props.store
-    const { position } = this.state
-    // set database
+    const { uid, displayName, email, photoURL } = this.state.dataSignIn
+    const { state } = this
+    // // set database
     writeUserData(uid, displayName, email, photoURL)
 
 
@@ -420,11 +419,11 @@ export class Maps extends React.Component {
           {/* <div id="content"></div> */}
         </Map>
         {/* <InputSearch /> */}
-        <SidenavPushMenu store={this.props.store}>
+        <SidenavPushMenu {...state}>
           {this.props.children}
         </SidenavPushMenu>
-        <SidenavPushNearbyUsers  store={this.props.store}/>
-      </div>
+        <SidenavPushNearbyUsers {...state} />
+      // </div>
     )
   }
 }
