@@ -8,11 +8,15 @@ import connectMapApiInitAutocomplete from './lib/connectMapApiInitAutocomplete'
 import loadScriptMaps from './lib/loadScriptMaps'
 import mapCenterBtn from './CenterMapBtn'
 import nearbyUsersBtn from './NearbyUsers'
+import searchLocationNearByUsersBtn from './SearchLocationNearbyUsers'
+import sameWayNearByUsersBtn from './SameWayNearbyUsers'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
 import { writeUserData, writeLocationPrivateData } from '../../Firbase/writeData'
-import SidenavPushMenu from './SidenavPushMenu'
-import SidenavPushNearbyUsers from './SidenavPushNearbyUsers'
+import SidenavMenuUI from './SidenavPushMenu'
+import SidenavNearbyUsersUI from './SidenavPushNearbyUsers'
+import SidenavSearchLocationNearbyUsersUI from './SidenavPushSearchLocationNearbyUsers'
+import SidenavSameWayNearbyUsersUI from './SidenavPushSameWayNearbyUsers'
 import { geocodeLatLng } from './ReverseGeocoding'
 
 import './hiddenGoogle.css'
@@ -77,7 +81,7 @@ export class Maps extends React.Component {
   initMap = () => {
     // Create A Map
 
-if(this.state.coords.latitude == undefined && this.state.coords.longitude == undefined) {
+if(this.state.coords.latitude === undefined && this.state.coords.longitude === undefined) {
 console.log(123);
 
 }else {
@@ -359,6 +363,9 @@ console.log(123);
     this.mapCenterBtnDiv.style.marginRight = '6px'
     this.mapCenterBtnDiv.style.marginBottom = '10px'
 
+    this.centerControl = new sameWayNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
+
+this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
 
     this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
@@ -419,11 +426,13 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
           {/* <div id="content"></div> */}
         </Map>
         {/* <InputSearch /> */}
-        <SidenavPushMenu {...state}>
+        <SidenavMenuUI {...state}>
           {this.props.children}
-        </SidenavPushMenu>
-        <SidenavPushNearbyUsers {...state} />
-      // </div>
+        </SidenavMenuUI>
+        <SidenavNearbyUsersUI {...state} />
+        <SidenavSearchLocationNearbyUsersUI {...state} />
+        <SidenavSameWayNearbyUsersUI {...state} />
+        </div>
     )
   }
 }
