@@ -1,0 +1,19 @@
+
+.CenterMapBtn-fab-2 {
+    width: 36px;
+    margin: 8px;
+    height: 36px;
+  }
+  .CenterMapBtn-extendedIcon-3 {
+    margin-right: 8px;
+  }
+  .CenterMapBtn-locationSearchingButton-4 {
+    right: 0;
+    width: 40px;
+    bottom: 0;
+    height: 40px;
+    z-index: 100000;
+    position: absolute;
+    margin-right: 35px;
+    margin-bottom: 55px;
+  }

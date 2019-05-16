@@ -106,9 +106,10 @@ function searchMap(el, map, position) {
 
   // add  Attribute class i
   this.iClass = document.createAttribute('class');
-  this.iClass.value = 'material-icons'
+  this.iClass.value = 'fas fa-bars'
   this.i.setAttributeNode(this.iClass)
-  this.i.innerHTML = 'menu'
+  this.i.style.color = "#1D385A"
+  // this.i.innerHTML = 'menu'
 
   // all tag i
   this.button.appendChild(this.i)
@@ -143,7 +144,7 @@ function searchMap(el, map, position) {
   this.inputClass.value = 'MuiInputBase-input-102'
   this.input.setAttributeNode(this.inputClass)
   this.placeholder = document.createAttribute('placeholder')
-  this.placeholder.value = 'Search Google Maps'
+  this.placeholder.value = 'Search Location'
   this.input.setAttributeNode(this.placeholder)
   this.inputType = document.createAttribute('type')
   this.inputType.value = 'text'
@@ -360,11 +361,14 @@ function searchMap(el, map, position) {
 
   // add  Attribute class i
   this.iClass_I = document.createAttribute('class');
-  this.iClass_I.value = 'material-icons'
+  this.iClass_I.value = 'fas fa-search'
   this.i_I.setAttributeNode(this.iClass_I)
-  this.i_I.innerHTML = 'search'
+  this.i_I.style.color = "#1D385A"
+  // this.i_I.innerHTML = 'search'
 
   // all tag i
+
+  this.button_I.style.marginRight = "3px"
   this.button_I.appendChild(this.i_I)
 
   //  --------------------------------
@@ -449,11 +453,14 @@ function searchMap(el, map, position) {
 
   // add  Attribute class i
   this.iClass_II = document.createAttribute('class');
-  this.iClass_II.value = 'material-icons'
+  this.iClass_II.value = 'fas fa-location-arrow'
   this.i_II.setAttributeNode(this.iClass_II)
-  this.i_II.innerHTML = 'directions'
+  this.i_II.style.color = "#1D385A"
+  // this.i_II.innerHTML = 'directions'
+
 
   // all tag i
+  this.button_II.style.marginLeft = "3px"
   this.button_II.appendChild(this.i_II)
 
   //  --------------------------------
