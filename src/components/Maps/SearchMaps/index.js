@@ -1,4 +1,7 @@
 import React from 'react'
+import * as firebase from 'firebase'
+import createPopupClass from '../createPopupClass'
+import {GPS,findDistance} from '../lib/gps'
 import { openNav } from '../../SidenavPushMenu'
 import './styles/InputSearch.css'
 import './styles/MuiToolbar.css'
@@ -269,6 +272,7 @@ function searchMap(el, map, position) {
     
     marker.setVisible(true);
 
+    // วงรอบพื้นที่ 1 กิโลเมตร
     var Circle = new window.google.maps.Circle({
       strokeColor: '#fb6a5fb0',
       strokeOpacity: 0.8,
@@ -279,6 +283,46 @@ function searchMap(el, map, position) {
       center: place.geometry.location,
       radius: Math.sqrt(100) * 100
     });
+
+    // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
+    firebase.database().ref(`location/`).once("value").then((snapshot) => {
+      var location = place.geometry.location
+      const database = firebase.database()
+      var lat = 0.0009043717330001755  //100 meter
+      var lng = 0.0008983111750069384 //100 meter
+
+      // console.log(place.geometry.location)
+      var latitudeH = location.lat() + (lat * 10)
+      var longitudeH = location.lng() + (lng * 10)
+
+      var latitudeL = location.lat() - (lat * 10)
+      var longitudeL = location.lng() - (lng * 10)
+
+      snapshot.forEach((childSnapshot) => {
+
+        var key = childSnapshot.key;
+        var childData = childSnapshot.val();
+
+        if (((childData.lat >= latitudeL) && (childData.lng >= longitudeL)) && ((childData.lat <= latitudeH) && (childData.lng <= longitudeH))) {
+          var gps1 = new GPS(location.lat(), location.lng())
+          var gps2 = new GPS(childData.lat, childData.lng)
+          console.log(`in lat: ${childData.lat} lng: ${childData.lng}
+          ${findDistance(gps1, gps2)} เมตร`);
+
+          database.ref(`users/${childData.location_id}`).once("value").then((snapshot) => {
+            var Popup = createPopupClass();
+            var popup = new Popup(
+              new window.google.maps.LatLng(childData.lat, childData.lng),
+              document.createElement("div"),
+              snapshot.child('photoURL').val(),
+            )
+            popup.setMap(map);
+            console.log(snapshot.child('photoURL').val());
+
+          })
+        }
+      })
+    })
 
     var address = '';
     if (place.address_components) {
