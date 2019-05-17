@@ -43,7 +43,8 @@ class App extends React.Component {
      * @inheritDoc
      */
     componentDidMount() {
-
+ 
+    
         // links styles
         const materialIconsLink = 'https://fonts.googleapis.com/icon?family=Material+Icons';
         const materialIndigoPinkLink = "https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
@@ -128,7 +129,7 @@ class App extends React.Component {
     render() {
 
         const { state } = this
-      
+    
         return (
             <React.Fragment>
                 {this.state.isSignedIn ? (
@@ -136,7 +137,7 @@ class App extends React.Component {
                         <Maps {...state} >
                             {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
 
-                            <a className="mm-listitem__text" onClick={() => firebaseApp.auth().signOut()} >Sign Out</a>
+                            <a className="mm-listitem__text-menu" onClick={() => firebaseApp.auth().signOut()} >Sign Out</a>
 
                         </Maps>
                         {/* <RoutePages /> */}
