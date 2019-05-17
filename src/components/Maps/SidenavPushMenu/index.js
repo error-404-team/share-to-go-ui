@@ -1,4 +1,5 @@
 import React from 'react'
+import * as firebase from 'firebase'
 import './styles/mySidenav.css'
 import './styles/menuProfile.css'
 
@@ -16,46 +17,57 @@ class SidenavUI extends React.Component {
         super(props)
         this.state = {...props}
     }
+    componentDidMount() {
+        firebase.database().ref(`location/${this.state.dataSignIn.uid}`).on('value',  (snapshot) => {
+            // updateStarCount(postElement, snapshot.val());
+          //  location.push(snapshot)
+      
+            this.setState({location_name:snapshot.val().location_name})
+            // console.log(snapshot.val().location);
+            // console.log(Object.keys(snapshot.val()).length);
+          });
+    }
 
     render() {
         const fullWidth = window.innerWidth;
         const fullHeight = window.innerHeight;
+        // const {location} = this.props;
+        console.log(this.state.location);
+        
         return (
             <div
                 id="mySidenav"
-                className="overlay"
+                className="overlay-menu"
 
             >
                 <div
                     style={{
                         width: '100%',
                         height: '5%',
-                        backgroundColor: '#4bb5ef',
+                        backgroundColor: '#1D385A',
                     }}
                 >
-                    <a href="javascript:void(0)" className="closebtn fa fa-close" onClick={() => closeNav()}></a>
+                    <a href="javascript:void(0)" className="closebtn-menu fa fa-close" onClick={() => closeNav()}></a>
                 </div>
 
                 <div
-                    className="mm-navbars_top"
+                    className="mm-navbars_top-menu"
                 >
-                    <div className="mm-navbar mm-navbar_size-2">
+                    <div className="mm-navbar-menu mm-navbar_size-2-menu">
                         <img src={this.state.dataSignIn.photoURL} />
-                        <span style={{ display: "list-item", fontSize: "18px" }}>{this.state.dataSignIn.displayName} </span>
+                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.dataSignIn.displayName} </span>
+                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.location_name} </span>
                     </div>
 
                 </div>
-                <div className="mm-panels">
-                    <div id="panel-menu" className="mm-panel mm-panel_opened" style={{
+                <div className="mm-panels-menu">
+                    <div id="panel-menu" className="mm-panel-menu mm-panel_opened-menu" style={{
                         WebkitTransform: 'translate3d(0,0,0)',
                         transform: "translate3d(0,0,0)",
-                        backgroundColor: " #3ba5df"
+                        backgroundColor: "#1D385A"
                     }}>
-                        <div className="mm-navbar" aria-hidden="true">
-                            <a className="mm-navbar__title">Menu</a></div>
-                        <ul className="mm-listview">
-                            <li className="mm-listitem">
-                                {/* <a href="#/" className="mm-listitem__text">Home</a> */}
+                        <ul className="mm-listview-menu">
+                            <li className="mm-listitem-menu">
                                 {this.props.children}
                             </li>
 

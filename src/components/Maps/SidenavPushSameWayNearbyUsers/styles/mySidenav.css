@@ -5,7 +5,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #3ba5df;
+  background-color: #274D7D;
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -31,7 +31,7 @@
   color: #f1f1f1;
 }
 
-.overlay-nearby-users .closebtn {
+.overlay-nearby-users .closebtn-nearby-users {
   position: absolute;
   top: 2px;
   left: 5px;
@@ -42,7 +42,7 @@
 @media screen and (max-height: 450px) {
   .overlay-nearby-users {overflow-y: auto;}
   .overlay-nearby-users a {font-size: 20px}
-  .overlay-nearby-users .closebtn {
+  .overlay-nearby-users .closebtn-nearby-users {
   font-size: 40px;
   top: 15px;
   right: 35px;
