@@ -377,7 +377,7 @@ export class Maps extends React.Component {
           }
         ]
       })
-      console.log(currentTime + " ตอนกลางคืน");
+      // console.log(currentTime + " ตอนกลางคืน");
     }
 
 
@@ -463,7 +463,7 @@ export class Maps extends React.Component {
       this.state.dataSignIn.photoURL,
       // this.state.navigator
     )
-    console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    // console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
 
     this.popup.setMap(this.map);

@@ -30,15 +30,15 @@ export function writeLocationPrivateData(userId, position, location_name, place_
         place_id: place_id
     }
     );
-    console.log(`
-    writeLocationPrivateData() : {
-        position: {
-        lat:${position.lat},
-        lng:${position.lng}
-    },
-    formatted_address:${location_name},
-    place_id:${place_id}
-}`);
+//     console.log(`
+//     writeLocationPrivateData() : {
+//         position: {
+//         lat:${position.lat},
+//         lng:${position.lng}
+//     },
+//     formatted_address:${location_name},
+//     place_id:${place_id}
+// }`);
 
 }
 

@@ -98,7 +98,7 @@ class App extends React.Component {
                     timestamp: position.timestamp
                 }
                 this.setState(geolocation)
-                console.log(position);
+                // console.log(position);
             }, (error) => {
                 console.log('Error occurred. Error code: ' + error.code);
                 // error.code can be:

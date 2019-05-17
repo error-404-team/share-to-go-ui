@@ -92,8 +92,8 @@ function createPopupClass() {
                 'none';
 
         if (display === 'block') {
-            this.popupImg.style.left = divPosition.x + 'px';
-            this.popupImg.style.top = divPosition.y + 'px';
+            this.popupImg.style.left = `${divPosition.x - 11.1}px`;
+            this.popupImg.style.top = `${divPosition.y - 11.1}px`;
         }
         if (this.popupImg.style.display !== display) {
             this.popupImg.style.display = display;

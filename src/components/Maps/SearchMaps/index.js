@@ -264,7 +264,21 @@ function searchMap(el, map, position) {
       map.setZoom(17);  // Why 17? Because it looks good.
     }
     marker.setPosition(place.geometry.location);
+
+    // console.log(place.geometry.location);
+    
     marker.setVisible(true);
+
+    var Circle = new window.google.maps.Circle({
+      strokeColor: '#fb6a5fb0',
+      strokeOpacity: 0.8,
+      strokeWeight: 1,
+      fillColor: '#fb6a5fb0',
+      fillOpacity: 0.35,
+      map: map,
+      center: place.geometry.location,
+      radius: Math.sqrt(100) * 100
+    });
 
     var address = '';
     if (place.address_components) {

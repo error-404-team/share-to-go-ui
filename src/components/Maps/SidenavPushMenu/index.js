@@ -32,7 +32,7 @@ class SidenavUI extends React.Component {
         const fullWidth = window.innerWidth;
         const fullHeight = window.innerHeight;
         // const {location} = this.props;
-        console.log(this.state.location);
+        // console.log(this.state.location);
         
         return (
             <div
