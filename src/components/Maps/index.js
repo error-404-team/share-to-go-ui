@@ -18,7 +18,7 @@ import SidenavNearbyUsersUI from './SidenavPushNearbyUsers'
 import SidenavSearchLocationNearbyUsersUI from './SidenavPushSearchLocationNearbyUsers'
 import SidenavSameWayNearbyUsersUI from './SidenavPushSameWayNearbyUsers'
 import { geocodeLatLng } from './ReverseGeocoding'
-import {GPS,findDistance} from './lib/gps'
+import { GPS, findDistance } from './lib/gps'
 
 import './hiddenGoogle.css'
 
@@ -37,7 +37,7 @@ export class Maps extends React.Component {
     super(props)
     this.state = {
       coords: props.coords,
-      dataSignIn:props.dataSignIn
+      dataSignIn: props.dataSignIn
     }
 
     // this.starCountRef = this.starCountRef.bind(this)
@@ -47,25 +47,25 @@ export class Maps extends React.Component {
   componentDidMount() {
 
     // ทดสอบคำนวนหาผู้ใช้ในบริเวณ 1 กิโลเมตร
-// const {latitude,longitude} = this.state.coords
-//     var lat = 0.0009043717330001755  //100 meter
-//     var lng = 0.0008983111750069384 //100 meter
+    // const {latitude,longitude} = this.state.coords
+    //     var lat = 0.0009043717330001755  //100 meter
+    //     var lng = 0.0008983111750069384 //100 meter
 
-//     var latitudeH = latitude + (lat*10)
-//     var longitudeH = longitude + (lng*10)
+    //     var latitudeH = latitude + (lat*10)
+    //     var longitudeH = longitude + (lng*10)
 
-//     var latitudeL = latitude - (lat*10)
-//     var longitudeL = longitude - (lng*10)
+    //     var latitudeL = latitude - (lat*10)
+    //     var longitudeL = longitude - (lng*10)
 
-// console.log(`
-// latitudeH: ${latitudeH}
-// longitudeH: ${longitudeH}
+    // console.log(`
+    // latitudeH: ${latitudeH}
+    // longitudeH: ${longitudeH}
 
-// latitude: ${latitude}
-// longitude: ${longitude}
+    // latitude: ${latitude}
+    // longitude: ${longitude}
 
-// latitudeL: ${latitudeL}
-// longitudeL: ${longitudeL}`);
+    // latitudeL: ${latitudeL}
+    // longitudeL: ${longitudeL}`);
 
 
     // var test =[
@@ -90,12 +90,12 @@ export class Maps extends React.Component {
     //             lng:100.73578979999999
     //             },
     // ]
-   
+
     // for (var i = 0; i < test.length; i++) {
 
     //   if(((test[i].lat >= latitudeL) && (test[i].lng >= longitudeL)) && ((test[i].lat <= latitudeH) && (test[i].lng <= longitudeH)) ) {
     //     console.log(`in lat: ${test[i].lat} lng: ${test[i].lng}`);
-        
+
     //   }else {console.log(`out lat: ${test[i].lat} lng: ${test[i].lng}`);}
     // }
 
@@ -105,7 +105,7 @@ export class Maps extends React.Component {
     //    let gps2 = new GPS(num.lat,num.lng)
     //     console.log(`in lat: ${num.lat} lng: ${num.lng}
     //     ${findDistance(gps1,gps2)} เมตร`);
-        
+
     //   }else {
     //     let gps1 = new GPS(latitude,longitude)
     //    let gps2 = new GPS(num.lat,num.lng)
@@ -113,8 +113,8 @@ export class Maps extends React.Component {
     //     ${findDistance(gps1,gps2)} เมตร`);
     //   }
     // }) 
-    
-    
+
+
 
     // connect google map apis
 
@@ -125,7 +125,7 @@ export class Maps extends React.Component {
     this._gapi = window.google;
 
     // check geolocation
-   
+
 
   }
 
@@ -134,26 +134,26 @@ export class Maps extends React.Component {
   initMap = () => {
     // Create A Map
 
-if(this.state.coords.latitude === undefined && this.state.coords.longitude === undefined) {
-console.log(123);
+    if (this.state.coords.latitude === undefined && this.state.coords.longitude === undefined) {
+      // console.log(123);
 
-}else {
-  
-  this.map = new window.google.maps.Map(document.getElementById('map'), {
-    center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-    zoom: 13,
-    disableDefaultUI: true,
-    styles: [{
-      featureType: 'poi.business',
-      stylers: [{ visibility: 'on' }]
-    },
-    {
-      featureType: 'transit',
-      elementType: 'labels.icon',
-      stylers: [{ visibility: 'off' }]
-    }]
-  })
-}
+    } else {
+
+      this.map = new window.google.maps.Map(document.getElementById('map'), {
+        center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+        zoom: 13,
+        disableDefaultUI: true,
+        styles: [{
+          featureType: 'poi.business',
+          stylers: [{ visibility: 'on' }]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'labels.icon',
+          stylers: [{ visibility: 'off' }]
+        }]
+      })
+    }
 
     //     var lat = (14.0314716 - (0.0009043717330001755 * 10)) + (0.0009043717330001755 * 10)
     //     var lng = (100.7357462 - (0.0008983111750069384 * 10)) + (0.0008983111750069384 * 10)
@@ -397,7 +397,7 @@ console.log(123);
     this.searchMapsDiv.style.width = '-webkit-fill-available'
 
     // setting call ui
-    this.centerControl = new searchMaps(this.searchMapsDiv, this.map,new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    this.centerControl = new searchMaps(this.searchMapsDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(this.searchMapsDiv);
@@ -418,7 +418,7 @@ console.log(123);
 
     this.centerControl = new sameWayNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
 
-this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
+    this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
 
     this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
@@ -429,6 +429,22 @@ this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
+
+    // -----------------------------------------------------
+
+    // -----------------------------------------------------
+
+    // รัสมีรอบๆ location 1 กิโลเมตร
+    var circle = new window.google.maps.Circle({
+      strokeColor: '#72c6f57a',
+      strokeOpacity: 0.8,
+      strokeWeight: 1,
+      fillColor: '#72c6f57a',
+      fillOpacity: 0.35,
+      map: this.map,
+      center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      radius: Math.sqrt(100) * 100
+    });
 
 
     // -------------------------------------------------------
@@ -441,13 +457,13 @@ this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this
 
     this.Popup = createPopupClass();
     this.popup = new this.Popup(
-     new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
       // this.state.position,
       document.createElement("div"),
       this.state.dataSignIn.photoURL,
       // this.state.navigator
     )
-console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
 
     this.popup.setMap(this.map);
@@ -475,8 +491,8 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
 
     writeUserData(uid, displayName, email, photoURL)
 
-      
-   
+
+
 
 
     return (
@@ -491,7 +507,7 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
         <SidenavNearbyUsersUI {...state} />
         <SidenavSearchLocationNearbyUsersUI {...state} />
         <SidenavSameWayNearbyUsersUI {...state} />
-        </div>
+      </div>
     )
   }
 }

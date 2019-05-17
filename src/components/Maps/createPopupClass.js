@@ -15,6 +15,8 @@ function createPopupClass() {
         this.content = content
         this.navigator = navigator
 
+        
+
         this.popupImg = document.createElement('img');
 
         // set attribute 
