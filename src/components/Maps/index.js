@@ -453,32 +453,57 @@ export class Maps extends React.Component {
     // ---------------------------------------------------------
 
     // icon profile
+
+    // โชว์ผู้ใช้งาน บริเวณใกล้เคียง 1 กิโลเมตร
     this.popupMapsDiv = document.createElement("div")
-    firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
-      this.Popup = createPopupClass();
-      this.popup = new this.Popup(
-        new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-        // this.state.position,
-        document.createElement("div"),
-        snapshot.child('photoURL').val(),
 
-        this.setState({
-          user: {
-            displayName: snapshot.child('displayName').val(),
-            phoneNumber: snapshot.child('phoneNumber').val(),
-            photoURL: snapshot.child('photoURL').val(),
-            userId: snapshot.child('userId').val()
-          }
-        })
-        // this.state.navigator
-      )
-      // console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    firebase.database().ref(`location/`).once("value").then((snapshot) => {
+      const { latitude, longitude } = this.state.coords
+      const map = this.map
+      const database = firebase.database()
+      var lat = 0.0009043717330001755  //100 meter
+      var lng = 0.0008983111750069384 //100 meter
 
+      var latitudeH = latitude + (lat * 10)
+      var longitudeH = longitude + (lng * 10)
 
-      this.popup.setMap(this.map);
-      console.log(snapshot.val());
+      var latitudeL = latitude - (lat * 10)
+      var longitudeL = longitude - (lng * 10)
+      snapshot.forEach((childSnapshot) => {
+        var key = childSnapshot.key;
+        var childData = childSnapshot.val();
+        if (((childData.lat >= latitudeL) && (childData.lng >= longitudeL)) && ((childData.lat <= latitudeH) && (childData.lng <= longitudeH))) {
 
+          var gps1 = new GPS(latitude, longitude)
+          var gps2 = new GPS(childData.lat, childData.lng)
+          console.log(`in lat: ${childData.lat} lng: ${childData.lng}
+          ${findDistance(gps1, gps2)} เมตร`);
+
+          database.ref(`users/${childData.location_id}`).once("value").then((snapshot) => {
+            var Popup = createPopupClass();
+            var popup = new Popup(
+              new window.google.maps.LatLng(childData.lat, childData.lng),
+              document.createElement("div"),
+              snapshot.child('photoURL').val(),
+            )
+            popup.setMap(map);
+            console.log(snapshot.child('photoURL').val());
+
+          })
+        }
+      })
     })
+
+
+
+
+    // console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+
+
+    // this.popup.setMap(this.map);
+    // console.log(snapshot.val());
+
+
 
 
 
@@ -489,8 +514,8 @@ export class Maps extends React.Component {
 
     geocodeLatLng(this.state.dataSignIn.uid, this.state.coords)
 
-
   }
+
 
 
 
