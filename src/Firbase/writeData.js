@@ -3,20 +3,42 @@ import React from 'react'
 import * as firebase from 'firebase'
 import firebaseApp from './firebaseApp'
 
-export function writeUserData(userId, name, email, imageUrl) {
-    firebaseApp.database().ref(`users/${userId}`).set({
-        userId: userId,
-        username: name,
-        email: email,
-        profile_picture: imageUrl,
-        location: {}
-    }, function (error) {
-        if (error) {
-            console.log(error);
-        } else {
-            // Data saved successfully!
+export function writeUserData(userId, displayName, email, photoURL,phoneNumber) {
+
+    if(displayName === null && email === null && photoURL === null) {
+        firebaseApp.database().ref(`users/${userId}`).set({
+            userId: userId,
+            displayName: phoneNumber,
+            email: email,
+            photoURL: "https://img.icons8.com/metro/52/000000/gender-neutral-user.png",
+            phoneNumber:phoneNumber
+        }, function (error) {
+            if (error) {
+                console.log(error);
+            } else {
+                // Data saved successfully!
+            }
+        });  
+
+        // console.log(`displayName: ${displayName}`);
+        
+    }else {
+
+        firebaseApp.database().ref(`users/${userId}`).set({
+            userId: userId,
+            displayName: displayName,
+            email: email,
+            photoURL: photoURL,
+            phoneNumber:phoneNumber
+        }, function (error) {
+            if (error) {
+                console.log(error);
+            } else {
+                // Data saved successfully!
+            }
         }
-    });
+        );
+    }
 
 
 }

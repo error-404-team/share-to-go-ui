@@ -14,19 +14,34 @@ export function closeNavNearbyUsers() {
 class SidenavNearbyUsersUI extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {...props}
+        this.state = {...props,user:{},location:{}}
+    }
+    componentDidMount() {
+        firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+          
+              this.setState({
+                user: {
+                  displayName: snapshot.child('displayName').val(),
+                  phoneNumber: snapshot.child('phoneNumber').val(),
+                  photoURL: snapshot.child('photoURL').val(),
+                  userId: snapshot.child('userId').val()
+                }
+              })
+          })
+      
+          firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+            this.setState({
+              location: {
+                lat: snapshot.child('lat').val(),
+                lng: snapshot.child('lng').val(),
+                location_id: snapshot.child('location_id').val(),
+                location_name: snapshot.child('location_name').val(),
+                place_id: snapshot.child('place_id').val(),
+              }
+            })
+          })
     }
 
-    componentDidMount() {
-        firebase.database().ref(`location/${this.state.dataSignIn.uid}`).on('value',  (snapshot) => {
-            // updateStarCount(postElement, snapshot.val());
-          //  location.push(snapshot)
-      
-            this.setState({location_name:snapshot.val().location_name})
-            // console.log(snapshot.val().location);
-            // console.log(Object.keys(snapshot.val()).length);
-          });
-    }
 
     render() {
         const fullWidth = window.innerWidth;
@@ -51,9 +66,9 @@ class SidenavNearbyUsersUI extends React.Component {
                     className="mm-navbars_top-nearby-users"
                 >
                     <div className="mm-navbar-nearby-users mm-navbar_size-2-nearby-users">
-                        <img src={this.state.dataSignIn.photoURL} />
-                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.dataSignIn.displayName} </span>
-                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.location_name} </span>
+                        <img src={this.state.user.photoURL} />
+                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.user.displayName} </span>
+                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.location.location_name} </span>
                     </div>
 
                 </div>

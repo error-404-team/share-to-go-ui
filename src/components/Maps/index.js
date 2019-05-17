@@ -454,19 +454,33 @@ export class Maps extends React.Component {
 
     // icon profile
     this.popupMapsDiv = document.createElement("div")
+    firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+      this.Popup = createPopupClass();
+      this.popup = new this.Popup(
+        new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+        // this.state.position,
+        document.createElement("div"),
+        snapshot.child('photoURL').val(),
 
-    this.Popup = createPopupClass();
-    this.popup = new this.Popup(
-      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-      // this.state.position,
-      document.createElement("div"),
-      this.state.dataSignIn.photoURL,
-      // this.state.navigator
-    )
-    // console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+        this.setState({
+          user: {
+            displayName: snapshot.child('displayName').val(),
+            phoneNumber: snapshot.child('phoneNumber').val(),
+            photoURL: snapshot.child('photoURL').val(),
+            userId: snapshot.child('userId').val()
+          }
+        })
+        // this.state.navigator
+      )
+      // console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
 
-    this.popup.setMap(this.map);
+      this.popup.setMap(this.map);
+      console.log(snapshot.val());
+
+    })
+
+
 
     this._gapi = window.google;
     this.setState({ google: this._gapi, map: this.map })
@@ -483,13 +497,13 @@ export class Maps extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { uid, displayName, email, photoURL } = this.state.dataSignIn
+    const { uid, displayName, email, photoURL, phoneNumber } = this.state.dataSignIn
     const { state } = this
     // // set database
 
     const location = []
 
-    writeUserData(uid, displayName, email, photoURL)
+    writeUserData(uid, displayName, email, photoURL, phoneNumber)
 
 
 
