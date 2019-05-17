@@ -60,6 +60,15 @@ class SidenavUI extends React.Component {
                     </div>
 
                 </div>
+                <div style={{
+                    textAlign: "center", 
+                    marginTop: "20px",
+                    color: "aliceblue",
+                    fontSize: "22px"
+                     }}>
+                    <span>สร้างการแชร์เส้นทาง</span>
+                    </div>
+    
                 <div className="mm-panels-menu">
                     <div id="panel-menu" className="mm-panel-menu mm-panel_opened-menu" style={{
                         WebkitTransform: 'translate3d(0,0,0)',

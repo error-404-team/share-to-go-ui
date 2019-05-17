@@ -137,7 +137,10 @@ class App extends React.Component {
                         <Maps {...state} >
                             {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
 
-                            <a className="mm-listitem__text-menu" onClick={() => firebaseApp.auth().signOut()} >Sign Out</a>
+                            <a 
+                            className="mm-listitem__text-menu" 
+                            onClick={() => firebaseApp.auth().signOut()} 
+                            >ออกจากระบบ</a>
 
                         </Maps>
                         {/* <RoutePages /> */}
