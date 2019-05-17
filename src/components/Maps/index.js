@@ -18,6 +18,7 @@ import SidenavNearbyUsersUI from './SidenavPushNearbyUsers'
 import SidenavSearchLocationNearbyUsersUI from './SidenavPushSearchLocationNearbyUsers'
 import SidenavSameWayNearbyUsersUI from './SidenavPushSameWayNearbyUsers'
 import { geocodeLatLng } from './ReverseGeocoding'
+import {GPS,findDistance} from './lib/gps'
 
 import './hiddenGoogle.css'
 
@@ -45,23 +46,75 @@ export class Maps extends React.Component {
 
   componentDidMount() {
 
-    // var lat = 0.0009043717330001755  //100 meter
-    // var lng = 0.0008983111750069384 //100 meter
+    // ทดสอบคำนวนหาผู้ใช้ในบริเวณ 1 กิโลเมตร
+// const {latitude,longitude} = this.state.coords
+//     var lat = 0.0009043717330001755  //100 meter
+//     var lng = 0.0008983111750069384 //100 meter
+
+//     var latitudeH = latitude + (lat*10)
+//     var longitudeH = longitude + (lng*10)
+
+//     var latitudeL = latitude - (lat*10)
+//     var longitudeL = longitude - (lng*10)
+
+// console.log(`
+// latitudeH: ${latitudeH}
+// longitudeH: ${longitudeH}
+
+// latitude: ${latitude}
+// longitude: ${longitude}
+
+// latitudeL: ${latitudeL}
+// longitudeL: ${longitudeL}`);
+
+
+    // var test =[
+    //   {
+    //     lat: 13.9923454,
+    //     lng:100.6515081
+    //     },
+    //     {
+    //       lat: 14.0013526,
+    //       lng:100.7192114
+    //       },
+    //       {
+    //         lat: 14.0018778,
+    //         lng:100.7511847
+    //         },
+    //         {
+    //           lat: 14.0018778,
+    //           lng:100.7511847
+    //           },
+    //           {
+    //             lat: 14.031384,
+    //             lng:100.73578979999999
+    //             },
+    // ]
    
-  
-//  firebase.database().ref(`users/${this.state.dataSignIn.uid}`).on('value',  (snapshot) => {
-//       // updateStarCount(postElement, snapshot.val());
-//       var location = snapshot.val().location.postion
+    // for (var i = 0; i < test.length; i++) {
 
-//       this.setState({location:location})
-//       console.log(snapshot.val().location);
-//       // console.log(Object.keys(snapshot.val()).length);
+    //   if(((test[i].lat >= latitudeL) && (test[i].lng >= longitudeL)) && ((test[i].lat <= latitudeH) && (test[i].lng <= longitudeH)) ) {
+    //     console.log(`in lat: ${test[i].lat} lng: ${test[i].lng}`);
+        
+    //   }else {console.log(`out lat: ${test[i].lat} lng: ${test[i].lng}`);}
+    // }
 
-//     });
+    // test.map(num => {
+    //   if(((num.lat >= latitudeL) && (num.lng >= longitudeL)) && ((num.lat <= latitudeH) && (num.lng <= longitudeH)) ) {
+    //    let gps1 = new GPS(latitude,longitude)
+    //    let gps2 = new GPS(num.lat,num.lng)
+    //     console.log(`in lat: ${num.lat} lng: ${num.lng}
+    //     ${findDistance(gps1,gps2)} เมตร`);
+        
+    //   }else {
+    //     let gps1 = new GPS(latitude,longitude)
+    //    let gps2 = new GPS(num.lat,num.lng)
+    //     console.log(`out lat: ${num.lat} lng: ${num.lng}
+    //     ${findDistance(gps1,gps2)} เมตร`);
+    //   }
+    // }) 
     
     
-  
-
 
     // connect google map apis
 
@@ -417,7 +470,13 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
     const { uid, displayName, email, photoURL } = this.state.dataSignIn
     const { state } = this
     // // set database
+
+    const location = []
+
     writeUserData(uid, displayName, email, photoURL)
+
+      
+   
 
 
     return (
@@ -426,7 +485,7 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
           {/* <div id="content"></div> */}
         </Map>
         {/* <InputSearch /> */}
-        <SidenavMenuUI {...state}>
+        <SidenavMenuUI {...state} >
           {this.props.children}
         </SidenavMenuUI>
         <SidenavNearbyUsersUI {...state} />
