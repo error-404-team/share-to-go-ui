@@ -53,6 +53,7 @@ class SidenavSearchLocationNearbyUsersUI extends React.Component {
                     <div className="mm-navbar-search-location-nearby-users mm-navbar_size-2-search-location-nearby-users">
                         <img src={this.state.dataSignIn.photoURL} />
                         <span style={{ display: "block", fontSize: "18px" }}>{this.state.dataSignIn.displayName} </span>
+                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.location_name} </span>
                     </div>
 
                 </div>
