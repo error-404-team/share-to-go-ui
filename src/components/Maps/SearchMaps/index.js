@@ -2,7 +2,8 @@ import React from 'react'
 import * as firebase from 'firebase'
 import createPopupClass from '../createPopupClass'
 import {GPS,findDistance} from '../lib/gps'
-import { openNav } from '../../SidenavPushMenu'
+import { openNav } from '../SidenavPushMenu'
+import {writeSearchLocationNearbyUsersData,writeDestinationUsersData} from '../../../Firebase/writeData'
 import './styles/InputSearch.css'
 import './styles/MuiToolbar.css'
 import './styles/MuiPaper.css'
@@ -16,7 +17,7 @@ import './styles/MuiButtonBase.css'
 import './styles/infoWindow.css'
 import '../hiddenGoogle.css'
 
-function searchMap(el, map, position) {
+function searchMap(el, map, position, user) {
   this.element = el
   this.map = map
   this.position = position
@@ -319,6 +320,16 @@ function searchMap(el, map, position) {
             popup.setMap(map);
             console.log(snapshot.child('photoURL').val());
 
+            writeSearchLocationNearbyUsersData(
+              childData.location_id,
+              snapshot.child('displayName').val(),
+              snapshot.child('photoURL').val(),
+              snapshot.child('email').val(),
+              new window.google.maps.LatLng(childData.lat, childData.lng),
+              childData.location_name,
+              childData.place_id
+              )
+
           })
         }
       })
@@ -483,6 +494,12 @@ function searchMap(el, map, position) {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
         console.log(response);
+
+        writeDestinationUsersData(
+          user.uid,
+          response.routes[0].legs[0].end_location,
+          response.routes[0].legs[0].end_address
+          )
 
         console.log(response.routes[0].legs[0].distance.value / 1000 + ' กม.');
        

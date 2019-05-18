@@ -12,7 +12,7 @@ import searchLocationNearByUsersBtn from './SearchLocationNearbyUsers'
 import sameWayNearByUsersBtn from './SameWayNearbyUsers'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
-import { writeUserData, writeLocationPrivateData } from '../../Firbase/writeData'
+import { writeUserData,writeLocationNearbyUsersData, writeLocationPrivateData } from '../../Firebase/writeData'
 import SidenavMenuUI from './SidenavPushMenu'
 import SidenavNearbyUsersUI from './SidenavPushNearbyUsers'
 import SidenavSearchLocationNearbyUsersUI from './SidenavPushSearchLocationNearbyUsers'
@@ -397,7 +397,12 @@ export class Maps extends React.Component {
     this.searchMapsDiv.style.width = '-webkit-fill-available'
 
     // setting call ui
-    this.centerControl = new searchMaps(this.searchMapsDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    this.centerControl = new searchMaps(
+      this.searchMapsDiv, 
+      this.map, 
+      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      this.state.dataSignIn
+      );
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(this.searchMapsDiv);
@@ -486,8 +491,19 @@ export class Maps extends React.Component {
               document.createElement("div"),
               snapshot.child('photoURL').val(),
             )
+            
             popup.setMap(map);
             console.log(snapshot.child('photoURL').val());
+
+            writeLocationNearbyUsersData(
+              childData.location_id,
+              snapshot.child('displayName').val(),
+              snapshot.child('photoURL').val(),
+              snapshot.child('email').val(),
+              new window.google.maps.LatLng(childData.lat, childData.lng),
+              childData.location_name,
+              childData.place_id
+              )
 
           })
         }

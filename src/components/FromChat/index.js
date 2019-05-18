@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import InputChat from './InputChat'
 import ListChat from './ListChat'
-import firebaseApp from '../../Firbase/firebaseApp'
+import firebaseApp from '../../Firebase/firebaseApp'
 
 
 class ChatFrom extends Component {

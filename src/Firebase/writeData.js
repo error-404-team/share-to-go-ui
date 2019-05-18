@@ -64,6 +64,43 @@ export function writeLocationPrivateData(userId, position, location_name, place_
 
 }
 
+export function writeLocationNearbyUsersData(userId,displayName,photoURL, email, position, location_name, place_id) {
+    firebaseApp.database().ref(`location_near_by_users/${userId}/`).set({
+        location_id: userId,
+        lat: position.lat(),
+        lng: position.lng(),
+        location_name: location_name,
+        place_id: place_id,
+        displayName:displayName,
+        photoURL: photoURL,
+        email:email
+    }
+    );
+}
+
+export function writeSearchLocationNearbyUsersData(userId,displayName,photoURL, email, position, location_name, place_id) {
+    firebaseApp.database().ref(`search_location_near_by_users/${userId}/`).set({
+        location_id: userId,
+        lat: position.lat(),
+        lng: position.lng(),
+        location_name: location_name,
+        place_id: place_id,
+        displayName:displayName,
+        photoURL: photoURL,
+        email:email
+    }
+    );
+}
+
+export function writeDestinationUsersData(userId,position, end_address) {
+    firebaseApp.database().ref(`destination_users/${userId}/`).set({
+        location_id: userId,
+        lat: position.lat(),
+        lng: position.lng(),
+        end_address: end_address
+    }
+    );
+}
 
 export function writeCreateGroupShareData(userId, user, startLocation, endLocation, timeStart, timeEnd, postTime, num) {
     firebaseApp.database().ref(`group_share/hg${userId}`).set({

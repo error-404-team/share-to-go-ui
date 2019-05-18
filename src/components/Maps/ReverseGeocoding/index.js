@@ -1,5 +1,5 @@
 import React from 'react'
-import { writeLocationPrivateData } from '../../../Firbase/writeData'
+import { writeLocationPrivateData } from '../../../Firebase/writeData'
 
 
 
