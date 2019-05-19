@@ -43,12 +43,12 @@ export function writeUserData(userId, displayName, email, photoURL,phoneNumber) 
 
 }
 
-export function writeLocationPrivateData(userId, position, location_name, place_id) {
+export function writeLocationPrivateData(userId, position, name_address, place_id) {
     firebaseApp.database().ref(`location/${userId}/`).set({
         location_id: userId,
         lat: position.lat,
         lng: position.lng,
-        location_name: location_name,
+        name_address: name_address,
         place_id: place_id
     }
     );
@@ -58,19 +58,18 @@ export function writeLocationPrivateData(userId, position, location_name, place_
 //         lat:${position.lat},
 //         lng:${position.lng}
 //     },
-//     formatted_address:${location_name},
+//     formatted_address:${name_address},
 //     place_id:${place_id}
 // }`);
 
 }
 
-export function writeLocationNearbyUsersData(userId,displayName,photoURL, email, position, location_name, place_id) {
-    firebaseApp.database().ref(`location_near_by_users/${userId}/`).set({
+export function writeLocationNearbyUsersData(userId,displayName,photoURL, email, position, name_address) {
+    firebaseApp.database().ref(`location_near_by_users/${userId}`).set({
         location_id: userId,
         lat: position.lat(),
         lng: position.lng(),
-        location_name: location_name,
-        place_id: place_id,
+        name_address: name_address,
         displayName:displayName,
         photoURL: photoURL,
         email:email
@@ -78,13 +77,28 @@ export function writeLocationNearbyUsersData(userId,displayName,photoURL, email,
     );
 }
 
-export function writeSearchLocationNearbyUsersData(userId,displayName,photoURL, email, position, location_name, place_id) {
+export function writeSearchLocationNearbyUsersData(userId,displayName,photoURL, email, position, name_address) {
     firebaseApp.database().ref(`search_location_near_by_users/${userId}/`).set({
         location_id: userId,
         lat: position.lat(),
         lng: position.lng(),
-        location_name: location_name,
-        place_id: place_id,
+        name_address: name_address,
+        displayName:displayName,
+        photoURL: photoURL,
+        email:email
+    }
+    );
+}
+
+export function writeShareMyWayNearbyUsersData(userId,displayName,photoURL, email, start_position,end_position, start_address, end_address) {
+    firebaseApp.database().ref(`search_location_near_by_users/${userId}/`).set({
+        location_id: userId,
+        start_lat: start_position.lat(),
+        start_lng: start_position.lng(),
+        end_lat: end_position.lat(),
+        end_lng: end_position.lng(),
+        start_address: start_address,
+        end_address: end_address,
         displayName:displayName,
         photoURL: photoURL,
         email:email
@@ -102,17 +116,19 @@ export function writeDestinationUsersData(userId,position, end_address) {
     );
 }
 
-export function writeCreateGroupShareUserData(userId, lat, lng,start_location, end_location, time_start, time_end, user_num) {
+export function writeCreateGroupShareUserData(userId, start_lat, start_lng, end_lat, end_lng,start_address, end_address, start_time, end_time, user_num) {
     firebaseApp.database().ref(`group_share_user/${userId}`).set({
         group_share_id: `${userId}`,
         user_num: user_num,
-        time_start: time_start,
-        time_end: time_end,
+        start_time: start_time,
+        end_time: end_time,
         post_time: `${new Date()}`,
-        start_location: start_location,
-        end_location: end_location,
-        lat:lat,
-        lng:lng
+        start_address: start_address,
+        end_address: end_address,
+        start_lat:start_lat,
+        start_lng:start_lng,
+        end_lat:end_lat,
+        end_lng:end_lng
 
     });
 }

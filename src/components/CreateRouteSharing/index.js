@@ -34,7 +34,7 @@ class CreateRouteSharing extends React.Component {
                     lat: snapshot.child('lat').val(),
                     lng: snapshot.child('lng').val(),
                     location_id: snapshot.child('location_id').val(),
-                    location_name: snapshot.child('location_name').val(),
+                    name_address: snapshot.child('name_address').val(),
                     place_id: snapshot.child('place_id').val(),
                 }
             })
@@ -70,7 +70,9 @@ class CreateRouteSharing extends React.Component {
                     this.state.dataSignIn.uid,
                     this.state.coords.latitude,
                     this.state.coords.longitude,
-                    this.state.location.location_name,
+                    this.state.destination_users.lat,
+                    this.state.destination_users.lng,
+                    this.state.location.name_address,
                     this.state.destination_users.end_address,
                     start_time.value,
                     end_time.value,
@@ -80,7 +82,7 @@ class CreateRouteSharing extends React.Component {
                 window.location.href = '/'
 
                 console.log(`
-                ต้นทาง: ${this.state.location.location_name}
+                ต้นทาง: ${this.state.location.name_address}
                 ปลายทาง: ${this.state.destination_users.end_address}
                 เริ่มต้น: ${start_time.value}
                 สิ้นสุด: ${end_time.value}
@@ -97,17 +99,19 @@ class CreateRouteSharing extends React.Component {
                     this.state.dataSignIn.uid,
                     this.state.coords.latitude,
                     this.state.coords.longitude,
-                    this.state.location.location_name,
+                    this.state.destination_users.lat,
+                    this.state.destination_users.lng,
+                    this.state.location.name_address,
                     this.state.destination_users.end_address,
                     start_time.value,
                     end_time.value,
-                    inlineRadioOptions[0].value
+                    inlineRadioOptions[1].value
                 )
 
                 window.location.href = '/'
 
                 console.log(`
-                ต้นทาง: ${this.state.location.location_name}
+                ต้นทาง: ${this.state.location.name_address}
                 ปลายทาง: ${this.state.destination_users.end_address}
                 เริ่มต้น: ${start_time.value}
                 สิ้นสุด: ${end_time.value}
@@ -159,7 +163,7 @@ class CreateRouteSharing extends React.Component {
                             <span>{this.state.user.displayName} </span>
                             <div>
                                 <Link to="/routes_map">
-                                    <input type="text" name="start_address" value={this.state.location.location_name} />
+                                    <input type="text" name="start_address" value={this.state.location.name_address} />
                                     <input type="text" name="end_address" value={this.state.destination_users.end_address} />
                                 </Link>
                             </div>
