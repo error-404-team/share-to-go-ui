@@ -48,11 +48,11 @@
     color: var(--mm-color-text-dimmed);
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    /* text-align: center; */
+    text-align: center;
     display: none;
     height: 44px;
     height: var(--mm-navbar-size);
-    padding: 0 44px;
+    padding: 10px 40px;
     margin: 0;
     position: absolute;
     top: 0;
@@ -117,7 +117,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 66%;
+    top: 60%;
     bottom: 0;
     z-index: 0;
 }
@@ -243,7 +243,7 @@
 .mm-listitem-create_route_sharing a, .mm-listitem-create_route_sharing a:hover {
     text-decoration: none;
 }
-.mm-listitem__text-menu {
+.mm-listitem__text-create_route_sharing {
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -256,7 +256,7 @@
     -ms-flex-preferred-size: 10%;
     flex-basis: 10%;
 }
-.mm-listitem__btn, .mm-listitem__text-menu {
+.mm-listitem__btn, .mm-listitem__text-create_route_sharing {
     color: inherit;
     display: block;
     padding-top: 12px;
