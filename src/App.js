@@ -1,5 +1,8 @@
 import React from 'react'
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router,Route } from "react-router-dom";
+
+import CreateRouteSharing from './components/CreateRouteSharing'
+import RoutesMap from './components/CreateRouteSharing/RoutesMap'
 // Firebase.
 import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
@@ -134,7 +137,7 @@ class App extends React.Component {
             <React.Fragment>
                 {this.state.isSignedIn ? (
                     <Router>
-                        <Maps {...state} >
+                        <Route path="/" exact render={ () => <Maps {...state} >
                             {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
 
                             <a 
@@ -143,6 +146,9 @@ class App extends React.Component {
                             >ออกจากระบบ</a>
 
                         </Maps>
+                        } />
+                        <Route path="/create_route_sharing" render={() => <CreateRouteSharing {...state} />} />
+                        <Route path="/routes_map" render={() => <RoutesMap {...state} /> } />
                         {/* <RoutePages /> */}
                     </Router>
                 )

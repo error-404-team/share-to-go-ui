@@ -1,0 +1,51 @@
+.overlay-create_route_sharing {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #274D7D;
+  overflow-y: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay-create_route_sharing a {
+  /* padding: 8px; */
+  text-decoration: none;
+  font-size: 36px;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay-create_route_sharing a:hover, .overlay-create_route_sharing a:focus {
+  color: #f1f1f1;
+}
+
+.overlay-create_route_sharing .closebtn-create_route_sharing {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 25px;
+  z-index: 10;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay-create_route_sharing {overflow-y: auto;}
+  .overlay-create_route_sharing a {font-size: 20px}
+  .overlay-create_route_sharing .closebtn-create_route_sharing {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+

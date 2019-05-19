@@ -555,6 +555,7 @@ export class Maps extends React.Component {
         <Map id="map" google={this.state.google}>
           {/* <div id="content"></div> */}
         </Map>
+        
         {/* <InputSearch /> */}
         <SidenavMenuUI {...state} >
           {this.props.children}
