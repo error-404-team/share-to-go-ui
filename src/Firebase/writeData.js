@@ -102,21 +102,22 @@ export function writeDestinationUsersData(userId,position, end_address) {
     );
 }
 
-export function writeCreateGroupShareData(userId, user, startLocation, endLocation, timeStart, timeEnd, postTime, num) {
-    firebaseApp.database().ref(`group_share/hg${userId}`).set({
-        groupShareId: `/hg${userId}`,
-        userNum: num,
-        time_start: timeStart,
-        time_end: timeEnd,
-        post_time: postTime,
-        start_location: startLocation,
-        end_location: endLocation,
-        group_share: [user]
+export function writeCreateGroupShareUserData(userId, lat, lng,start_location, end_location, time_start, time_end, user_num) {
+    firebaseApp.database().ref(`group_share_user/${userId}`).set({
+        group_share_id: `${userId}`,
+        user_num: user_num,
+        time_start: time_start,
+        time_end: time_end,
+        post_time: `${new Date()}`,
+        start_location: start_location,
+        end_location: end_location,
+        lat:lat,
+        lng:lng
 
     });
 }
 
 export function addUserToGroupShareData(userId, user) {
-    firebaseApp.database().ref(`group_share/hg${userId}/group_share`).push(user);
+    firebaseApp.database().ref(`group_shareuserId/group_share`).push(user);
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import * as firebase from 'firebase'
 import { Route, Link } from "react-router-dom";
+import { writeCreateGroupShareUserData } from '../../Firebase/writeData'
 import RoutesMap from './RoutesMap'
 import './styles/menuProfile.css'
 import './styles/mySidenav.css'
@@ -10,9 +11,11 @@ class CreateRouteSharing extends React.Component {
     constructor(props) {
         super(props)
         this.state = { ...props, user: {}, location: {}, destination_users: {} }
+
+        this.createShare = this.createShare.bind(this)
     }
     componentDidMount() {
-
+        document.getElementById('inlineRadio1').checked = true
         firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
 
             this.setState({
@@ -49,12 +52,82 @@ class CreateRouteSharing extends React.Component {
         })
     }
 
+    createShare = () => {
+
+        var inlineRadioOptions = document.getElementsByName('inlineRadioOptions')
+        var start_time = document.getElementById('start_time')
+        var end_time = document.getElementById('end_time')
+
+        var startDate = new Date();
+        var countDownDate = new Date("Sun May 19 2019 23:20:08 GMT+0700 (เวลาอินโดจีน)").getTime();
+        console.log(countDownDate);
+        console.log(startDate.getTime());
+
+        if (inlineRadioOptions[0].checked) {
+
+            if (start_time.value !== "" && end_time.value !== "") {
+                writeCreateGroupShareUserData(
+                    this.state.dataSignIn.uid,
+                    this.state.coords.latitude,
+                    this.state.coords.longitude,
+                    this.state.location.location_name,
+                    this.state.destination_users.end_address,
+                    start_time.value,
+                    end_time.value,
+                    inlineRadioOptions[0].value
+                )
+
+                window.location.href = '/'
+
+                console.log(`
+                ต้นทาง: ${this.state.location.location_name}
+                ปลายทาง: ${this.state.destination_users.end_address}
+                เริ่มต้น: ${start_time.value}
+                สิ้นสุด: ${end_time.value}
+                ต้องการเพื่อนร่วมทาง: ${inlineRadioOptions[0].value}คน
+                เริ่มโพสต์: ${startDate}
+                `);
+            } else {
+                window.alert('เวลาเริ่มต้นและเวลาสิ้นสุด ไม่ได้ระบุ ')
+            }
+
+        } else {
+            if (start_time.value !== "" && end_time.value !== "") {
+                writeCreateGroupShareUserData(
+                    this.state.dataSignIn.uid,
+                    this.state.coords.latitude,
+                    this.state.coords.longitude,
+                    this.state.location.location_name,
+                    this.state.destination_users.end_address,
+                    start_time.value,
+                    end_time.value,
+                    inlineRadioOptions[0].value
+                )
+
+                window.location.href = '/'
+
+                console.log(`
+                ต้นทาง: ${this.state.location.location_name}
+                ปลายทาง: ${this.state.destination_users.end_address}
+                เริ่มต้น: ${start_time.value}
+                สิ้นสุด: ${end_time.value}
+                ต้องการเพื่อนร่วมทาง: ${inlineRadioOptions[1].value}คน
+                เริ่มโพสต์: ${startDate}
+                `);
+            } else {
+                window.alert('เวลาเริ่มต้นและเวลาสิ้นสุด ไม่ได้ระบุ ')
+            }
+        }
+
+    }
+
     render() {
         const fullWidth = window.innerWidth;
         const fullHeight = window.innerHeight;
         // const {location} = this.props;
         // console.log(this.state.location);
         const { state } = this
+
 
         return (
             <div
@@ -86,8 +159,8 @@ class CreateRouteSharing extends React.Component {
                             <span>{this.state.user.displayName} </span>
                             <div>
                                 <Link to="/routes_map">
-                                    <input id="start_address" value={this.state.location.location_name} />
-                                    <input id="end_address" value={this.state.destination_users.end_address} />
+                                    <input type="text" name="start_address" value={this.state.location.location_name} />
+                                    <input type="text" name="end_address" value={this.state.destination_users.end_address} />
                                 </Link>
                             </div>
                         </div>
@@ -102,13 +175,13 @@ class CreateRouteSharing extends React.Component {
                     position: "relative",
                     zIndex: 10000
                 }}>
-                    <div style={{height: "fit-content"}}>
-                        <div  style={{ margin: "10%" }}>
+                    <div style={{ height: "fit-content" }}>
+                        <div style={{ margin: "10%" }}>
                             <h3
-                            style= {{marginBottom: "20%"}}
+                                style={{ marginBottom: "20%" }}
                             >กำหนดการเดินทาง</h3>
-                            </div>
-                        <div  style={{ margin: "10%" }}>
+                        </div>
+                        <div style={{ margin: "10%" }}>
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                     <span
@@ -120,13 +193,12 @@ class CreateRouteSharing extends React.Component {
                                     >เริ่มต้น</span>
                                     <input
                                         type="time"
-                                        readonly
                                         className="form-control-plaintext"
-                                        name="start_time"
+                                        id="start_time"
                                         style={{
                                             position: "absolute",
-                                            left: "54%",
-                                            top: "-8px",
+                                            left: "55%",
+                                            top: "-13px",
                                         }}
                                     />
                                 </div>
@@ -144,13 +216,12 @@ class CreateRouteSharing extends React.Component {
                                     >สิ้นสุด</span>
                                     <input
                                         type="time"
-                                        readonly
                                         className="form-control-plaintext"
-                                        name="end_time"
+                                        id="end_time"
                                         style={{
                                             position: "absolute",
-                                            left: "54%",
-                                            top: "-15px",
+                                            left: "55%",
+                                            top: "-13px",
                                         }}
                                     />
                                 </div>
@@ -168,24 +239,23 @@ class CreateRouteSharing extends React.Component {
                             >
                                 <div className="col-auto" >
                                     <label
-                                        for="inputEndTime"
                                         className="col-sm-2 col-form-label"
                                         style={{ marginRight: "16px" }}
                                     >ต้องการเพื่อนร่วมแชร์</label>
                                 </div>
-                                <div 
-                                className="col-auto" 
-                                style={{ marginRight: "16px" }}
+                                <div
+                                    className="col-auto"
+                                    style={{ marginRight: "16px" }}
                                 >
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-                                        <label className="form-check-label" for="inlineRadio1">1คน</label>
+                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" />
+                                        <label className="form-check-label" >1คน</label>
                                     </div>
                                 </div>
                                 <div className="col-auto" >
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-                                        <label className="form-check-label" for="inlineRadio2">2คน</label>
+                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" />
+                                        <label className="form-check-label">2คน</label>
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +272,7 @@ class CreateRouteSharing extends React.Component {
                         <ul className="mm-listview-create_route_sharing">
                             <li className="mm-listitem-create_route_sharing">
                                 <span
+                                    onClick={this.createShare}
                                     className="mm-listitem__text-create_route_sharing"
                                     style={{
                                         fontSize: "25px",
