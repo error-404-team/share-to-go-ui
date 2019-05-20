@@ -1,0 +1,50 @@
+{
+  "name": "share-to-go-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d build",
+    "deploy_branch": "gh-pages -b n-psk -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/error-404-team/share-to-go-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/error-404-team/share-to-go-ui/issues"
+  },
+  "homepage": "https://github.com/error-404-team/share-to-go-ui#readme",
+  "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "clsx": "^1.0.4",
+    "downshift": "^3.2.10",
+    "firebase": "^5.11.1",
+    "firebaseui": "^3.6.0",
+    "lodash": "^4.17.11",
+    "react": "^16.8.6",
+    "react-chat-widget": "^2.1.4-1",
+    "react-dom": "^16.8.6",
+    "react-google-map-apis": "^0.1.2",
+    "react-router-dom": "^5.0.0",
+    "react-swipeable-views": "^0.13.1",
+    "warning": "^4.0.3",
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "react-scripts": "^2.1.8"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
