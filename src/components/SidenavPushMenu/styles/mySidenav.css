@@ -1,11 +1,11 @@
-.overlay {
-  height: 0%;
+.overlay-menu {
+  height: -webkit-fill-available;
   width: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #3ba5df;
+  background-color: #274D7D;
   overflow-y: hidden;
   transition: 0.5s;
 }
@@ -18,7 +18,7 @@
   margin-top: 30px;
 }
 
-.overlay a {
+.overlay-menu a {
   padding: 8px;
   text-decoration: none;
   font-size: 36px;
@@ -27,11 +27,11 @@
   transition: 0.3s;
 }
 
-.overlay a:hover, .overlay a:focus {
+.overlay-menu a:hover, .overlay-menu a:focus {
   color: #f1f1f1;
 }
 
-.overlay .closebtn {
+.overlay-menu .closebtn-menu {
   position: absolute;
   top: 2px;
   left: 5px;
@@ -40,9 +40,9 @@
 }
 
 @media screen and (max-height: 450px) {
-  .overlay {overflow-y: auto;}
-  .overlay a {font-size: 20px}
-  .overlay .closebtn {
+  .overlay-menu {overflow-y: auto;}
+  .overlay-menu a {font-size: 20px}
+  .overlay-menu .closebtn-menu {
   font-size: 40px;
   top: 15px;
   right: 35px;

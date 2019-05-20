@@ -26,9 +26,9 @@ function mapCenterBtn(el, map, position) {
     
      // add  Attribute class i
     let iClass = document.createAttribute('class');
-    iClass.value = 'material-icons'
+    iClass.value = 'fas fa-map-pin fa-2x'
     i.setAttributeNode(iClass)
-    i.innerHTML = 'my_location'
+    // i.innerHTML = 'my_location'
     button.appendChild(i)
 
      // Setup the click event listeners: simply set the map to Chicago.

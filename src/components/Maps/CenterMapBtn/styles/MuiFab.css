@@ -49,14 +49,14 @@
   }
   .MuiFab-primary-7 {
     color: #fff;
-    background-color: #4bb5ef;
+    background-color: #1D385A;
   }
   .MuiFab-primary-7:hover {
-    background-color: #337497;
+    background-color: rgb(20, 45, 75);
   }
   @media (hover: none) {
     .MuiFab-primary-7:hover {
-      background-color: #46a4d6;
+      background-color: #1D385A;
     }
   }
   .MuiFab-secondary-8 {

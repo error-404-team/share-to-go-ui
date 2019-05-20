@@ -1,5 +1,5 @@
 import React from 'react'
-import { writeLocationPrivateData } from '../../../Firbase/writeData'
+import { writeLocationPrivateData } from '../../../Firebase/writeData'
 
 
 
@@ -14,7 +14,7 @@ const latlng = {
             if (results[0]) {
                 const formatted_address = results[0].formatted_address
                 const place_id = results[0].place_id
-                console.log(results);
+                // console.log(results);
 
                 writeLocationPrivateData(userId, latlng, formatted_address, place_id)
                 

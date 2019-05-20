@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = {
     bgColor: {
-        backgroundColor: "#0081ff",
+        backgroundColor: "#1D385A",
         width: "100%",
         borderRadius: "0px",
     }
