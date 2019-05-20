@@ -54,7 +54,10 @@ class RecipeReviewCard extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const address_input = <input style={{ width: "100%" }} className="form-control-plaintext-recipe-review-card" type="text" value={this.props.name_address} />
+        const address_input = <input style={{ width: "100%" }} className="form-control-plaintext-recipe-review-card" type="text" value={this.props.name_address !== undefined ? this.props.name_address : this.props.start_address} />
+        
+
+        
         return (
             <Card className={classes.card}>
                 <CardHeader

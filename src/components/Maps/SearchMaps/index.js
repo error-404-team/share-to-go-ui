@@ -589,9 +589,6 @@ function searchMap(el, map, position, user) {
                     popup.setMap(map);
                     console.log(snapshot.child('photoURL').val());
 
-
-
-
                     writeShareMyWayNearbyUsersData(
                       user.uid,
                       group_share_id,

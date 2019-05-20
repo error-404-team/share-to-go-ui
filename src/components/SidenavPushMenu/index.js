@@ -74,7 +74,11 @@ class SidenavUI extends React.Component {
                     color: "aliceblue",
                     fontSize: "22px"
                      }}>
-                    <Link to="/create_route_sharing">สร้างการแชร์เส้นทาง</Link>
+                    <Link
+                    style={{
+                        fontSize: "x-large"
+                    }}
+                     to="/create_route_sharing">สร้างการแชร์เส้นทาง</Link>
                     </div>
     
                 <div className="mm-panels-menu">
