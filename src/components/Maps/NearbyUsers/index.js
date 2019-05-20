@@ -1,12 +1,9 @@
 import React from 'react'
-import {openNavNearbyUsers} from '../SidenavPushNearbyUsers'
-import {closeNavSameWayNearbyUsers} from '../SidenavPushSameWayNearbyUsers'
-import {closeNavSearchLocationNearbyUsers} from '../SidenavPushSearchLocationNearbyUsers'
-import './styles/CenterMapBtn.css'
-import './styles/MuiButtonBase.css'
-import './styles/MuiFab.css'
-import './styles/MuiSvgIcon.css'
-import './styles/MuiTouchRipple.css'
+import '../styles/CenterMapBtn.css'
+import '../styles/MuiButtonBase.css'
+import '../styles/MuiFab.css'
+import '../styles/MuiSvgIcon.css'
+import '../styles/MuiTouchRipple.css'
 
 function nearbyUsersBtn(el, map, position) {
 
@@ -37,9 +34,7 @@ function nearbyUsersBtn(el, map, position) {
 
      // Setup the click event listeners: simply set the map to Chicago.
      button.addEventListener('click', function () {
-         closeNavSameWayNearbyUsers()
-         closeNavSearchLocationNearbyUsers()
-         openNavNearbyUsers()
+        window.location.href = "/near_by_users"
     });
 
 }

@@ -13,10 +13,6 @@ import sameWayNearByUsersBtn from './SameWayNearbyUsers'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
 import { writeUserData, writeLocationNearbyUsersData, writeLocationPrivateData } from '../../Firebase/writeData'
-import SidenavMenuUI from './SidenavPushMenu'
-import SidenavNearbyUsersUI from './SidenavPushNearbyUsers'
-import SidenavSearchLocationNearbyUsersUI from './SidenavPushSearchLocationNearbyUsers'
-import SidenavSameWayNearbyUsersUI from './SidenavPushSameWayNearbyUsers'
 import { geocodeLatLng } from './ReverseGeocoding'
 import { GPS, findDistance } from './lib/gps'
 
@@ -584,13 +580,6 @@ export class Maps extends React.Component {
           {/* <div id="content"></div> */}
         </Map>
 
-        {/* <InputSearch /> */}
-        <SidenavMenuUI {...state} >
-          {this.props.children}
-        </SidenavMenuUI>
-        <SidenavNearbyUsersUI {...state} />
-        <SidenavSearchLocationNearbyUsersUI {...state} />
-        <SidenavSameWayNearbyUsersUI {...state} />
       </div>
     )
   }

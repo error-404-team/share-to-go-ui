@@ -1,12 +1,9 @@
 import React from 'react'
-import {openNavSameWayNearbyUsers} from '../SidenavPushSameWayNearbyUsers'
-import {closeNavNearbyUsers} from '../SidenavPushNearbyUsers'
-import {closeNavSearchLocationNearbyUsers} from '../SidenavPushSearchLocationNearbyUsers'
-import './styles/CenterMapBtn.css'
-import './styles/MuiButtonBase.css'
-import './styles/MuiFab.css'
-import './styles/MuiSvgIcon.css'
-import './styles/MuiTouchRipple.css'
+import '../styles/CenterMapBtn.css'
+import '../styles/MuiButtonBase.css'
+import '../styles/MuiFab.css'
+import '../styles/MuiSvgIcon.css'
+import '../styles/MuiTouchRipple.css'
 
 function sameWayNearByUsersBtn(el, map, position) {
 
@@ -37,10 +34,8 @@ function sameWayNearByUsersBtn(el, map, position) {
 
      // Setup the click event listeners: simply set the map to Chicago.
      button.addEventListener('click', function () {
-        closeNavNearbyUsers()
-        closeNavSearchLocationNearbyUsers()
-        openNavSameWayNearbyUsers()
-    });
+        window.location.href = "/same_way_near_by_users"
+     })
 
 }
 

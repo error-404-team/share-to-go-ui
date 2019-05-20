@@ -2,7 +2,6 @@ import React from 'react'
 import * as firebase from 'firebase'
 import createPopupClass from '../createPopupClass'
 import { GPS, findDistance } from '../lib/gps'
-import { openNav } from '../SidenavPushMenu'
 import {
   writeSearchLocationNearbyUsersData,
   writeDestinationUsersData, writeShareMyWayNearbyUsersData
@@ -122,7 +121,7 @@ function searchMap(el, map, position, user) {
   this.button.appendChild(this.i)
 
   this.button.addEventListener('click', function () {
-    openNav()
+    window.location.href = "/menu"
   })
 
   //  --------------------------------
@@ -277,8 +276,8 @@ function searchMap(el, map, position, user) {
 
     marker.setVisible(true);
     Circle.setVisible(true);
-    
-    
+
+
 
 
     // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
@@ -330,6 +329,20 @@ function searchMap(el, map, position, user) {
                 new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
                 childData.start_address
               )
+            }
+
+          })
+        } else {
+          var gps1 = new GPS(location.lat(), location.lng())
+          var gps2 = new GPS(childData.start_lat, childData.start_lng)
+          console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
+          ${findDistance(gps1, gps2)} เมตร`);
+
+          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
+            const group_share_id = childData.group_share_id
+            if (user.uid !== group_share_id) {
+              database.ref(`search_location_near_by_users/${user.uid}`).remove()
+
             }
 
           })
@@ -564,7 +577,7 @@ function searchMap(el, map, position, user) {
                     end_lat: ${childData.start_lat} 
                     end_lng: ${childData.start_lng}
                     ${findDistance(gps1, gps2)} เมตร.`
-                        );
+                    );
 
                     var Popup = createPopupClass();
                     var popup = new Popup(
@@ -576,7 +589,7 @@ function searchMap(el, map, position, user) {
                     popup.setMap(map);
                     console.log(snapshot.child('photoURL').val());
 
-                   
+
 
 
                     writeShareMyWayNearbyUsersData(
@@ -594,6 +607,20 @@ function searchMap(el, map, position, user) {
 
                 })
               }
+            } else {
+              var gps1 = new GPS(location.lat(), location.lng())
+              var gps2 = new GPS(childData.start_lat, childData.start_lng)
+              console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
+              ${findDistance(gps1, gps2)} เมตร`);
+
+              database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
+                const group_share_id = childData.group_share_id
+                if (user.uid !== group_share_id) {
+                  database.ref(`share_my_way_near_by_users/${user.uid}`).remove()
+
+                }
+
+              })
             }
           })
         })
