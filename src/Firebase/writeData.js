@@ -64,9 +64,9 @@ export function writeLocationPrivateData(userId, position, name_address, place_i
 
 }
 
-export function writeLocationNearbyUsersData(userId,displayName,photoURL, email, position, name_address) {
-    firebaseApp.database().ref(`location_near_by_users/${userId}`).set({
-        location_id: userId,
+export function writeLocationNearbyUsersData(userId,group_share_id,displayName,photoURL, email, position, name_address) {
+    firebaseApp.database().ref(`location_near_by_users/${userId}/${group_share_id}`).set({
+        group_share_id: group_share_id,
         lat: position.lat(),
         lng: position.lng(),
         name_address: name_address,
@@ -77,9 +77,9 @@ export function writeLocationNearbyUsersData(userId,displayName,photoURL, email,
     );
 }
 
-export function writeSearchLocationNearbyUsersData(userId,displayName,photoURL, email, position, name_address) {
-    firebaseApp.database().ref(`search_location_near_by_users/${userId}/`).set({
-        location_id: userId,
+export function writeSearchLocationNearbyUsersData(userId,group_share_id,displayName,photoURL, email, position, name_address) {
+    firebaseApp.database().ref(`search_location_near_by_users/${userId}/${group_share_id}`).set({
+        group_share_id: group_share_id,
         lat: position.lat(),
         lng: position.lng(),
         name_address: name_address,
@@ -90,9 +90,9 @@ export function writeSearchLocationNearbyUsersData(userId,displayName,photoURL, 
     );
 }
 
-export function writeShareMyWayNearbyUsersData(userId,displayName,photoURL, email, start_position,end_position, start_address, end_address) {
-    firebaseApp.database().ref(`search_location_near_by_users/${userId}/`).set({
-        location_id: userId,
+export function writeShareMyWayNearbyUsersData(userId,group_share_id,displayName,photoURL, email, start_position,end_position, start_address, end_address) {
+    firebaseApp.database().ref(`search_location_near_by_users/${userId}/${group_share_id}`).set({
+        group_share_id: group_share_id,
         start_lat: start_position.lat(),
         start_lng: start_position.lng(),
         end_lat: end_position.lat(),

@@ -523,6 +523,7 @@ export class Maps extends React.Component {
               console.log(snapshot.child('photoURL').val());
 
               writeLocationNearbyUsersData(
+                uid,
                 group_share_id,
                 snapshot.child('displayName').val(),
                 snapshot.child('photoURL').val(),

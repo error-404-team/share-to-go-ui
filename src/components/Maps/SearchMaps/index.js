@@ -254,6 +254,7 @@ function searchMap(el, map, position, user) {
 
   autocomplete.addListener('place_changed', function () {
     infowindow.close();
+    Circle.setVisible(false);
     marker.setVisible(false);
     var place = autocomplete.getPlace();
     if (!place.geometry) {
@@ -271,22 +272,13 @@ function searchMap(el, map, position, user) {
       map.setZoom(17);  // Why 17? Because it looks good.
     }
     marker.setPosition(place.geometry.location);
-
+    Circle.setCenter(place.geometry.location);
     // console.log(place.geometry.location);
 
     marker.setVisible(true);
-
-    // วงรอบพื้นที่ 1 กิโลเมตร
-    var Circle = new window.google.maps.Circle({
-      strokeColor: '#fb6a5fb0',
-      strokeOpacity: 0.8,
-      strokeWeight: 1,
-      fillColor: '#fb6a5fb0',
-      fillOpacity: 0.35,
-      map: map,
-      center: place.geometry.location,
-      radius: Math.sqrt(100) * 100
-    });
+    Circle.setVisible(true);
+    
+    
 
 
     // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
@@ -330,6 +322,7 @@ function searchMap(el, map, position, user) {
               console.log(snapshot.child('photoURL').val());
 
               writeSearchLocationNearbyUsersData(
+                user.uid,
                 group_share_id,
                 snapshot.child('displayName').val(),
                 snapshot.child('photoURL').val(),
@@ -385,6 +378,17 @@ function searchMap(el, map, position, user) {
   var marker = new window.google.maps.Marker({
     map: map,
     anchorPoint: new window.google.maps.Point(0, -29)
+  });
+
+  // วงรอบพื้นที่ 1 กิโลเมตร
+  var Circle = new window.google.maps.Circle({
+    strokeColor: '#fb6a5fb0',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: '#fb6a5fb0',
+    fillOpacity: 0.35,
+    map: map,
+    radius: Math.sqrt(100) * 100
   });
 
   // all tag div
@@ -576,6 +580,7 @@ function searchMap(el, map, position, user) {
 
 
                     writeShareMyWayNearbyUsersData(
+                      user.uid,
                       group_share_id,
                       snapshot.child('displayName').val(),
                       snapshot.child('photoURL').val(),
