@@ -85,7 +85,7 @@ class App extends React.Component {
             });
             // console.log(user);
 
-
+window.location.href = "/share-to-go-ui/"
 
         });
         // firebaseui-list-item
@@ -146,18 +146,18 @@ class App extends React.Component {
                         <Switch>
                             <Route path="/share-to-go-ui/" exact render={() => <Maps {...state} />
                             } />
-                            <Route path="/share-to-go-ui/create_route_sharing" render={() => <CreateRouteSharing {...state} />} />
-                            <Route path="/share-to-go-ui/routes_map" render={() => <RoutesMap {...state} />} />
-                            <Route path="/share-to-go-ui/menu" render={() => <SidenavPushMenu {...state} >
+                            <Route path="/share-to-go-ui/CreateRouteSharing" render={() => <CreateRouteSharing {...state} />} />
+                            <Route path="/share-to-go-ui/RoutesMap" render={() => <RoutesMap {...state} />} />
+                            <Route path="/share-to-go-ui/Menu" render={() => <SidenavPushMenu {...state} >
                                 <Link
                                     to="/share-to-go-ui/"
                                     className="mm-listitem__text-menu"
                                     onClick={() => firebaseApp.auth().signOut()}
                                 >ออกจากระบบ</Link>
                             </SidenavPushMenu>} />
-                            <Route path="/share-to-go-ui/near_by_users" render={() => <SidenavPushNearbyUsers {...state} />} />
-                            <Route path="/share-to-go-ui/same_way_near_by_users" render={() => <SidenavPushSameWayNearbyUsers {...state} />} />
-                            <Route path="/share-to-go-ui/search_location_near_by_users" render={() => <SidenavPushSearchLocationNearbyUsers {...state} />} />
+                            <Route path="/share-to-go-ui/NearByUsers" render={() => <SidenavPushNearbyUsers {...state} />} />
+                            <Route path="/share-to-go-ui/SameWayNearByUsers" render={() => <SidenavPushSameWayNearbyUsers {...state} />} />
+                            <Route path="/share-to-go-ui/SearchLocationNearByUsers" render={() => <SidenavPushSearchLocationNearbyUsers {...state} />} />
                             {/* <RoutePages /> */}
                         </Switch>
                     </Router>
