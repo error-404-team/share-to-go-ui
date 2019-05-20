@@ -457,15 +457,17 @@ export class Maps extends React.Component {
 
     // ---------------------------------------------------------
 
+    firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
 
-    var Popup = createPopupClass();
-    var popup = new Popup(
-      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-      document.createElement("div"),
-      this.state.dataSignIn.photoURL,
-    )
-
-    popup.setMap(this.map);
+      var Popup = createPopupClass();
+      var popup = new Popup(
+        new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+        document.createElement("div"),
+        snapshot.child('photoURL').val(),
+        )
+        
+        popup.setMap(this.map);
+      })
 
     // icon profile
 
