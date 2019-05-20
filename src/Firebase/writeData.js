@@ -91,7 +91,7 @@ export function writeSearchLocationNearbyUsersData(userId,group_share_id,display
 }
 
 export function writeShareMyWayNearbyUsersData(userId,group_share_id,displayName,photoURL, email, start_position,end_position, start_address, end_address) {
-    firebaseApp.database().ref(`search_location_near_by_users/${userId}/${group_share_id}`).set({
+    firebaseApp.database().ref(`share_my_way_near_by_users/${userId}/${group_share_id}`).set({
         group_share_id: group_share_id,
         start_lat: start_position.lat(),
         start_lng: start_position.lng(),
