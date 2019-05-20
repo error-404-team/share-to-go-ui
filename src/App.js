@@ -1,5 +1,4 @@
 import React from 'react'
-<<<<<<< HEAD
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import CreateRouteSharing from './components/CreateRouteSharing'
@@ -8,20 +7,6 @@ import SidenavPushMenu from './components/SidenavPushMenu'
 import SidenavPushNearbyUsers from './components/SidenavPushNearbyUsers'
 import SidenavPushSameWayNearbyUsers from './components/SidenavPushSameWayNearbyUsers'
 import SidenavPushSearchLocationNearbyUsers from './components/SidenavPushSearchLocationNearbyUsers'
-=======
-<<<<<<< HEAD
-import './App.css'
-import TapBar from './components/items/TapBar'
-import TapShare from './components/items/TapShare'
-import { withStyles } from '@material-ui/core/styles'
-const stylesI = theme => ({
-    BGcolor: {
-        backgroundColor: '#6999E2',
-    }
-});
-=======
-import { BrowserRouter as Router } from "react-router-dom";
->>>>>>> master
 // Firebase.
 import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
@@ -42,7 +27,6 @@ import loadScripts from './lib/loadScripts'
 import Loading from './components/Loading'
 
 
->>>>>>> a8717e877e1fe3445ba33edad64d104874a25ef6
 class App extends React.Component {
 
     uiConfig = {
@@ -155,10 +139,6 @@ class App extends React.Component {
 
         return (
             <React.Fragment>
-<<<<<<< HEAD
-                <TapShare/>  
-                {/* <TapBar/> */}
-=======
                 {this.state.isSignedIn ? (
                     <Router>
                         <Switch>
@@ -198,7 +178,6 @@ class App extends React.Component {
                 }
 
 
->>>>>>> a8717e877e1fe3445ba33edad64d104874a25ef6
             </React.Fragment>
         )
     }
