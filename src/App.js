@@ -9,7 +9,6 @@ import SidenavPushNearbyUsers from './components/SidenavPushNearbyUsers'
 import SidenavPushSameWayNearbyUsers from './components/SidenavPushSameWayNearbyUsers'
 import SidenavPushSearchLocationNearbyUsers from './components/SidenavPushSearchLocationNearbyUsers'
 
-import { BrowserRouter as Router } from "react-router-dom";
 // Firebase.
 import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
