@@ -66,7 +66,7 @@
 
 .mm-navbar_size-2-nearby-users:before {
     content: "";
-    display: inline-block;
+    display: -webkit-box;
     vertical-align: middle;
     height: 100%;
     width: 1px;
@@ -79,7 +79,7 @@
     width: 60px;
     height: 60px;
     padding: 3px;
-    margin: 40px 0px 8px 0px;
+    margin: 40px 10px 8px 0px;
 }
 .mm-navbar_size-2-nearby-users > * {
     display: inline-block;

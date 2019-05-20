@@ -3,6 +3,7 @@ import * as firebase from 'firebase'
 import RecipeReviewCard from '../../RecipeReviewCard'
 import './styles/mySidenav.css'
 import './styles/menuProfile.css'
+import './styles/input-style.css'
 
 export function openNavNearbyUsers() {
     document.getElementById("mySidenavNearbyUsers").style.width = "70%";
@@ -36,7 +37,7 @@ class SidenavNearbyUsersUI extends React.Component {
                     lat: snapshot.child('lat').val(),
                     lng: snapshot.child('lng').val(),
                     location_id: snapshot.child('location_id').val(),
-                    location_name: snapshot.child('location_name').val(),
+                    name_address: snapshot.child('name_address').val(),
                     place_id: snapshot.child('place_id').val(),
                 }
             })
@@ -61,7 +62,7 @@ class SidenavNearbyUsersUI extends React.Component {
     render() {
         const fullWidth = window.innerWidth;
         const fullHeight = window.innerHeight;
-        const {location_near_by_users} =this.state
+        const { location_near_by_users } = this.state
         return (
             <div
                 id="mySidenavNearbyUsers"
@@ -83,8 +84,25 @@ class SidenavNearbyUsersUI extends React.Component {
                 >
                     <div className="mm-navbar-nearby-users mm-navbar_size-2-nearby-users">
                         <img src={this.state.user.photoURL} />
-                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.user.displayName} </span>
-                        <span style={{ display: "block", fontSize: "18px" }}>{this.state.location.location_name} </span>
+                        <div style={{
+                            display: "block",
+                            fontSize: "18px",
+                            float: "right",
+                            margin: "40px 0px 8px 0px",
+                            width: "60%"
+                        }}
+                        >
+                            <span style={{ float: "left" }}>{this.state.user.displayName} </span>
+                            <div>
+                                <input style={{
+                                    width: "-webkit-fill-available"
+                                }} 
+                                className="form-control-plaintext-sidenav-push-near-by-users"
+                                type="text" 
+                                name="start_address" 
+                                value={this.state.location.name_address} />
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -96,14 +114,11 @@ class SidenavNearbyUsersUI extends React.Component {
                     }}>
                         {
                             location_near_by_users.map((items) => {
-                               return <RecipeReviewCard {...items}/>
+                                return <RecipeReviewCard {...items} />
                             })
                         }
                     </div>
                 </div>
-                {/* <div className="overlay-content">
-                    {this.props.children}
-                </div> */}
             </div>
 
         )

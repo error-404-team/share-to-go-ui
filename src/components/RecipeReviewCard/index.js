@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import './styles/input-style.css'
 
 const styles = theme => ({
     card: {
@@ -53,7 +54,7 @@ class RecipeReviewCard extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const address_input = <input style={{width: "100%"}} type="text" value={this.props.name_address} />
+        const address_input = <input style={{ width: "100%" }} className="form-control-plaintext-recipe-review-card" type="text" value={this.props.name_address} />
         return (
             <Card className={classes.card}>
                 <CardHeader
@@ -69,15 +70,17 @@ class RecipeReviewCard extends React.Component {
                     }
                     title={this.props.displayName}
                     subheader={address_input}
-                    style={{paddingBottom: "2px"}}
+                    style={{ paddingBottom: "2px" }}
                 />
-                <CardActions 
-                className={classes.actions} 
-                disableActionSpacing
-                style={{ paddingTop: "3px" }}
+                <CardActions
+                    className={classes.actions}
+                    disableActionSpacing
+                    style={{ paddingTop: "3px" }}
                 >
                     <IconButton
-                        style={{ padding: "0px 12px" }}
+                        style={{
+                            padding: "0px 12px"
+                        }}
                         className={classnames(classes.expand, {
                             [classes.expandOpen]: this.state.expanded,
                         })}
