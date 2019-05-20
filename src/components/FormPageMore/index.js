@@ -25,7 +25,7 @@ class FormPageMore extends React.Component {
                         backgroundColor: '#1D385A',
                     }}
                 >
-                    <Link to={go_link } className="closebtn-form-page-more fa fa-close" />
+                    <Link to={go_link} className="closebtn-form-page-more fa fa-close" />
                 </div>
 
                 <div

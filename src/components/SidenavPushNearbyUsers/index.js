@@ -62,7 +62,7 @@ class SidenavNearbyUsersUI extends React.Component {
         const { location_near_by_users,location,user } = this.state
         return (
             <FormPageMore 
-            go_link="/"
+            go_link="/share-to-go-ui/"
             photo_url={user.photoURL}
             display_name={user.displayName}
             name_address={location.name_address}

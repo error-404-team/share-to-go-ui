@@ -79,7 +79,7 @@ class CreateRouteSharing extends React.Component {
                     inlineRadioOptions[0].value
                 )
 
-                window.location.href = '/'
+                window.location.href = '/share-to-go-ui/'
 
                 console.log(`
                 ต้นทาง: ${this.state.location.name_address}
@@ -108,7 +108,7 @@ class CreateRouteSharing extends React.Component {
                     inlineRadioOptions[1].value
                 )
 
-                window.location.href = '/'
+                window.location.href = '/share-to-go-ui/'
 
                 console.log(`
                 ต้นทาง: ${this.state.location.name_address}

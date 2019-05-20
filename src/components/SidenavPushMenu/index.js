@@ -55,7 +55,7 @@ class SidenavUI extends React.Component {
                         backgroundColor: '#1D385A',
                     }}
                 >
-                    <Link to="/" className="closebtn-menu fa fa-close" />
+                    <Link to="/share-to-go-ui/" className="closebtn-menu fa fa-close" />
                 </div>
 
                 <div
@@ -78,7 +78,7 @@ class SidenavUI extends React.Component {
                     style={{
                         fontSize: "x-large"
                     }}
-                     to="/create_route_sharing">สร้างการแชร์เส้นทาง</Link>
+                     to="/share-to-go-ui/create_route_sharing">สร้างการแชร์เส้นทาง</Link>
                     </div>
     
                 <div className="mm-panels-menu">

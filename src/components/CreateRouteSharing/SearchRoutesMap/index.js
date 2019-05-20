@@ -200,7 +200,7 @@ function searchRoutesMap(el, map, position, user) {
   mapCloseBtnSpan.style.margin = "10px"
 
   mapCloseBtnSpan.addEventListener('click', function () {
-    window.location.href = '/create_route_sharing'
+    window.location.href = '/share-to-go-ui/create_route_sharing'
     writeDestinationUsersData(
       user.uid,
       null,
@@ -230,7 +230,7 @@ function searchRoutesMap(el, map, position, user) {
 
 
   mapCenterBtnSpan.addEventListener('click', function () {
-    window.location.href = '/create_route_sharing'
+    window.location.href = '/share-to-go-ui/create_route_sharing'
    
   })
 
