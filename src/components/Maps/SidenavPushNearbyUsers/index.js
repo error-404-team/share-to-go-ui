@@ -1,5 +1,6 @@
 import React from 'react'
 import * as firebase from 'firebase'
+import RecipeReviewCard from '../../RecipeReviewCard'
 import './styles/mySidenav.css'
 import './styles/menuProfile.css'
 
@@ -14,38 +15,53 @@ export function closeNavNearbyUsers() {
 class SidenavNearbyUsersUI extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {...props,user:{},location:{}}
+        this.state = { ...props, user: {}, location: {}, location_near_by_users: [] }
     }
     componentDidMount() {
         firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
-          
-              this.setState({
-                user: {
-                  displayName: snapshot.child('displayName').val(),
-                  phoneNumber: snapshot.child('phoneNumber').val(),
-                  photoURL: snapshot.child('photoURL').val(),
-                  userId: snapshot.child('userId').val()
-                }
-              })
-          })
-      
-          firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+
             this.setState({
-              location: {
-                lat: snapshot.child('lat').val(),
-                lng: snapshot.child('lng').val(),
-                location_id: snapshot.child('location_id').val(),
-                location_name: snapshot.child('location_name').val(),
-                place_id: snapshot.child('place_id').val(),
-              }
+                user: {
+                    displayName: snapshot.child('displayName').val(),
+                    phoneNumber: snapshot.child('phoneNumber').val(),
+                    photoURL: snapshot.child('photoURL').val(),
+                    userId: snapshot.child('userId').val()
+                }
             })
-          })
+        })
+
+        firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+            this.setState({
+                location: {
+                    lat: snapshot.child('lat').val(),
+                    lng: snapshot.child('lng').val(),
+                    location_id: snapshot.child('location_id').val(),
+                    location_name: snapshot.child('location_name').val(),
+                    place_id: snapshot.child('place_id').val(),
+                }
+            })
+        })
+
+        firebase.database().ref(`location_near_by_users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+            var arr = []
+            snapshot.forEach((childSnapshot) => {
+                var childData = childSnapshot.val();
+                arr.push(childData)
+            })
+
+            console.log(arr);
+            this.setState({
+                location_near_by_users: arr
+            })
+
+        })
     }
 
 
     render() {
         const fullWidth = window.innerWidth;
         const fullHeight = window.innerHeight;
+        const {location_near_by_users} =this.state
         return (
             <div
                 id="mySidenavNearbyUsers"
@@ -78,13 +94,11 @@ class SidenavNearbyUsersUI extends React.Component {
                         transform: "translate3d(0,0,0)",
                         backgroundColor: "#274D7D"
                     }}>
-                        <ul className="mm-listview-nearby-users">
-                            <li className="mm-listitem-nearby-users">
-                                {/* <a href="#/" className="mm-listitem__text">Home</a> */}
-                                {this.props.children}
-                            </li>
-
-                        </ul>
+                        {
+                            location_near_by_users.map((items) => {
+                               return <RecipeReviewCard {...items}/>
+                            })
+                        }
                     </div>
                 </div>
                 {/* <div className="overlay-content">

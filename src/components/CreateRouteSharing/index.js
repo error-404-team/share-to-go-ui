@@ -160,7 +160,7 @@ class CreateRouteSharing extends React.Component {
                             width: "70%"
                         }}
                         >
-                            <span>{this.state.user.displayName} </span>
+                            <span style={{float: "left"}}>{this.state.user.displayName} </span>
                             <div>
                                 <Link to="/routes_map">
                                     <input type="text" name="start_address" value={this.state.location.name_address} />
