@@ -1,5 +1,11 @@
 import React from 'react'
-import { openNav } from '../../SidenavPushMenu'
+import * as firebase from 'firebase'
+import createPopupClass from '../createPopupClass'
+import { GPS, findDistance } from '../lib/gps'
+import {
+  writeSearchLocationNearbyUsersData,
+  writeDestinationUsersData, writeShareMyWayNearbyUsersData
+} from '../../../Firebase/writeData'
 import './styles/InputSearch.css'
 import './styles/MuiToolbar.css'
 import './styles/MuiPaper.css'
@@ -13,7 +19,7 @@ import './styles/MuiButtonBase.css'
 import './styles/infoWindow.css'
 import '../hiddenGoogle.css'
 
-function searchMap(el, map, position) {
+function searchMap(el, map, position, user) {
   this.element = el
   this.map = map
   this.position = position
@@ -106,15 +112,16 @@ function searchMap(el, map, position) {
 
   // add  Attribute class i
   this.iClass = document.createAttribute('class');
-  this.iClass.value = 'material-icons'
+  this.iClass.value = 'fas fa-bars'
   this.i.setAttributeNode(this.iClass)
-  this.i.innerHTML = 'menu'
+  this.i.style.color = "#1D385A"
+  // this.i.innerHTML = 'menu'
 
   // all tag i
   this.button.appendChild(this.i)
 
   this.button.addEventListener('click', function () {
-    openNav()
+    window.location.href = "/menu"
   })
 
   //  --------------------------------
@@ -143,7 +150,7 @@ function searchMap(el, map, position) {
   this.inputClass.value = 'MuiInputBase-input-102'
   this.input.setAttributeNode(this.inputClass)
   this.placeholder = document.createAttribute('placeholder')
-  this.placeholder.value = 'Search Google Maps'
+  this.placeholder.value = 'Search Location'
   this.input.setAttributeNode(this.placeholder)
   this.inputType = document.createAttribute('type')
   this.inputType.value = 'text'
@@ -246,6 +253,7 @@ function searchMap(el, map, position) {
 
   autocomplete.addListener('place_changed', function () {
     infowindow.close();
+    Circle.setVisible(false);
     marker.setVisible(false);
     var place = autocomplete.getPlace();
     if (!place.geometry) {
@@ -263,7 +271,84 @@ function searchMap(el, map, position) {
       map.setZoom(17);  // Why 17? Because it looks good.
     }
     marker.setPosition(place.geometry.location);
+    Circle.setCenter(place.geometry.location);
+    // console.log(place.geometry.location);
+
     marker.setVisible(true);
+    Circle.setVisible(true);
+
+
+
+
+    // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
+    firebase.database().ref(`group_share_user/`).once("value").then((snapshot) => {
+      var location = place.geometry.location
+      const database = firebase.database()
+      var lat = 0.0009043717330001755  //100 meter
+      var lng = 0.0008983111750069384 //100 meter
+
+      // console.log(place.geometry.location)
+      var latitudeH = location.lat() + (lat * 10)
+      var longitudeH = location.lng() + (lng * 10)
+
+      var latitudeL = location.lat() - (lat * 10)
+      var longitudeL = location.lng() - (lng * 10)
+
+      snapshot.forEach((childSnapshot) => {
+
+        var key = childSnapshot.key;
+        var childData = childSnapshot.val();
+
+        if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
+
+          var gps1 = new GPS(location.lat(), location.lng())
+          var gps2 = new GPS(childData.start_lat, childData.start_lng)
+          console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
+          ${findDistance(gps1, gps2)} เมตร`);
+
+          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
+            const group_share_id = childData.group_share_id
+            if (user.uid !== childData.group_share_id) {
+
+              var Popup = createPopupClass();
+              var popup = new Popup(
+                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
+                document.createElement("div"),
+                snapshot.child('photoURL').val(),
+              )
+
+              popup.setMap(map);
+              console.log(snapshot.child('photoURL').val());
+
+              writeSearchLocationNearbyUsersData(
+                user.uid,
+                group_share_id,
+                snapshot.child('displayName').val(),
+                snapshot.child('photoURL').val(),
+                snapshot.child('email').val(),
+                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
+                childData.start_address
+              )
+            }
+
+          })
+        } else {
+          var gps1 = new GPS(location.lat(), location.lng())
+          var gps2 = new GPS(childData.start_lat, childData.start_lng)
+          console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
+          ${findDistance(gps1, gps2)} เมตร`);
+
+          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
+            const group_share_id = childData.group_share_id
+            if (user.uid !== group_share_id) {
+              database.ref(`search_location_near_by_users/${user.uid}`).remove()
+
+            }
+
+          })
+        }
+      })
+    })
 
     var address = '';
     if (place.address_components) {
@@ -306,6 +391,17 @@ function searchMap(el, map, position) {
   var marker = new window.google.maps.Marker({
     map: map,
     anchorPoint: new window.google.maps.Point(0, -29)
+  });
+
+  // วงรอบพื้นที่ 1 กิโลเมตร
+  var Circle = new window.google.maps.Circle({
+    strokeColor: '#fb6a5fb0',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: '#fb6a5fb0',
+    fillOpacity: 0.35,
+    map: map,
+    radius: Math.sqrt(100) * 100
   });
 
   // all tag div
@@ -360,11 +456,14 @@ function searchMap(el, map, position) {
 
   // add  Attribute class i
   this.iClass_I = document.createAttribute('class');
-  this.iClass_I.value = 'material-icons'
+  this.iClass_I.value = 'fas fa-search'
   this.i_I.setAttributeNode(this.iClass_I)
-  this.i_I.innerHTML = 'search'
+  this.i_I.style.color = "#1D385A"
+  // this.i_I.innerHTML = 'search'
 
   // all tag i
+
+  this.button_I.style.marginRight = "3px"
   this.button_I.appendChild(this.i_I)
 
   //  --------------------------------
@@ -407,8 +506,8 @@ function searchMap(el, map, position) {
 
   var directionsService = new window.google.maps.DirectionsService;
   var directionsDisplay = new window.google.maps.DirectionsRenderer;
-  
-  
+
+
   directionsDisplay.setMap(map);
 
   function calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -422,8 +521,103 @@ function searchMap(el, map, position) {
         directionsDisplay.setDirections(response);
         console.log(response);
 
+        writeDestinationUsersData(
+          user.uid,
+          response.routes[0].legs[0].end_location,
+          response.routes[0].legs[0].end_address
+        )
+
+        // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
+        firebase.database().ref(`group_share_user/`).once("value").then((snapshot) => {
+          var location = response.routes[0].legs[0].start_location
+          var end_location = response.routes[0].legs[0].end_location
+          const database = firebase.database()
+          var lat = 0.0009043717330001755  //100 meter
+          var lng = 0.0008983111750069384 //100 meter
+
+          // console.log(place.geometry.location)
+          var latitudeH = location.lat() + (lat * 10)
+          var longitudeH = location.lng() + (lng * 10)
+
+          var latitudeL = location.lat() - (lat * 10)
+          var longitudeL = location.lng() - (lng * 10)
+
+          snapshot.forEach((childSnapshot) => {
+
+            var key = childSnapshot.key;
+            var childData = childSnapshot.val();
+
+            if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
+
+              //  console.log(`
+              //  end_location.lat: ${end_location.lat()}
+              //  childData.end_lat: ${childData.end_lat}
+              //  end_location.lng: ${end_location.lng()}
+              //  childData.end_lng: ${childData.end_lng}
+              //  `);
+              if (end_location.lat() === childData.end_lat && end_location.lng() === childData.end_lng) {
+                console.log(`
+             end_location.lat: ${end_location.lat()}
+             childData.end_lat: ${childData.end_lat}
+             end_location.lng: ${end_location.lng()}
+             childData.end_lng: ${childData.end_lng}
+             `);
+
+                var gps1 = new GPS(location.lat(), location.lng())
+                var gps2 = new GPS(childData.start_lat, childData.start_lng)
+
+                database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
+                  const group_share_id = childData.group_share_id
+                  if (user.uid !== childData.group_share_id) {
+
+                    console.log(`in 
+                    name: ${snapshot.child('displayName').val()}
+                    start_lat: ${location.lat()} 
+                    start_lng: ${location.lng()}
+                    end_lat: ${childData.start_lat} 
+                    end_lng: ${childData.start_lng}
+                    ${findDistance(gps1, gps2)} เมตร.`
+                    );
+
+                    var Popup = createPopupClass();
+                    var popup = new Popup(
+                      new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
+                      document.createElement("div"),
+                      snapshot.child('photoURL').val(),
+                    )
+
+                    popup.setMap(map);
+                    console.log(snapshot.child('photoURL').val());
+
+                    writeShareMyWayNearbyUsersData(
+                      user.uid,
+                      group_share_id,
+                      snapshot.child('displayName').val(),
+                      snapshot.child('photoURL').val(),
+                      snapshot.child('email').val(),
+                      new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
+                      new window.google.maps.LatLng(childData.end_lat, childData.end_lng),
+                      childData.start_address,
+                      childData.end_address
+                    )
+                  }
+
+                })
+              } else {
+                var gps1 = new GPS(location.lat(), location.lng())
+                var gps2 = new GPS(childData.start_lat, childData.start_lng)
+                console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
+                ${findDistance(gps1, gps2)} เมตร`);
+
+                database.ref(`share_my_way_near_by_users/${user.uid}`).remove()
+
+              }
+            }
+          })
+        })
+
         console.log(response.routes[0].legs[0].distance.value / 1000 + ' กม.');
-       
+
       } else {
         window.alert('Directions request failed due to ' + status);
       }
@@ -449,11 +643,14 @@ function searchMap(el, map, position) {
 
   // add  Attribute class i
   this.iClass_II = document.createAttribute('class');
-  this.iClass_II.value = 'material-icons'
+  this.iClass_II.value = 'fas fa-location-arrow'
   this.i_II.setAttributeNode(this.iClass_II)
-  this.i_II.innerHTML = 'directions'
+  this.i_II.style.color = "#1D385A"
+  // this.i_II.innerHTML = 'directions'
+
 
   // all tag i
+  this.button_II.style.marginLeft = "3px"
   this.button_II.appendChild(this.i_II)
 
   //  --------------------------------

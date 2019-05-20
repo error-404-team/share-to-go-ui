@@ -1,5 +1,14 @@
 import React from 'react'
-import { BrowserRouter as Router } from "react-router-dom";
+
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
+import CreateRouteSharing from './components/CreateRouteSharing'
+import RoutesMap from './components/CreateRouteSharing/RoutesMap'
+import SidenavPushMenu from './components/SidenavPushMenu'
+import SidenavPushNearbyUsers from './components/SidenavPushNearbyUsers'
+import SidenavPushSameWayNearbyUsers from './components/SidenavPushSameWayNearbyUsers'
+import SidenavPushSearchLocationNearbyUsers from './components/SidenavPushSearchLocationNearbyUsers'
+
 // Firebase.
 import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
@@ -8,7 +17,7 @@ import FirebaseAuth from './components/SignInAndUp/FirebaseAuth'
 import AppBarBottom from './components/SignInAndUp/AppBarBottom'
 
 // firebase app connect
-import firebaseApp from './Firbase/firebaseApp'
+import firebaseApp from './Firebase/firebaseApp'
 
 import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSingInAndUp'
 
@@ -44,6 +53,7 @@ class App extends React.Component {
      */
     componentDidMount() {
 
+
         // links styles
         const materialIconsLink = 'https://fonts.googleapis.com/icon?family=Material+Icons';
         const materialIndigoPinkLink = "https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
@@ -75,7 +85,7 @@ class App extends React.Component {
             });
             // console.log(user);
 
-            
+
 
         });
         // firebaseui-list-item
@@ -97,7 +107,7 @@ class App extends React.Component {
                     timestamp: position.timestamp
                 }
                 this.setState(geolocation)
-                console.log(position);
+                // console.log(position);
             }, (error) => {
                 console.log('Error occurred. Error code: ' + error.code);
                 // error.code can be:
@@ -128,18 +138,28 @@ class App extends React.Component {
     render() {
 
         const { state } = this
-      
+
         return (
             <React.Fragment>
                 {this.state.isSignedIn ? (
                     <Router>
-                        <Maps {...state} >
-                            {/* <h1> Hello.  {firebaseApp.auth().currentUser.displayName} You are now signed In! </h1> */}
-
-                            <a className="mm-listitem__text" onClick={() => firebaseApp.auth().signOut()} >Sign Out</a>
-
-                        </Maps>
-                        {/* <RoutePages /> */}
+                        <Switch>
+                            <Route path="/" exact render={() => <Maps {...state} />
+                            } />
+                            <Route path="/create_route_sharing" render={() => <CreateRouteSharing {...state} />} />
+                            <Route path="/routes_map" render={() => <RoutesMap {...state} />} />
+                            <Route path="/menu" render={() => <SidenavPushMenu {...state} >
+                                <Link
+                                    to="/"
+                                    className="mm-listitem__text-menu"
+                                    onClick={() => firebaseApp.auth().signOut()}
+                                >ออกจากระบบ</Link>
+                            </SidenavPushMenu>} />
+                            <Route path="/near_by_users" render={() => <SidenavPushNearbyUsers {...state} />} />
+                            <Route path="/same_way_near_by_users" render={() => <SidenavPushSameWayNearbyUsers {...state} />} />
+                            <Route path="/search_location_near_by_users" render={() => <SidenavPushSearchLocationNearbyUsers {...state} />} />
+                            {/* <RoutePages /> */}
+                        </Switch>
                     </Router>
                 )
                     : (

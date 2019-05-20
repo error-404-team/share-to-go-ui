@@ -8,12 +8,13 @@ import connectMapApiInitAutocomplete from './lib/connectMapApiInitAutocomplete'
 import loadScriptMaps from './lib/loadScriptMaps'
 import mapCenterBtn from './CenterMapBtn'
 import nearbyUsersBtn from './NearbyUsers'
+import searchLocationNearByUsersBtn from './SearchLocationNearbyUsers'
+import sameWayNearByUsersBtn from './SameWayNearbyUsers'
 import Map from './Map'
 import createPopupClass from './createPopupClass'
-import { writeUserData, writeLocationPrivateData } from '../../Firbase/writeData'
-import SidenavPushMenu from './SidenavPushMenu'
-import SidenavPushNearbyUsers from './SidenavPushNearbyUsers'
+import { writeUserData, writeLocationNearbyUsersData, writeLocationPrivateData } from '../../Firebase/writeData'
 import { geocodeLatLng } from './ReverseGeocoding'
+import { GPS, findDistance } from './lib/gps'
 
 import './hiddenGoogle.css'
 
@@ -32,7 +33,7 @@ export class Maps extends React.Component {
     super(props)
     this.state = {
       coords: props.coords,
-      dataSignIn:props.dataSignIn
+      dataSignIn: props.dataSignIn
     }
 
     // this.starCountRef = this.starCountRef.bind(this)
@@ -41,22 +42,74 @@ export class Maps extends React.Component {
 
   componentDidMount() {
 
-    // var lat = 0.0009043717330001755  //100 meter
-    // var lng = 0.0008983111750069384 //100 meter
-   
-  
-//  firebase.database().ref(`users/${this.state.dataSignIn.uid}`).on('value',  (snapshot) => {
-//       // updateStarCount(postElement, snapshot.val());
-//       var location = snapshot.val().location.postion
+    // ทดสอบคำนวนหาผู้ใช้ในบริเวณ 1 กิโลเมตร
+    // const {latitude,longitude} = this.state.coords
+    //     var lat = 0.0009043717330001755  //100 meter
+    //     var lng = 0.0008983111750069384 //100 meter
 
-//       this.setState({location:location})
-//       console.log(snapshot.val().location);
-//       // console.log(Object.keys(snapshot.val()).length);
+    //     var latitudeH = latitude + (lat*10)
+    //     var longitudeH = longitude + (lng*10)
 
-//     });
-    
-    
-  
+    //     var latitudeL = latitude - (lat*10)
+    //     var longitudeL = longitude - (lng*10)
+
+    // console.log(`
+    // latitudeH: ${latitudeH}
+    // longitudeH: ${longitudeH}
+
+    // latitude: ${latitude}
+    // longitude: ${longitude}
+
+    // latitudeL: ${latitudeL}
+    // longitudeL: ${longitudeL}`);
+
+
+    // var test =[
+    //   {
+    //     lat: 13.9923454,
+    //     lng:100.6515081
+    //     },
+    //     {
+    //       lat: 14.0013526,
+    //       lng:100.7192114
+    //       },
+    //       {
+    //         lat: 14.0018778,
+    //         lng:100.7511847
+    //         },
+    //         {
+    //           lat: 14.0018778,
+    //           lng:100.7511847
+    //           },
+    //           {
+    //             lat: 14.031384,
+    //             lng:100.73578979999999
+    //             },
+    // ]
+
+    // for (var i = 0; i < test.length; i++) {
+
+    //   if(((test[i].lat >= latitudeL) && (test[i].lng >= longitudeL)) && ((test[i].lat <= latitudeH) && (test[i].lng <= longitudeH)) ) {
+    //     console.log(`in lat: ${test[i].lat} lng: ${test[i].lng}`);
+
+    //   }else {console.log(`out lat: ${test[i].lat} lng: ${test[i].lng}`);}
+    // }
+
+    // test.map(num => {
+    //   if(((num.lat >= latitudeL) && (num.lng >= longitudeL)) && ((num.lat <= latitudeH) && (num.lng <= longitudeH)) ) {
+    //    let gps1 = new GPS(latitude,longitude)
+    //    let gps2 = new GPS(num.lat,num.lng)
+    //     console.log(`in lat: ${num.lat} lng: ${num.lng}
+    //     ${findDistance(gps1,gps2)} เมตร`);
+
+    //   }else {
+    //     let gps1 = new GPS(latitude,longitude)
+    //    let gps2 = new GPS(num.lat,num.lng)
+    //     console.log(`out lat: ${num.lat} lng: ${num.lng}
+    //     ${findDistance(gps1,gps2)} เมตร`);
+    //   }
+    // }) 
+
 
 
     // connect google map apis
@@ -68,7 +121,7 @@ export class Maps extends React.Component {
     this._gapi = window.google;
 
     // check geolocation
-   
+
 
   }
 
@@ -77,26 +130,26 @@ export class Maps extends React.Component {
   initMap = () => {
     // Create A Map
 
-if(this.state.coords.latitude == undefined && this.state.coords.longitude == undefined) {
-console.log(123);
+    if (this.state.coords.latitude === undefined && this.state.coords.longitude === undefined) {
+      // console.log(123);
 
-}else {
-  
-  this.map = new window.google.maps.Map(document.getElementById('map'), {
-    center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-    zoom: 13,
-    disableDefaultUI: true,
-    styles: [{
-      featureType: 'poi.business',
-      stylers: [{ visibility: 'on' }]
-    },
-    {
-      featureType: 'transit',
-      elementType: 'labels.icon',
-      stylers: [{ visibility: 'off' }]
-    }]
-  })
-}
+    } else {
+
+      this.map = new window.google.maps.Map(document.getElementById('map'), {
+        center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+        zoom: 13,
+        disableDefaultUI: true,
+        styles: [{
+          featureType: 'poi.business',
+          stylers: [{ visibility: 'on' }]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'labels.icon',
+          stylers: [{ visibility: 'off' }]
+        }]
+      })
+    }
 
     //     var lat = (14.0314716 - (0.0009043717330001755 * 10)) + (0.0009043717330001755 * 10)
     //     var lng = (100.7357462 - (0.0008983111750069384 * 10)) + (0.0008983111750069384 * 10)
@@ -320,7 +373,7 @@ console.log(123);
           }
         ]
       })
-      console.log(currentTime + " ตอนกลางคืน");
+      // console.log(currentTime + " ตอนกลางคืน");
     }
 
 
@@ -340,7 +393,12 @@ console.log(123);
     this.searchMapsDiv.style.width = '-webkit-fill-available'
 
     // setting call ui
-    this.centerControl = new searchMaps(this.searchMapsDiv, this.map,new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    this.centerControl = new searchMaps(
+      this.searchMapsDiv,
+      this.map,
+      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      this.state.dataSignIn
+    );
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(this.searchMapsDiv);
@@ -359,6 +417,9 @@ console.log(123);
     this.mapCenterBtnDiv.style.marginRight = '6px'
     this.mapCenterBtnDiv.style.marginBottom = '10px'
 
+    this.centerControl = new sameWayNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
+
+    this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
 
     this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
@@ -370,27 +431,121 @@ console.log(123);
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
 
+    // -----------------------------------------------------
+
+    // -----------------------------------------------------
+
+    // รัสมีรอบๆ location 1 กิโลเมตร
+    var circle = new window.google.maps.Circle({
+      strokeColor: '#72c6f57a',
+      strokeOpacity: 0.8,
+      strokeWeight: 1,
+      fillColor: '#72c6f57a',
+      fillOpacity: 0.35,
+      map: this.map,
+      center: new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      radius: Math.sqrt(100) * 100
+    });
+
 
     // -------------------------------------------------------
 
 
     // ---------------------------------------------------------
 
+    firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+
+      var Popup = createPopupClass();
+      var popup = new Popup(
+        new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+        document.createElement("div"),
+        snapshot.child('photoURL').val(),
+        )
+        
+        popup.setMap(this.map);
+      })
+
     // icon profile
+
+    // โชว์ผู้ใช้งาน บริเวณใกล้เคียง 1 กิโลเมตร
     this.popupMapsDiv = document.createElement("div")
 
-    this.Popup = createPopupClass();
-    this.popup = new this.Popup(
-     new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-      // this.state.position,
-      document.createElement("div"),
-      this.state.dataSignIn.photoURL,
-      // this.state.navigator
-    )
-console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    firebase.database().ref(`group_share_user/`).once("value").then((snapshot) => {
+      const { latitude, longitude } = this.state.coords
+      const map = this.map
+      const { uid } = this.state.dataSignIn
+      const database = firebase.database()
+      var lat = 0.0009043717330001755  //100 meter
+      var lng = 0.0008983111750069384 //100 meter
+
+      var latitudeH = latitude + (lat * 10)
+      var longitudeH = longitude + (lng * 10)
+
+      var latitudeL = latitude - (lat * 10)
+      var longitudeL = longitude - (lng * 10)
+      snapshot.forEach((childSnapshot) => {
+        var key = childSnapshot.key;
+        var childData = childSnapshot.val();
+        if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
+
+          var gps1 = new GPS(latitude, longitude)
+          var gps2 = new GPS(childData.start_lat, childData.start_lng)
+          // console.log(`in 
+          // lat: ${childData.start_lat} 
+          // lng: ${childData.start_lng}
+          // ${findDistance(gps1, gps2)} เมตร`);
+
+          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
+            const group_share_id = childData.group_share_id
+            if (uid !== childData.group_share_id) {
+
+              console.log(`in 
+                    name: ${snapshot.child('displayName').val()}
+                    start_lat: ${latitude} 
+                    start_lng: ${longitude}
+                    end_lat: ${childData.start_lat} 
+                    end_lng: ${childData.start_lng}
+                    ${findDistance(gps1, gps2)} เมตร.`
+                        );
+
+              var Popup = createPopupClass();
+              var popup = new Popup(
+                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
+                document.createElement("div"),
+                snapshot.child('photoURL').val(),
+              )
+
+              popup.setMap(map);
+              console.log(snapshot.child('photoURL').val());
+
+              writeLocationNearbyUsersData(
+                uid,
+                group_share_id,
+                snapshot.child('displayName').val(),
+                snapshot.child('photoURL').val(),
+                snapshot.child('email').val(),
+                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
+                childData.start_address
+              )
+            }
+
+          })
+        }
+      })
+    })
 
 
-    this.popup.setMap(this.map);
+
+
+    // console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+
+
+    // this.popup.setMap(this.map);
+    // console.log(snapshot.val());
+
+
+
+
 
     this._gapi = window.google;
     this.setState({ google: this._gapi, map: this.map })
@@ -399,18 +554,24 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
 
     geocodeLatLng(this.state.dataSignIn.uid, this.state.coords)
 
-
   }
+
 
 
 
   render() {
 
     const { classes } = this.props;
-    const { uid, displayName, email, photoURL } = this.state.dataSignIn
+    const { uid, displayName, email, photoURL, phoneNumber } = this.state.dataSignIn
     const { state } = this
     // // set database
-    writeUserData(uid, displayName, email, photoURL)
+
+    const location = []
+
+    writeUserData(uid, displayName, email, photoURL, phoneNumber)
+
+
+
 
 
     return (
@@ -418,12 +579,8 @@ console.log(new window.google.maps.LatLng(this.state.coords.latitude, this.state
         <Map id="map" google={this.state.google}>
           {/* <div id="content"></div> */}
         </Map>
-        {/* <InputSearch /> */}
-        <SidenavPushMenu {...state}>
-          {this.props.children}
-        </SidenavPushMenu>
-        <SidenavPushNearbyUsers {...state} />
-      // </div>
+
+      </div>
     )
   }
 }

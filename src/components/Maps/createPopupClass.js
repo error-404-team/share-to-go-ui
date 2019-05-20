@@ -15,6 +15,8 @@ function createPopupClass() {
         this.content = content
         this.navigator = navigator
 
+        
+
         this.popupImg = document.createElement('img');
 
         // set attribute 
@@ -90,8 +92,8 @@ function createPopupClass() {
                 'none';
 
         if (display === 'block') {
-            this.popupImg.style.left = divPosition.x + 'px';
-            this.popupImg.style.top = divPosition.y + 'px';
+            this.popupImg.style.left = `${divPosition.x - 11.5}px`;
+            this.popupImg.style.top = `${divPosition.y - 11.5}px`;
         }
         if (this.popupImg.style.display !== display) {
             this.popupImg.style.display = display;

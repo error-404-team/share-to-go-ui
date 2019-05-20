@@ -1,0 +1,51 @@
+.overlay-form-page-more {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #274D7D;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay-form-page-more a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay-form-page-more a:hover, .overlay-form-page-more a:focus {
+  color: #f1f1f1;
+}
+
+.overlay-form-page-more .closebtn-form-page-more {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 25px;
+  z-index: 10;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay-form-page-more {overflow-y: auto;}
+  .overlay-form-page-more a {font-size: 20px}
+  .overlay-form-page-more .closebtn-form-page-more {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+

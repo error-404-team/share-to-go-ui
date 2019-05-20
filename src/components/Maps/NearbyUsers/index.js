@@ -1,10 +1,9 @@
 import React from 'react'
-import {openNavNearbyUsers} from '../SidenavPushNearbyUsers'
-import './styles/CenterMapBtn.css'
-import './styles/MuiButtonBase.css'
-import './styles/MuiFab.css'
-import './styles/MuiSvgIcon.css'
-import './styles/MuiTouchRipple.css'
+import '../styles/CenterMapBtn.css'
+import '../styles/MuiButtonBase.css'
+import '../styles/MuiFab.css'
+import '../styles/MuiSvgIcon.css'
+import '../styles/MuiTouchRipple.css'
 
 function nearbyUsersBtn(el, map, position) {
 
@@ -27,14 +26,15 @@ function nearbyUsersBtn(el, map, position) {
     
      // add  Attribute class i
     let iClass = document.createAttribute('class');
-    iClass.value = 'material-icons'
+    iClass.value = 'fas fa-street-view fa-2x'
     i.setAttributeNode(iClass)
-    i.innerHTML = 'group'
+    // i.style.color = "#1D385A"
+    // i.innerHTML = 'group'
     button.appendChild(i)
 
      // Setup the click event listeners: simply set the map to Chicago.
      button.addEventListener('click', function () {
-        openNavNearbyUsers()
+        window.location.href = "/near_by_users"
     });
 
 }
