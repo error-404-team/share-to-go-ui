@@ -85,7 +85,6 @@ class App extends React.Component {
             });
             // console.log(user);
 
-window.location.href = "/share-to-go-ui/"
 
         });
         // firebaseui-list-item

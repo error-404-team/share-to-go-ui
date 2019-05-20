@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/share-to-go-ui/precache-manifest.bc51cb2216cc7320c1c90b8259af1fd1.js"
+  "/error-404-team/share-to-go-ui/precache-manifest.30a4c518c47f01b1662d737c543e5887.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/share-to-go-ui/index.html", {
+workbox.routing.registerNavigationRoute("/error-404-team/share-to-go-ui/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
