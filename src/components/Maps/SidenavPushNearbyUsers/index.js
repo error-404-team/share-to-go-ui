@@ -104,7 +104,17 @@ class SidenavNearbyUsersUI extends React.Component {
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div
+                style={{
+                    backgroundColor:"#142a46",
+                    padding: "8px",
+                    textAlign: "center",
+                    color: "white",
+                    fontSize: "large",
+                }}
+                >
+                    <span>บริเวณใกล้เคียง</span>
                 </div>
                 <div className="mm-panels-nearby-users">
                     <div id="panel-menu-nearby-users" className="mm-panel-nearby-users mm-panel_opened-nearby-users" style={{
