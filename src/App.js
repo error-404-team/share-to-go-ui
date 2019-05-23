@@ -1,52 +1,50 @@
 import React from 'react'
-
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
 import CreateRouteSharing from './components/CreateRouteSharing'
 import RoutesMap from './components/CreateRouteSharing/RoutesMap'
-import SidenavPushMenu from './components/SidenavPushMenu'
-import SidenavPushNearbyUsers from './components/SidenavPushNearbyUsers'
-import SidenavPushSameWayNearbyUsers from './components/SidenavPushSameWayNearbyUsers'
-import SidenavPushSearchLocationNearbyUsers from './components/SidenavPushSearchLocationNearbyUsers'
+import SignInAndUp from './components/SignInAndUp'
+import Menu from './components/Menu'
+import NearbyUsersMenu from './components/NearbyUsersMenu'
+import SameWayNearbyUsersMenu from './components/SameWayNearbyUsersMenu'
+import SearchLocationNearbyUsersMenu from './components/SearchLocationNearbyUsersMenu'
+import Maps from './components/Maps'
 
 // Firebase.
 import * as firebase from 'firebase';
 // import { RoutePages } from './RoutePages'
 // firebase ui
-import FirebaseAuth from './components/SignInAndUp/FirebaseAuth'
-import AppBarBottom from './components/SignInAndUp/AppBarBottom'
+
 
 // firebase app connect
 import firebaseApp from './Firebase/firebaseApp'
 
-import BackgrourdFromSingInAndUp from './components/SignInAndUp/BackgrourdFromSingInAndUp'
 
-import Maps from './components/Maps'
 
 import loadLinks from './lib/loadLinks'
 import loadScripts from './lib/loadScripts'
 
 import Loading from './components/Loading'
 
+import RouteWithSubPrivateRoutes from './RouteWithSubPrivateRoutes'
+import RouteWithSubLoginRoutes from './RouteWithSubLoginRoutes'
+import locationNearbyUsersProsesing from './components/Maps/lib/locationNearbyUsers'
 
 class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: true,
+            isSignedIn: false,
+            userLogin: {},
+            userPrivate: {},
+            coords: {},
+            location_near_by_users: {}
+        };
 
-    uiConfig = {
-        // signInFlow: 'popup',
-        signInOptions: [
-            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            // firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            firebase.auth.PhoneAuthProvider.PROVIDER_ID
-        ],
-        callbacks: {
-            signInSuccessWithAuthResult: () => false,
-        },
-    };
-
-    state = {
-        loading: true
-    };
+        this.setUserPrivate = this.setUserPrivate.bind(this)
+        this.setLocationNearbyUsers = this.setLocationNearbyUsers.bind(this)
+    }
 
     /**
      * @inheritDoc
@@ -80,12 +78,12 @@ class App extends React.Component {
             var data = [user]
             this.setState({
                 isSignedIn: !!user,
-                dataSignIn: user,
+                userLogin: user,
                 loading: false,
             });
             // console.log(user);
-
-
+            this.setUserPrivate(user.uid)
+            this.setLocationNearbyUsers(user.uid)
         });
         // firebaseui-list-item
 
@@ -127,6 +125,35 @@ class App extends React.Component {
 
     }
 
+    setUserPrivate = (uid) => {
+        firebaseApp.database().ref(`/users/${uid}`).once("value").then((snapshot) => {
+            // var userPrivate = snapshot.child(`${this.state.userLogin.uid}`).val()
+            // console.log(userPrivate.displayName);
+
+            this.setState({
+                userPrivate: snapshot.val()
+            })
+        })
+        locationNearbyUsersProsesing(uid, this.state.coords.latitude, this.state.coords.longitude)
+    }
+
+    setLocationNearbyUsers = (uid) => {
+
+        firebaseApp.database().ref(`/location_near_by_users/${uid}`).once("value").then((snapshot) => {
+            const data = []
+            snapshot.forEach((childSnapshot) => {
+                const childData = childSnapshot.val();
+                data.push(childData)  
+                
+            })
+             
+            this.setState({
+                location_near_by_users: data
+            })
+        })
+       
+    }
+
     /**
      * @inheritDoc
      */
@@ -137,47 +164,63 @@ class App extends React.Component {
     render() {
 
         const { state } = this
+        const privateRoutes = [
+            {
+                path: "/",
+                component: Maps
+            },
+            {
+                path: "/create-route-sharing",
+                component: CreateRouteSharing
+            },
+            {
+                path: "/menu",
+                component: Menu
+            },
+            {
+                path: "/near-by-users-menu",
+                component: NearbyUsersMenu
+            },
+            // {
+            //     path: "/same-way-near-by-users-menu",
+            //     component: SameWayNearByUsersMenu
+            // },
+            // {
+            //     path: "/search-location-near-by-users-menu",
+            //     component: SearchLocationNearByUsersMenu
+            // },
+        ]
+
+        const loginRoutes = [
+            {
+                path: "/",
+                component: SignInAndUp
+            }
+        ]
 
         return (
             <React.Fragment>
-                {this.state.isSignedIn ? (
-                    <Router>
-                        <Switch>
-                            <Route path="/share-to-go-ui/" exact render={() => <Maps {...state} />
-                            } />
-                            <Route path="/share-to-go-ui/CreateRouteSharing" render={() => <CreateRouteSharing {...state} />} />
-                            <Route path="/share-to-go-ui/RoutesMap" render={() => <RoutesMap {...state} />} />
-                            <Route path="/share-to-go-ui/Menu" render={() => <SidenavPushMenu {...state} >
-                                <Link
-                                    to="/share-to-go-ui/"
-                                    className="mm-listitem__text-menu"
-                                    onClick={() => firebaseApp.auth().signOut()}
-                                >ออกจากระบบ</Link>
-                            </SidenavPushMenu>} />
-                            <Route path="/share-to-go-ui/NearByUsers" render={() => <SidenavPushNearbyUsers {...state} />} />
-                            <Route path="/share-to-go-ui/SameWayNearByUsers" render={() => <SidenavPushSameWayNearbyUsers {...state} />} />
-                            <Route path="/share-to-go-ui/SearchLocationNearByUsers" render={() => <SidenavPushSearchLocationNearbyUsers {...state} />} />
-                            {/* <RoutePages /> */}
-                        </Switch>
-                    </Router>
-                )
-                    : (
-                        this.state.loading
-                            ? (<Loading />)
-                            : (<React.Fragment>
-                                <BackgrourdFromSingInAndUp >
-
-                                </BackgrourdFromSingInAndUp>
-                                <AppBarBottom>
-                                    <FirebaseAuth uiConfig={this.uiConfig}
-                                        firebaseAuth={firebaseApp.auth()} />
-
-                                    {/* <Facebook /> */}
-                                </AppBarBottom>
-                            </React.Fragment>)
+                <Router>
+                    {this.state.isSignedIn ? (
+                        <React.Fragment>
+                            {privateRoutes.map((route) => (
+                                <RouteWithSubPrivateRoutes {...route} {...state} />
+                            ))}
+                        </React.Fragment>
                     )
-                }
+                        : (this.state.loading
+                            ? (<Loading />)
+                            : (
+                                <React.Fragment>
+                                    {loginRoutes.map((route) => (
+                                        <RouteWithSubLoginRoutes  {...route} {...state} />
+                                    ))}
+                                </React.Fragment>
 
+                            )
+                        )
+                    }
+                </Router>
 
             </React.Fragment>
         )

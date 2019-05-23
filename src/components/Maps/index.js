@@ -31,17 +31,13 @@ const styles = {
 export class Maps extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      coords: props.coords,
-      dataSignIn: props.dataSignIn
-    }
+    this.state = { ...props }
+    
 
-    // this.starCountRef = this.starCountRef.bind(this)
 
   }
-
+  
   componentDidMount() {
-
     // ทดสอบคำนวนหาผู้ใช้ในบริเวณ 1 กิโลเมตร
     // const {latitude,longitude} = this.state.coords
     //     var lat = 0.0009043717330001755  //100 meter
@@ -123,6 +119,8 @@ export class Maps extends React.Component {
     // check geolocation
 
 
+
+
   }
 
 
@@ -174,7 +172,7 @@ export class Maps extends React.Component {
 
     // console.log(currentHours);
     if ((currentHours >= 5 && currentHours <= 11) || (currentHours >= 16 && currentHours <= 18)) {
-      this.map.setOptions({ styles: [{ visibility: 'off' }] })
+      this.map.setOptions({ styles: [{ visibility: 'on' }] })
       console.log("ตอนช่าว และ ตอนเย็น");
     } else if (currentHours >= 12 && currentHours <= 15) {
       this.map.setOptions({
@@ -397,7 +395,7 @@ export class Maps extends React.Component {
       this.searchMapsDiv,
       this.map,
       new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-      this.state.dataSignIn
+      this.state.userLogin
     );
 
     // push ui to maps
@@ -453,86 +451,32 @@ export class Maps extends React.Component {
 
     // ---------------------------------------------------------
 
-    firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
 
-      var Popup = createPopupClass();
-      var popup = new Popup(
-        new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-        document.createElement("div"),
-        snapshot.child('photoURL').val(),
-        )
-        
-        popup.setMap(this.map);
-      })
+
+    var Popup = createPopupClass();
+    var popup = new Popup(
+      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+      document.createElement("div"),
+      this.props.userPrivate.photoURL,
+    )
+
+    popup.setMap(this.map);
+
 
     // icon profile
 
     // โชว์ผู้ใช้งาน บริเวณใกล้เคียง 1 กิโลเมตร
-    this.popupMapsDiv = document.createElement("div")
 
-    firebase.database().ref(`group_share_user/`).once("value").then((snapshot) => {
-      const { latitude, longitude } = this.state.coords
-      const map = this.map
-      const { uid } = this.state.dataSignIn
-      const database = firebase.database()
-      var lat = 0.0009043717330001755  //100 meter
-      var lng = 0.0008983111750069384 //100 meter
 
-      var latitudeH = latitude + (lat * 10)
-      var longitudeH = longitude + (lng * 10)
+    var Popup = createPopupClass();
+    var popup = new Popup(
+      new window.google.maps.LatLng(this.props.location_near_by_users[0].lat, this.props.location_near_by_users[0].lng),
+      document.createElement("div"),
+      this.props.location_near_by_users[0].photoURL
+    )
 
-      var latitudeL = latitude - (lat * 10)
-      var longitudeL = longitude - (lng * 10)
-      snapshot.forEach((childSnapshot) => {
-        var key = childSnapshot.key;
-        var childData = childSnapshot.val();
-        if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
-
-          var gps1 = new GPS(latitude, longitude)
-          var gps2 = new GPS(childData.start_lat, childData.start_lng)
-          // console.log(`in 
-          // lat: ${childData.start_lat} 
-          // lng: ${childData.start_lng}
-          // ${findDistance(gps1, gps2)} เมตร`);
-
-          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
-            const group_share_id = childData.group_share_id
-            if (uid !== childData.group_share_id) {
-
-              console.log(`in 
-                    name: ${snapshot.child('displayName').val()}
-                    start_lat: ${latitude} 
-                    start_lng: ${longitude}
-                    end_lat: ${childData.start_lat} 
-                    end_lng: ${childData.start_lng}
-                    ${findDistance(gps1, gps2)} เมตร.`
-                        );
-
-              var Popup = createPopupClass();
-              var popup = new Popup(
-                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
-                document.createElement("div"),
-                snapshot.child('photoURL').val(),
-              )
-
-              popup.setMap(map);
-              console.log(snapshot.child('photoURL').val());
-
-              writeLocationNearbyUsersData(
-                uid,
-                group_share_id,
-                snapshot.child('displayName').val(),
-                snapshot.child('photoURL').val(),
-                snapshot.child('email').val(),
-                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
-                childData.start_address
-              )
-            }
-
-          })
-        }
-      })
-    })
+    popup.setMap(this.map);
+    // console.log(photoURL);
 
 
 
@@ -552,27 +496,27 @@ export class Maps extends React.Component {
 
     // --------------------------------------------------------
 
-    geocodeLatLng(this.state.dataSignIn.uid, this.state.coords)
+    geocodeLatLng(this.state.userLogin.uid, this.state.coords)
+
+   
 
   }
 
-
-
+  
+    
+  
 
   render() {
 
     const { classes } = this.props;
-    const { uid, displayName, email, photoURL, phoneNumber } = this.state.dataSignIn
+    const { uid, displayName, email, photoURL, phoneNumber } = this.state.userLogin
     const { state } = this
+
     // // set database
 
     const location = []
 
-    writeUserData(uid, displayName, email, photoURL, phoneNumber)
-
-
-
-
+   
 
     return (
       <div className={this.props.classes.root}>

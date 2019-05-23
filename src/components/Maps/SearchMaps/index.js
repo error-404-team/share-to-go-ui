@@ -121,7 +121,7 @@ function searchMap(el, map, position, user) {
   this.button.appendChild(this.i)
 
   this.button.addEventListener('click', function () {
-    window.location.href = "/share-to-go-ui/Menu"
+    window.location.href = "/Menu"
   })
 
   //  --------------------------------

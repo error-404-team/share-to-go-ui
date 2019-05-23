@@ -64,7 +64,7 @@ export function writeLocationPrivateData(userId, position, name_address, place_i
 
 }
 
-export function writeLocationNearbyUsersData(userId,group_share_id,displayName,photoURL, email, position, name_address) {
+export function writeLocationNearbyUsersData(userId,group_share_id,displayName,photoURL, email, position, name_address,distance) {
     firebaseApp.database().ref(`location_near_by_users/${userId}/${group_share_id}`).set({
         group_share_id: group_share_id,
         lat: position.lat(),
@@ -72,7 +72,8 @@ export function writeLocationNearbyUsersData(userId,group_share_id,displayName,p
         name_address: name_address,
         displayName:displayName,
         photoURL: photoURL,
-        email:email
+        email:email,
+        distance:distance
     }
     );
 }

@@ -34,7 +34,7 @@ function searchLocationNearByUsersBtn(el, map, position) {
 
      // Setup the click event listeners: simply set the map to Chicago.
      button.addEventListener('click', function () {
-         window.location.href = "/share-to-go-ui/SearchLocationNearByUsers"
+         window.location.href = "/SearchLocationNearByUsers"
     });
 
 }
