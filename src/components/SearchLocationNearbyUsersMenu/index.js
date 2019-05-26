@@ -10,7 +10,7 @@ class SearchLocationNearbyUsersMenu extends React.Component {
         this.state = {...props,user:{},location:{}, search_location_near_by_users:[]}
     }
     componentDidMount() {
-        firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
           
               this.setState({
                 user: {
@@ -22,7 +22,7 @@ class SearchLocationNearbyUsersMenu extends React.Component {
               })
           })
       
-          firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+          firebase.database().ref(`location/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             this.setState({
               location: {
                 lat: snapshot.child('lat').val(),
@@ -34,7 +34,7 @@ class SearchLocationNearbyUsersMenu extends React.Component {
             })
           })
 
-          firebase.database().ref(`search_location_near_by_users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+          firebase.database().ref(`search_location_near_by_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             console.log(snapshot);
             var arr = []
             snapshot.forEach((childSnapshot) => {

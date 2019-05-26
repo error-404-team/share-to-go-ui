@@ -6,6 +6,9 @@ import {
   writeSearchLocationNearbyUsersData,
   writeDestinationUsersData, writeShareMyWayNearbyUsersData
 } from '../../../Firebase/writeData'
+import sameWayNearByUsersBtn from '../SameWayNearbyUsers'
+import searchLocationNearbyUsers from '../lib/searchLocationNearbyUsers'
+import shareMyWayNearbyUsers from '../lib/shareMyWayNearbyUsers'
 import './styles/InputSearch.css'
 import './styles/MuiToolbar.css'
 import './styles/MuiPaper.css'
@@ -121,7 +124,7 @@ function searchMap(el, map, position, user) {
   this.button.appendChild(this.i)
 
   this.button.addEventListener('click', function () {
-    window.location.href = "/Menu"
+    window.location.href = "/menu"
   })
 
   //  --------------------------------
@@ -272,7 +275,7 @@ function searchMap(el, map, position, user) {
     }
     marker.setPosition(place.geometry.location);
     Circle.setCenter(place.geometry.location);
-    // console.log(place.geometry.location);
+    // console.log(place);
 
     marker.setVisible(true);
     Circle.setVisible(true);
@@ -281,74 +284,9 @@ function searchMap(el, map, position, user) {
 
 
     // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
-    firebase.database().ref(`group_share_user/`).once("value").then((snapshot) => {
-      var location = place.geometry.location
-      const database = firebase.database()
-      var lat = 0.0009043717330001755  //100 meter
-      var lng = 0.0008983111750069384 //100 meter
+    searchLocationNearbyUsers(user, map, place,position)
 
-      // console.log(place.geometry.location)
-      var latitudeH = location.lat() + (lat * 10)
-      var longitudeH = location.lng() + (lng * 10)
-
-      var latitudeL = location.lat() - (lat * 10)
-      var longitudeL = location.lng() - (lng * 10)
-
-      snapshot.forEach((childSnapshot) => {
-
-        var key = childSnapshot.key;
-        var childData = childSnapshot.val();
-
-        if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
-
-          var gps1 = new GPS(location.lat(), location.lng())
-          var gps2 = new GPS(childData.start_lat, childData.start_lng)
-          console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
-          ${findDistance(gps1, gps2)} เมตร`);
-
-          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
-            const group_share_id = childData.group_share_id
-            if (user.uid !== childData.group_share_id) {
-
-              var Popup = createPopupClass();
-              var popup = new Popup(
-                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
-                document.createElement("div"),
-                snapshot.child('photoURL').val(),
-              )
-
-              popup.setMap(map);
-              console.log(snapshot.child('photoURL').val());
-
-              writeSearchLocationNearbyUsersData(
-                user.uid,
-                group_share_id,
-                snapshot.child('displayName').val(),
-                snapshot.child('photoURL').val(),
-                snapshot.child('email').val(),
-                new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
-                childData.start_address
-              )
-            }
-
-          })
-        } else {
-          var gps1 = new GPS(location.lat(), location.lng())
-          var gps2 = new GPS(childData.start_lat, childData.start_lng)
-          console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
-          ${findDistance(gps1, gps2)} เมตร`);
-
-          database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
-            const group_share_id = childData.group_share_id
-            if (user.uid !== group_share_id) {
-              database.ref(`search_location_near_by_users/${user.uid}`).remove()
-
-            }
-
-          })
-        }
-      })
-    })
+    
 
     var address = '';
     if (place.address_components) {
@@ -430,6 +368,9 @@ function searchMap(el, map, position, user) {
     }
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
+
+    // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
+    searchLocationNearbyUsers(user, map, place)
 
     var address = '';
     if (place.address_components) {
@@ -519,7 +460,7 @@ function searchMap(el, map, position, user) {
     }, function (response, status) {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
-        console.log(response);
+        // console.log(response);
 
         writeDestinationUsersData(
           user.uid,
@@ -527,96 +468,28 @@ function searchMap(el, map, position, user) {
           response.routes[0].legs[0].end_address
         )
 
-        // โชว์ผลการค้นหา location บริเวณใกล้เคียง 1 กม.
-        firebase.database().ref(`group_share_user/`).once("value").then((snapshot) => {
-          var location = response.routes[0].legs[0].start_location
-          var end_location = response.routes[0].legs[0].end_location
-          const database = firebase.database()
-          var lat = 0.0009043717330001755  //100 meter
-          var lng = 0.0008983111750069384 //100 meter
+        // โชว์ผลการค้นหา location ปลายทางเดียวกัน
+        shareMyWayNearbyUsers(user, map, response, position)
 
-          // console.log(place.geometry.location)
-          var latitudeH = location.lat() + (lat * 10)
-          var longitudeH = location.lng() + (lng * 10)
+        let mapCenterBtnDiv = document.createElement("div")
 
-          var latitudeL = location.lat() - (lat * 10)
-          var longitudeL = location.lng() - (lng * 10)
+        mapCenterBtnDiv.style.width = "57px"
+        mapCenterBtnDiv.style.marginRight = '6px'
+        // mapCenterBtnDiv.style.marginBottom = '10px'
 
-          snapshot.forEach((childSnapshot) => {
 
-            var key = childSnapshot.key;
-            var childData = childSnapshot.val();
+        // firebase.database().ref(`share_my_way_near_by_users/${user.uid}`).once("value").then((snapshot) => {
+        //   let snaps = snapshot.val()
+        //   if (!!snaps) {
+        //     this.centerControl = new sameWayNearByUsersBtn(mapCenterBtnDiv, this.map, new window.google.maps.LatLng(position))
+        //   } else {
 
-            if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
+        //   }
+        //   console.log(!!snaps);
+        // })
 
-              //  console.log(`
-              //  end_location.lat: ${end_location.lat()}
-              //  childData.end_lat: ${childData.end_lat}
-              //  end_location.lng: ${end_location.lng()}
-              //  childData.end_lng: ${childData.end_lng}
-              //  `);
-              if (end_location.lat() === childData.end_lat && end_location.lng() === childData.end_lng) {
-                console.log(`
-             end_location.lat: ${end_location.lat()}
-             childData.end_lat: ${childData.end_lat}
-             end_location.lng: ${end_location.lng()}
-             childData.end_lng: ${childData.end_lng}
-             `);
-
-                var gps1 = new GPS(location.lat(), location.lng())
-                var gps2 = new GPS(childData.start_lat, childData.start_lng)
-
-                database.ref(`users/${childData.group_share_id}`).once("value").then((snapshot) => {
-                  const group_share_id = childData.group_share_id
-                  if (user.uid !== childData.group_share_id) {
-
-                    console.log(`in 
-                    name: ${snapshot.child('displayName').val()}
-                    start_lat: ${location.lat()} 
-                    start_lng: ${location.lng()}
-                    end_lat: ${childData.start_lat} 
-                    end_lng: ${childData.start_lng}
-                    ${findDistance(gps1, gps2)} เมตร.`
-                    );
-
-                    var Popup = createPopupClass();
-                    var popup = new Popup(
-                      new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
-                      document.createElement("div"),
-                      snapshot.child('photoURL').val(),
-                    )
-
-                    popup.setMap(map);
-                    console.log(snapshot.child('photoURL').val());
-
-                    writeShareMyWayNearbyUsersData(
-                      user.uid,
-                      group_share_id,
-                      snapshot.child('displayName').val(),
-                      snapshot.child('photoURL').val(),
-                      snapshot.child('email').val(),
-                      new window.google.maps.LatLng(childData.start_lat, childData.start_lng),
-                      new window.google.maps.LatLng(childData.end_lat, childData.end_lng),
-                      childData.start_address,
-                      childData.end_address
-                    )
-                  }
-
-                })
-              } else {
-                var gps1 = new GPS(location.lat(), location.lng())
-                var gps2 = new GPS(childData.start_lat, childData.start_lng)
-                console.log(`in lat: ${childData.start_lat} lng: ${childData.start_lng}
-                ${findDistance(gps1, gps2)} เมตร`);
-
-                database.ref(`share_my_way_near_by_users/${user.uid}`).remove()
-
-              }
-            }
-          })
-        })
-
-        console.log(response.routes[0].legs[0].distance.value / 1000 + ' กม.');
+        // map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(mapCenterBtnDiv);
+        // console.log(response.routes[0].legs[0].distance.value / 1000 + ' กม.');
 
       } else {
         window.alert('Directions request failed due to ' + status);

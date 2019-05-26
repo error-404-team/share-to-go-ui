@@ -47,10 +47,10 @@ function findUserLocations (uid,latitude,longitude,latitudeH,longitudeH,latitude
             if (((childData.start_lat >= latitudeL) && (childData.start_lng >= longitudeL)) && ((childData.start_lat <= latitudeH) && (childData.start_lng <= longitudeH))) {
                 var gps1 = new GPS(latitude, longitude)
                 var gps2 = new GPS(childData.start_lat, childData.start_lng)
-                console.log(`in 
-                lat: ${childData.start_lat} 
-                lng: ${childData.start_lng}
-                ${findDistance(gps1, gps2)} เมตร`);
+                // console.log(`in 
+                // lat: ${childData.start_lat} 
+                // lng: ${childData.start_lng}
+                // ${findDistance(gps1, gps2)} เมตร`);
 
                 recordLocationNearbyUsers(uid,childData.group_share_id,childData.start_lat,childData.start_lng,childData.start_address,findDistance(gps1, gps2))
             }

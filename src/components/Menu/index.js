@@ -12,7 +12,7 @@ class Menu extends React.Component {
         this.state = { ...props, user: {}, location: {} }
     }
     componentDidMount() {
-        firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
 
             this.setState({
                 user: {
@@ -24,7 +24,7 @@ class Menu extends React.Component {
             })
         })
 
-        firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`location/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             this.setState({
                 location: {
                     lat: snapshot.child('lat').val(),
@@ -79,7 +79,7 @@ class Menu extends React.Component {
                         style={{
                             fontSize: "x-large"
                         }}
-                        to="/CreateRouteSharing">สร้างการแชร์เส้นทาง</Link>
+                        to="/create-route-sharing">สร้างการแชร์เส้นทาง</Link>
                 </div>
 
                 <div className="mm-panels-menu">

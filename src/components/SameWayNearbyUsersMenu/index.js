@@ -8,7 +8,7 @@ class SameWayNearbyUsersMenu extends React.Component {
         this.state = {...props,user:{},user:{},location:{},share_my_way_near_by_users:[]}
     }
     componentDidMount() {
-        firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
           
               this.setState({
                 user: {
@@ -20,7 +20,7 @@ class SameWayNearbyUsersMenu extends React.Component {
               })
           })
       
-          firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+          firebase.database().ref(`location/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             this.setState({
               location: {
                 lat: snapshot.child('lat').val(),
@@ -32,7 +32,7 @@ class SameWayNearbyUsersMenu extends React.Component {
             })
           })
 
-          firebase.database().ref(`share_my_way_near_by_users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+          firebase.database().ref(`share_my_way_near_by_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             console.log(snapshot);
             var arr = []
             snapshot.forEach((childSnapshot) => {

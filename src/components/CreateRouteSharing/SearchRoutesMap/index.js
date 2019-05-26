@@ -200,7 +200,7 @@ function searchRoutesMap(el, map, position, user) {
   mapCloseBtnSpan.style.margin = "10px"
 
   mapCloseBtnSpan.addEventListener('click', function () {
-    window.location.href = '/CreateRouteSharing'
+    window.location.href = '/near-by-users-menu'
     writeDestinationUsersData(
       user.uid,
       null,
@@ -230,7 +230,7 @@ function searchRoutesMap(el, map, position, user) {
 
 
   mapCenterBtnSpan.addEventListener('click', function () {
-    window.location.href = '/CreateRouteSharing'
+    window.location.href = '/near-by-users-menu'
    
   })
 

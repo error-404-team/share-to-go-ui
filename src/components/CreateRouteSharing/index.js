@@ -16,7 +16,7 @@ class CreateRouteSharing extends React.Component {
     }
     componentDidMount() {
         document.getElementById('inlineRadio1').checked = true
-        firebase.database().ref(`users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
 
             this.setState({
                 user: {
@@ -28,7 +28,7 @@ class CreateRouteSharing extends React.Component {
             })
         })
 
-        firebase.database().ref(`location/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`location/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             this.setState({
                 location: {
                     lat: snapshot.child('lat').val(),
@@ -40,7 +40,7 @@ class CreateRouteSharing extends React.Component {
             })
         })
 
-        firebase.database().ref(`destination_users/${this.state.dataSignIn.uid}`).once("value").then((snapshot) => {
+        firebase.database().ref(`destination_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
             this.setState({
                 destination_users: {
                     lat: snapshot.child('lat').val(),
@@ -67,7 +67,7 @@ class CreateRouteSharing extends React.Component {
 
             if (start_time.value !== "" && end_time.value !== "") {
                 writeCreateGroupShareUserData(
-                    this.state.dataSignIn.uid,
+                    this.state.userLogin.uid,
                     this.state.coords.latitude,
                     this.state.coords.longitude,
                     this.state.destination_users.lat,
@@ -96,7 +96,7 @@ class CreateRouteSharing extends React.Component {
         } else {
             if (start_time.value !== "" && end_time.value !== "") {
                 writeCreateGroupShareUserData(
-                    this.state.dataSignIn.uid,
+                    this.state.userLogin.uid,
                     this.state.coords.latitude,
                     this.state.coords.longitude,
                     this.state.destination_users.lat,

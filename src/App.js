@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import CreateRouteSharing from './components/CreateRouteSharing'
 import RoutesMap from './components/CreateRouteSharing/RoutesMap'
@@ -43,7 +43,6 @@ class App extends React.Component {
         };
 
         this.setUserPrivate = this.setUserPrivate.bind(this)
-        this.setLocationNearbyUsers = this.setLocationNearbyUsers.bind(this)
     }
 
     /**
@@ -126,32 +125,8 @@ class App extends React.Component {
     }
 
     setUserPrivate = (uid) => {
-        firebaseApp.database().ref(`/users/${uid}`).once("value").then((snapshot) => {
-            // var userPrivate = snapshot.child(`${this.state.userLogin.uid}`).val()
-            // console.log(userPrivate.displayName);
 
-            this.setState({
-                userPrivate: snapshot.val()
-            })
-        })
         locationNearbyUsersProsesing(uid, this.state.coords.latitude, this.state.coords.longitude)
-    }
-
-    setLocationNearbyUsers = (uid) => {
-
-        firebaseApp.database().ref(`/location_near_by_users/${uid}`).once("value").then((snapshot) => {
-            const data = []
-            snapshot.forEach((childSnapshot) => {
-                const childData = childSnapshot.val();
-                data.push(childData)  
-                
-            })
-             
-            this.setState({
-                location_near_by_users: data
-            })
-        })
-       
     }
 
     /**
@@ -181,14 +156,14 @@ class App extends React.Component {
                 path: "/near-by-users-menu",
                 component: NearbyUsersMenu
             },
-            // {
-            //     path: "/same-way-near-by-users-menu",
-            //     component: SameWayNearByUsersMenu
-            // },
-            // {
-            //     path: "/search-location-near-by-users-menu",
-            //     component: SearchLocationNearByUsersMenu
-            // },
+            {
+                path: "/same-way-near-by-users-menu",
+                component: SameWayNearbyUsersMenu
+            },
+            {
+                path: "/search-location-near-by-users-menu",
+                component: SearchLocationNearbyUsersMenu
+            },
         ]
 
         const loginRoutes = [
@@ -199,14 +174,16 @@ class App extends React.Component {
         ]
 
         return (
-            <React.Fragment>
+            // <React.Fragment>
                 <Router>
+                <Switch>
                     {this.state.isSignedIn ? (
                         <React.Fragment>
                             {privateRoutes.map((route) => (
                                 <RouteWithSubPrivateRoutes {...route} {...state} />
                             ))}
                         </React.Fragment>
+                        // <Pages/>
                     )
                         : (this.state.loading
                             ? (<Loading />)
@@ -220,9 +197,10 @@ class App extends React.Component {
                             )
                         )
                     }
+                   </Switch>
                 </Router>
 
-            </React.Fragment>
+            // </React.Fragment>
         )
     }
 }

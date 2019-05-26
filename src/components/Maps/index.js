@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import searchMaps from './SearchMaps'
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase'
@@ -17,6 +18,7 @@ import { geocodeLatLng } from './ReverseGeocoding'
 import { GPS, findDistance } from './lib/gps'
 
 import './hiddenGoogle.css'
+import { once } from 'events';
 
 
 
@@ -32,11 +34,11 @@ export class Maps extends React.Component {
   constructor(props) {
     super(props)
     this.state = { ...props }
-    
+
 
 
   }
-  
+
   componentDidMount() {
     // ทดสอบคำนวนหาผู้ใช้ในบริเวณ 1 กิโลเมตร
     // const {latitude,longitude} = this.state.coords
@@ -111,7 +113,7 @@ export class Maps extends React.Component {
     // connect google map apis
 
     // add key
-    const YOUR_API_KEY = "AIzaSyC0sxMyj3-daWXmS8fwrAJrNpUuq9L19fI"
+    const YOUR_API_KEY = "AIzaSyCfdx1_dkKY9BejzU-We23YqfEynZtAIJc"
     connectMapApiInitMap(YOUR_API_KEY, this.initMap)
     // push locatin to state
     this._gapi = window.google;
@@ -415,16 +417,60 @@ export class Maps extends React.Component {
     this.mapCenterBtnDiv.style.marginRight = '6px'
     this.mapCenterBtnDiv.style.marginBottom = '10px'
 
-    this.centerControl = new sameWayNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
 
-    this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
+    // firebase.database().ref(`share_my_way_near_by_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
+    //   let snaps = snapshot.val()
+    //   if (!!snaps) {
+    //     this.centerControl = new sameWayNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
+    //   } else {
 
-    this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+    //   }
+    //   console.log(!!snaps);
+    // })
+
+    // firebase.database().ref(`search_location_near_by_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
+    //   let snaps = snapshot.val()
+    //   if (!!snaps) {
+    //     this.centerControl = new searchLocationNearByUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude))
+    //   } else {
+
+    //   }
+    //   console.log(!!snaps);
+
+    // })
+
+
+    firebase.database().ref(`location_near_by_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
+      let snaps = snapshot.val()
+      if (!!snaps) {
+
+        this.centerControl = new nearbyUsersBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+      } else {
+
+      }
+      console.log(!!snaps);
+
+    })
+
+    
+    firebase.database().ref(`users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
+      let snaps = snapshot.val()
+      if (!!snaps) {
+
+        this.centerControl = new mapCenterBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
+
+      } else {
+
+      }
+      console.log(!!snaps);
+
+    })
+      // setting call ui
+      
+  
 
     // this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
 
-    // setting call ui
-    this.centerControl = new mapCenterBtn(this.mapCenterBtnDiv, this.map, new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude));
 
     // push ui to maps
     this.map.controls[window.google.maps.ControlPosition.RIGHT_BOTTOM].push(this.mapCenterBtnDiv);
@@ -452,31 +498,46 @@ export class Maps extends React.Component {
     // ---------------------------------------------------------
 
 
+    firebase.database().ref(`/users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
+      // var userPrivate = snapshot.child(`${this.state.userLogin.uid}`).val()
+      // console.log(userPrivate.displayName);
+      const photoURL = snapshot.child('photoURL').val()
+      var Popup = createPopupClass();
+      var popup = new Popup(
+        new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
+        document.createElement("div"),
+        photoURL,
+      )
 
-    var Popup = createPopupClass();
-    var popup = new Popup(
-      new window.google.maps.LatLng(this.state.coords.latitude, this.state.coords.longitude),
-      document.createElement("div"),
-      this.props.userPrivate.photoURL,
-    )
+      popup.setMap(this.map);
+    })
 
-    popup.setMap(this.map);
 
 
     // icon profile
 
     // โชว์ผู้ใช้งาน บริเวณใกล้เคียง 1 กิโลเมตร
+    firebase.database().ref(`/location_near_by_users/${this.state.userLogin.uid}`).once("value").then((snapshot) => {
+      // const data = []
+      snapshot.forEach((childSnapshot) => {
+        const childData = childSnapshot.val();
+        // data.push(childData) 
+        // console.log(childData);
+
+        var Popup = createPopupClass();
+        var popup = new Popup(
+          new window.google.maps.LatLng(childData.lat, childData.lng),
+          document.createElement("div"),
+          childData.photoURL
+        )
+
+        popup.setMap(this.map);
+        // console.log(photoURL);
+
+      })
+    })
 
 
-    var Popup = createPopupClass();
-    var popup = new Popup(
-      new window.google.maps.LatLng(this.props.location_near_by_users[0].lat, this.props.location_near_by_users[0].lng),
-      document.createElement("div"),
-      this.props.location_near_by_users[0].photoURL
-    )
-
-    popup.setMap(this.map);
-    // console.log(photoURL);
 
 
 
@@ -498,13 +559,13 @@ export class Maps extends React.Component {
 
     geocodeLatLng(this.state.userLogin.uid, this.state.coords)
 
-   
+
 
   }
 
-  
-    
-  
+
+
+
 
   render() {
 
@@ -516,14 +577,13 @@ export class Maps extends React.Component {
 
     const location = []
 
-   
+
 
     return (
       <div className={this.props.classes.root}>
         <Map id="map" google={this.state.google}>
           {/* <div id="content"></div> */}
         </Map>
-
       </div>
     )
   }

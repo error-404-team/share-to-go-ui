@@ -34,7 +34,7 @@ function sameWayNearByUsersBtn(el, map, position) {
 
      // Setup the click event listeners: simply set the map to Chicago.
      button.addEventListener('click', function () {
-        window.location.href = "/SameWayNearByUsers"
+        window.location.href = "/same-way-near-by-users-menu"
      })
 
 }
