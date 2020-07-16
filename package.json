@@ -25,7 +25,7 @@
     "downshift": "^3.2.10",
     "firebase": "^5.11.1",
     "firebaseui": "^3.6.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "react": "^16.8.6",
     "react-chat-widget": "^2.1.4-1",
     "react-dom": "^16.8.6",
